@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tema 1. Tipos de datos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gustavo A. García   ggarci24@eafit.edu.co                  " />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tema 1. Tipos de datos
+### Gustavo A. García <br> <span class="notbold" style="font-size:65%"><a href="mailto:ggarci24@eafit.edu.co" class="email">ggarci24@eafit.edu.co</a></span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+### <span class="notbold" style="font-size:65%">Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+
+---
+
+
+
+
+&lt;style&gt;
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+&lt;font size = "5"&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Tema1/Tema1.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Tema1/Tema1.pdf)
+
+---
+# &lt;span style="font-size:80%"&gt;En este tema&lt;/span&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;La estructura de los datos económicos](#estructura)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Datos de sección cruzada (*Cross-sectional data*)](#sc)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Datos de series de tiempo (*Time series data*)](#st)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Datos panel o longitudinales (*Panel data*)](#pd)&lt;/span&gt; 
+
+---
+name: estructura
+# &lt;span style="font-size:80%"&gt;La estructura de los datos económicos&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- El conjunto de datos en economía son de una variedad de tipos
+
+- En general los métodos econométricos pueden ser aplicados con pocas modificaciones para diferentes tipos de datos
+
+- Sin embargo, las características especiales de algunos conjuntos de datos deben ser tenidos en cuenta para ser explotados
+
+- Entre las más importantes estructuras de datos se tienen:
+	- Datos de sección cruzada (*Cross-sectional data*)
+	
+	- Datos de series de tiempo (*Time series data*)
+	
+	- Datos panel o longitudinales (*Panel data*)
+	
+---
+name: sc
+# &lt;span style="font-size:80%"&gt;Datos de sección cruzada&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- **Definición**: un conjunto de datos de sección cruzada consiste en una muestra de individuos, hogares, firmas, ciudades, estados, países, o variedad de otras unidades &lt;span style="color:blue"&gt;tomadas en un dado punto en el tiempo&lt;/span&gt;
+
+- Una importante característica de los datos de sección cruzada es que se asume que estos datos han sido obtenidos de una &lt;span style="color:blue"&gt;muestra aleatoria&lt;/span&gt; de una población objetivo. Por ejemplo: salarios, educación, experiencia y otras características de la población
+
+- Los datos de sección cruzada son ampliamente utilizadas en economía y otras ciencias sociales
+
+- En economía el análisis de estos tipos de datos está cercanamente alineado con el campo de la microeconomía aplicada: economía laboral, organización industrial, economía urbana, economía de la educación, economía de la salud, etc
+
+- Datos sobre individuos, hogares, firmas, y ciudades en un punto en el tiempo son importantes para probar hipótesis en la microeconomía y evaluar políticas económicas
+
+---
+# &lt;span style="font-size:80%"&gt;Datos de sección cruzada&lt;/span&gt;
+
+
+```r
+library(haven) # Leyendo el paquete haven para leer datos de Stata
+data1 &lt;- read_dta("http://fmwww.bc.edu/ec-p/data/wooldridge/wage1.dta")
+names(data1) # Muestra las variables que contiene la base de datos
+```
+
+```
+ [1] "wage"     "educ"     "exper"    "tenure"   "nonwhite" "female"  
+ [7] "married"  "numdep"   "smsa"     "northcen" "south"    "west"    
+[13] "construc" "ndurman"  "trcommpu" "trade"    "services" "profserv"
+[19] "profocc"  "clerocc"  "servocc"  "lwage"    "expersq"  "tenursq" 
+```
+
+&lt;span style="font-size:100%"&gt;En este [link](http://fmwww.bc.edu/ec-p/data/wooldridge/wage1.des) se puede ver la descripción de las variables (es lo que llamamos el diccionario de variables)&lt;/span&gt;
+
+&lt;p style="margin-bottom: -1em"&gt;
+
+.pull-left-50[
+
+```r
+data1[1:15,c("wage", "educ", "exper", "female", "married")]
+```
+
+```
+# A tibble: 15 x 5
+    wage  educ exper female married
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+ 1  3.10    11     2      1       0
+ 2  3.24    12    22      1       1
+ 3  3       11     2      0       0
+ 4  6        8    44      0       1
+ 5  5.30    12     7      0       1
+ 6  8.75    16     9      0       1
+ 7 11.2     18    15      0       0
+ 8  5       12     5      1       0
+ 9  3.60    12    26      1       0
+10 18.2     17    22      0       1
+11  6.25    16     8      1       0
+12  8.13    13     3      1       0
+13  8.77    12    15      0       1
+14  5.5     12    18      0       0
+15 22.2     12    31      0       1
+```
+]
+
+.pull-right-50[
+
+```r
+data1[512:526,c("wage", "educ", "exper", "female", "married")]
+```
+
+```
+# A tibble: 15 x 5
+    wage  educ exper female married
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+ 1  4.38    13     7      0       1
+ 2 10       12    15      0       0
+ 3  4.95     7    25      0       1
+ 4  9       17     7      1       1
+ 5  1.43    12    17      1       1
+ 6  3.08    12     3      0       0
+ 7  9.33    14    12      0       1
+ 8  7.5     12    18      0       1
+ 9  4.75    13    47      0       1
+10  5.65    12     2      0       0
+11 15       16    14      1       1
+12  2.27    10     2      1       0
+13  4.67    15    13      0       1
+14 11.6     16     5      0       1
+15  3.5     14     5      1       0
+```
+]
+
+
+---
+# &lt;span style="font-size:80%"&gt;Datos de sección cruzada&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Diferentes variables algunas veces corresponden a diferentes períodos de tiempo en datos de sección cruzada
+
+- Por ejemplo, para determinar &lt;span style="color:blue"&gt;los efectos de las políticas sobre el crecimiento de largo plazo&lt;/span&gt;, se ha estudiado la relación entre el &lt;span style="color:blue"&gt;crecimiento en el PIB per capita real&lt;/span&gt; sobre un cierto período (1960-1985) y variables determinadas en parte por &lt;span style="color:blue"&gt;políticas en 1960&lt;/span&gt;, como &lt;span style="color:blue"&gt;consumo del gobierno&lt;/span&gt; como porcentaje del PIB y &lt;span style="color:blue"&gt;las tasas de adultos con secundaria&lt;/span&gt; 	
+
+&lt;img src="data1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+name: st
+# &lt;span style="font-size:80%"&gt;Datos de series de tiempo&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- **Definición**: los datos de series de tiempo consiste de observaciones sobre una o varias variables sobre el tiempo
+
+- Ejemplos: los precios, la oferta monetaria, IPC, PIB, tasas de homicidios, etc
+
+- A diferencia del los datos de sección cruzada, el orden cronológico de las observaciones en los datos de series de tiempo conlleva a potencialmente importante información
+
+- Dos características importantes en los datos de series de tiempo son la &lt;span style="color:blue"&gt;dependencia temporal&lt;/span&gt; y la presencia de &lt;span style="color:blue"&gt;tendencias sobre el tiempo&lt;/span&gt;. Estos factores deben ser tenidos en cuenta antes aplicar técnicas econométricas estándar
+
+- Otra característica a tener en cuenta en este tipo de datos es la &lt;span style="color:blue"&gt;frecuencia de los datos&lt;/span&gt;: datos diarios, semanales, mensuales, trimestrales o anuales. Este tipo de datos presentan fuertes patrones estacionales, lo cual debe ser tenido en cuenta en los modelos de regresión  
+
+---
+# &lt;span style="font-size:80%"&gt;Datos de series de tiempo&lt;/span&gt;
+&lt;span style="font-size:100%"&gt;
+Datos anuales de Puerto Rico entre 1950 y 1987 sobre la tasa de empleo, salario mínimo y otras variables usadas en Castillo-Freeman y Freeman (1992) para estudiar los efectos del salario mínimo sobre el empleo
+
+
+```r
+data2 &lt;- read_dta("http://fmwww.bc.edu/ec-p/data/wooldridge/prminwge.dta")
+names(data2)
+```
+
+```
+ [1] "year"     "avgmin"   "avgwage"  "kaitz"    "avgcov"   "covt"    
+ [7] "mfgwage"  "prdef"    "prepop"   "prepopf"  "prgnp"    "prunemp" 
+[13] "usgnp"    "t"        "post74"   "lprunemp" "lprgnp"   "lusgnp"  
+[19] "lkaitz"   "lprun_1"  "lprepop"  "lprep_1"  "mincov"   "lmincov" 
+[25] "lavgmin" 
+```
+
+En este [link](http://fmwww.bc.edu/ec-p/data/wooldridge/prminwge.des) se puede ver la descripción de las variables
+
+&lt;p style="margin-bottom: -1em"&gt;
+
+.pull-left-50[
+
+```r
+data2[1:15,c("year","prepop", "usgnp", "mincov")]
+```
+
+```
+# A tibble: 15 x 4
+    year prepop usgnp mincov
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1  1950  0.470 1204.  0.100
+ 2  1951  0.449 1328.  0.106
+ 3  1952  0.434 1380   0.121
+ 4  1953  0.428 1435.  0.150
+ 5  1954  0.415 1416.  0.138
+ 6  1955  0.419 1495.  0.159
+ 7  1956  0.412 1526.  0.182
+ 8  1957  0.412 1551.  0.174
+ 9  1958  0.397 1539.  0.184
+10  1959  0.394 1629.  0.194
+11  1960  0.403 1665.  0.198
+12  1961  0.397 1709.  0.187
+13  1962  0.385 1799.  0.211
+14  1963  0.395 1873.  0.195
+15  1964  0.396 1973.  0.217
+```
+]
+
+.pull-right-50[
+
+```r
+data2[24:38,c("year","prepop", "usgnp", "mincov")]
+```
+
+```
+# A tibble: 15 x 4
+    year prepop usgnp mincov
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1  1973  0.421 2744.  0.250
+ 2  1974  0.405 2729.  0.373
+ 3  1975  0.368 2695   0.434
+ 4  1976  0.364 2827.  0.446
+ 5  1977  0.358 2959.  0.429
+ 6  1978  0.362 3115.  0.450
+ 7  1979  0.360 3192.  0.458
+ 8  1980  0.359 3187.  0.455
+ 9  1981  0.343 3249.  0.458
+10  1982  0.318 3166   0.448
+11  1983  0.321 3279.  0.438
+12  1984  0.334 3501.  0.436
+13  1985  0.331 3608.  0.425
+14  1986  0.351 3713.  0.412
+15  1987  0.369 3820.  0.400
+```
+]
+
+---
+name: dp
+# &lt;span style="font-size:80%"&gt;Datos panel o longitudinales&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- **Definición**: los datos panel o longitudinales consisten en series de tiempo para unidad de sección cruzada
+
+- Ejemplo: información sobre salarios, educación y empleo para un conjunto de individuos sobre un período de 10 años. O datos de crimen de dos años para 150 ciudades
+
+&lt;img src="data2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Datos panel o longitudinales&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Los datos panel presentan importantes ventajas sobre los datos de sección cruzada:
+- la existencia de múltiples observaciones sobre la misma unidad permite controlar por &lt;span style="color:blue"&gt;características inobservadas&lt;/span&gt; de los individuos, firmas, etc
+
+- permiten estudiar la importancia de los efectos de &lt;span style="color:blue"&gt;los rezagos&lt;/span&gt;. Esto es de particular importancia teniendo en cuenta que muchas medidas de política puede ser esperadas a tener un impacto después de un tiempo
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
