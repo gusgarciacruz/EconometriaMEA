@@ -12,3 +12,5 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
 [Tema 2. Probabilidad y distribución](https://gusgarciacruz.github.io/EconometriaMEA/Tema2/Tema2.html)
 
+[Tema 3. El modelo de regresión lineal simple (RLS)](https://gusgarciacruz.github.io/EconometriaMEA/Tema3/Tema3.html)
+
