@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tema 2. Probabilidad y distribución</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gustavo A. García   ggarci24@eafit.edu.co                  " />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tema 2. Probabilidad y distribución
+### Gustavo A. García <br> <span class="notbold" style="font-size:65%"><a href="mailto:ggarci24@eafit.edu.co" class="email">ggarci24@eafit.edu.co</a></span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+### <span class="notbold" style="font-size:65%">Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+
+---
+
+
+
+
+&lt;style&gt;
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+&lt;font size = "5"&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Tema2/Tema2.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Tema2/Tema2.pdf)
+
+---
+# &lt;span style="font-size:80%"&gt;En este tema&lt;/span&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Motivación](#motivacion)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Variables aleatorias y sus distribuciones de probabilidad](#va)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Tipos de variables aleatorias](#tva)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Características de las distribuciones de probabilidad](#distribucion)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Medidas de asociación](#ma)&lt;/span&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Lecturas&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Wooldridge, Jeffrey (2013). *Introducción a la econometría*. 5a edición, Cengage Learning. &lt;span style="color:blue"&gt;Apéndice B&lt;/span&gt;
+
+- Gujarati, D. y Porter, D. (2010). *Econometría*. 5a edición, Mc Graw Hill. &lt;span style="color:blue"&gt;Apéndice A&lt;/span&gt;
+
+---
+name: motivacion
+# &lt;span style="font-size:80%"&gt;Motivación&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+El análisis de probabilidad de una variable aleatoria ayuda a encontrar soluciones a diferentes situaciones
+
+Por ejemplo, el caso de una aerolínea que tiene que decidir &lt;span style="color:blue"&gt;cuántas reservas aceptar&lt;/span&gt; para un vuelo en el que hay &lt;span style="color:blue"&gt;100 asientos disponibles&lt;/span&gt;. Existen diferentes situaciones que hacen el problema no trivial:
+
+
+- Si hay pocas reservas, todas serán aceptadas
+	
+- Pero &lt;span style="color:blue"&gt;¿qué pasa si hay muchas personas reservando, más de 100?&lt;/span&gt;
+	&lt;p style="margin-bottom: -0.8em"&gt;
+	- aceptar máximo 100. Pero si hay personas que cancelan se corre el riesgo de &lt;span style="color:blue"&gt;no llenar el avión&lt;/span&gt;
+	- aceptar más de 100. Habrá un exceso de reservas y tendrá que &lt;span style="color:blue"&gt;compensar a los pasajeros&lt;/span&gt;
+	
+&lt;p style="margin-bottom: 1.5em"&gt;
+	
+&lt;p class="comment"&gt;
+¿Se puede determinar la cantidad óptima de reservar que deba hacer la aerolínea?
+&lt;/p&gt;
+
+---
+name: va
+# &lt;span style="font-size:80%"&gt;Variables aleatorias y sus distribuciones de probabilidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Entender el concepto de variable aleatoria es muy importante en economía y en general en las ciencias sociales `\(\Longrightarrow\)` &lt;span style="color:blue"&gt;todo el tiempo los economistas estamos trabajando con variables aleatorias&lt;/span&gt;
+
+- La variable &lt;span style="color:blue"&gt; `\(X\)`: el número de reservas que recibe la aerolínea&lt;/span&gt;, es una variable aleatoria ya que, hasta que los datos son observados, es incierto que valores tomará `\(X\)`
+
+- Una &lt;span style="color:blue"&gt;variable aleatoria&lt;/span&gt; es aquella que toma un valor numérico que será determinado por un &lt;span style="color:blue"&gt;experimento&lt;/span&gt;
+
+- &lt;span style="color:blue"&gt;Un experimento&lt;/span&gt;, en general, es un procedimiento que puede repetirse una cantidad infinita de veces y que tiene un conjunto bien definido de resultados
+
+---
+# &lt;span style="font-size:80%"&gt;Variables aleatorias y sus distribuciones de probabilidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Por ejemplo, &lt;span style="color:blue"&gt;el número de reservas que recibe la aerolínea&lt;/span&gt; es una variable aleatoria y es importante ya que es crucial determinar el &lt;span style="color:blue"&gt;óptimo de reservas que debe aceptar la aerolínea&lt;/span&gt;
+
+- El número de reservas que recibe la aerolínea es una variable aleatoria ya que 
+&lt;p style="margin-bottom: -0.8em"&gt;
+ - en cada vuelo el número de reservas es &lt;span style="color:blue"&gt;incierto&lt;/span&gt;, no se sabe cuantas finalmente se van hacer
+&lt;p style="margin-bottom: -0.8em"&gt; 
+ - el número de reservas puede pensarse como un &lt;span style="color:blue"&gt;resultado de un experimento&lt;/span&gt;, esto es, se puede &lt;span style="color:blue"&gt;repetir una cantidad infinita de veces&lt;/span&gt; (cada vez que haya un vuelo) y tiene un &lt;span style="color:blue"&gt;conjunto bien definido de resultados&lt;/span&gt; (de cero reservas al óptimo definido por la aerolínea)   
+ 
+- &lt;span style="color:blue"&gt;Problema de información incompleta&lt;/span&gt;: el hecho de que la aerolínea entienda que el número de reservas es una variable aleatoria hace que el problema de estimar el número (óptimo) de reservas no sea trivial
+
+---
+# &lt;span style="font-size:80%"&gt;Variables aleatorias y sus distribuciones de probabilidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+&lt;p class="comment"&gt;
+¿Se puede determinar la cantidad óptima de reservas que debe aceptar la aerolínea?
+&lt;/p&gt;
+
+- Dada cierta información, por ejemplo &lt;span style="color:blue"&gt;la probabilidad con la que en cada vuelo se aceptan un número fijo de reservas (ej. 100)&lt;/span&gt;, puede emplearse la &lt;span style="color:blue"&gt;probabilidad&lt;/span&gt; básica para encontrar la solución a este caso
+
+- En otras palabras, se puede construir &lt;span style="color:blue"&gt;la distribución de probabilidad&lt;/span&gt; de la variable aleatoria &lt;span style="color:blue"&gt;número de reservas&lt;/span&gt; con la información pasada de esta variable
+
+- Este procedimiento permite con información ex-ante pronosticar el posible número de reservas
+
+---
+# &lt;span style="font-size:80%"&gt;Variables aleatorias y sus distribuciones de probabilidad&lt;/span&gt;
+
+&lt;p style="margin-bottom: -1em"&gt;
+
+```r
+library(summarytools)
+x &lt;- rnorm(400,100)
+x &lt;- round(x, digits = 0)
+freq(x, headings=F)
+```
+
+```
+
+              Freq   % Valid   % Valid Cum.   % Total   % Total Cum.
+----------- ------ --------- -------------- --------- --------------
+         97      1      0.25           0.25      0.25           0.25
+         98     23      5.75           6.00      5.75           6.00
+         99     92     23.00          29.00     23.00          29.00
+        100    145     36.25          65.25     36.25          65.25
+        101    104     26.00          91.25     26.00          91.25
+        102     34      8.50          99.75      8.50          99.75
+        103      1      0.25         100.00      0.25         100.00
+       &lt;NA&gt;      0                               0.00         100.00
+      Total    400    100.00         100.00    100.00         100.00
+```
+
+&lt;p style="margin-bottom: -1em"&gt;
+
+.pull-left-50[
+
+```r
+hist(x, breaks = c(96,97,98,99,100,101,102,103), xlab="Número de reservas",
+     ylab="Frecuencia", ylim=c(0,100), main="Distribución de frecuencia",col="blue")
+```
+
+&lt;img src="Tema2_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right-50[
+
+```r
+hist(x, freq=F, breaks = c(96,97,98,99,100,101,102,103), xlab="Número de reservas",
+     ylab="Probabilidad (Densidad)", main="Distribución de probabilidad",col="grey")
+```
+
+&lt;img src="Tema2_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# &lt;span style="font-size:80%"&gt;Variables aleatorias y sus distribuciones de probabilidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Otras variables aleatorias importantes
+
+- &lt;span style="color:blue"&gt;Hogar&lt;/span&gt;: ingreso anual del hogar, tamaño del hogar, tasa de participación laboral del hogar
+
+- &lt;span style="color:blue"&gt;País&lt;/span&gt;: número de pensionados, número de individuos bajo la línea de pobreza, precio del petróleo, precio del dólar, tasa de homicidio, tasa de desempleo
+
+- &lt;span style="color:blue"&gt;Firma&lt;/span&gt;: costo de producción, insumos utilizados, número de empleados
+
+- &lt;span style="color:blue"&gt;Otras menos importantes&lt;/span&gt;: cantidad de caras en 10 lanzamientos, la cantidad de veces que cae el 6 al tirar un dado, número de penaltis acertados cobrados por Messi
+
+---
+name: tva
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+.small-code[
+&lt;p style="margin-bottom: -1em"&gt;
+**&lt;span style="color:blue"&gt;Discretas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+- Es una variable que sólo toma una cantidad finita de valores
+&lt;p style="margin-bottom: -0.5em"&gt;
+- Ejemplos: variable aleatoria Bernoulli (o binaria, toma valores 0 o 1); estar desempleado o no; estar enfermo o no 
+&lt;p style="margin-bottom: -0.5em"&gt;
+
+
+```r
+x &lt;- rbinom(100, 1, 0.75)
+freq(x, h=F, cumul=F)
+```
+
+```
+
+              Freq   % Valid   % Total
+----------- ------ --------- ---------
+          0     23     23.00     23.00
+          1     77     77.00     77.00
+       &lt;NA&gt;      0                0.00
+      Total    100    100.00    100.00
+```
+
+```r
+hist(x, freq=F, xlim=c(0,1), ylim=c(0,8), xlab="Bernoulli", ylab="Probabilidad", main="", col="skyblue")
+```
+
+&lt;img src="Tema2_files/figure-html/unnamed-chunk-4-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+
+**&lt;span style="color:blue"&gt;Discretas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+
+- Para describir por completo el comportamiento de una variable aleatoria discreta es necesario determinar la &lt;span style="color:blue"&gt;probabilidad&lt;/span&gt; que toma cada valor de la variable
+
+- En el ejemplo de número de reservas óptimo por la aerolínea, el problema puede analizarse en el contexto de las variables aleatorias de Bernoulli de la siguiente forma: &lt;span style="color:blue"&gt;dada una reserva realizada por una persona, tomado aleatoriamente, se define una variable aleatoria de Bernoulli como `\(X=1\)` si la aerolínea ha tomado la reserva y `\(X=0\)` si no la ha tomado
+
+- La probabilidad de que una reserva haya sido tomada por la aerolínea puede ser cualquier numero entre cero y uno. Si llamamos a esta probabilidad `\(\theta\)`, se tienen las siguientes probabilidades:
+
+`$$P(X=1) = \theta$$`
+`$$P(X=0) = 1-\theta$$`
+
+
+- De manera general, cualquier va aleatoria discreta queda completamente explicada cuando se determinan las probabilidades de cada valor que toma:
+
+`$$p_{j}=P(X=x_{j}), j=1,2,...,k$$`
+
+donde cada `\(p_{j}\)` está entre 0 y 1 y
+
+`$$p_{1}+p_{2}+...+p_{k}=1$$`
+
+---
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+&lt;font size = "5"&gt;
+**&lt;span style="color:blue"&gt;Discretas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+
+- La &lt;span style="color:blue"&gt;función de densidad de probabilidad (fdp)&lt;/span&gt; de `\(X\)` resume la información concerniente a los valores que puede tomar `\(X\)` y a sus correspondientes probabilidades:
+
+`$$f(x_{j})=p_{j}, j=1,2,...,k$$`
+
+- Dada la fdp de cualquier variable aleatoria discreta, es fácil calcular la probabilidad de cualquier evento relacionado con esa variable aleatoria
+
+- Por ejemplo, suponga que `\(X\)` es la cantidad de tiros libres anotados por Messi en dos intentos, entonces `\(X\)` puede tomar los valores { `\(0,1,2\)`}. Suponga que la fdp de `\(X\)` está definida por:
+
+`$$f(0)=.17; f(1)=.50; f(2)=.33$$`
+
+---
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+&lt;font size = "5"&gt;
+**&lt;span style="color:blue"&gt;Discretas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+.pull-left-50[
+
+```r
+set.seed(123456789)
+x &lt;- rbinom(100, 2, 0.6)
+freq(x, h=F, cumul=F)
+```
+
+```
+
+              Freq   % Valid   % Total
+----------- ------ --------- ---------
+          0     17     17.00     17.00
+          1     50     50.00     50.00
+          2     33     33.00     33.00
+       &lt;NA&gt;      0                0.00
+      Total    100    100.00    100.00
+```
+]
+
+.pull-right-50[
+
+```r
+hist(x, freq=F, breaks=c(-1,0,1,2), xlab="Cantidad de tiros libres anotados por Messi", ylab="Probabilidad", main="fdp de la cantidad de tiros 
+     libres marcados por Messi en dos intentos n=100", col="skyblue")
+```
+
+&lt;img src="Tema2_files/figure-html/unnamed-chunk-6-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+
+- Estas tres probabilidades suman 1
+
+- La probabilidad de que Messi anote &lt;span style="color:blue"&gt;por lo menos&lt;/span&gt; un tiro libre:
+`$$P(X \geq 1) = P(X=1)+P(X=2) = .50 + .33 = .83$$` 
+
+---
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+&lt;font size = "5"&gt;
+**&lt;span style="color:blue"&gt;Continuas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+
+- Es una variable en la cual la probabilidad de que esta tome un valor cualquiera es cero. Es decir, &lt;span style="color:blue"&gt;los valores que puede tomar la variable aleatoria son tantos que no es posible contarlos o hacerlos coincidir con los enteros positivos (es innumerable)&lt;/span&gt;, por lo que la variable aleatoria puede tomar cada uno de estos valores con probabilidad cero
+
+- Ejemplos: salarios, riqueza, tasa de cambio, precio del dólar, ingresos operacionales, millas recorridas al final de la carrera futbolística de Messi
+
+- También puede definirse una fdp y proporciona información sobre los posibles valores de esta variable aleatoria
+
+- Sin embargo, dado que no tiene sentido analizar la posibilidad de que una variable aleatoria continua tome un determinado valor, &lt;span style="color:blue"&gt;la fdp de una variable de este tipo sólo se usa para calcular eventos que comprenden un rango de valores&lt;/span&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+&lt;font size = "5"&gt;
+**&lt;span style="color:blue"&gt;Continuas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+
+Por ejemplo, si `\(a\)` y `\(b\)` son constantes y `\(a&lt;b\)`, la probabilidad de que `\(X\)` se encuentre entre `\(a\)` y `\(b\)`, `\(P(a \leq X \leq b)\)`, es el área bajo la fdp entre los punto `\(a\)` y `\(b\)`  
+
+
+&lt;img src="fdp_continua.png" width="46%" style="display: block; margin: auto;" /&gt;
+
+ Esta probabilidad es la integral de la función `\(f\)` entre los punto `\(a\)` y `\(b\)`. Todo el área bajo la fdp siempre debe ser igual a 1   
+
+---
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+&lt;font size = "5"&gt;
+**&lt;span style="color:blue"&gt;Continuas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+
+- Para calcular probabilidades de va continuas, es más fácil emplear la &lt;span style="color:blue"&gt;función de distribución acumulada (fda)&lt;/span&gt;. La fda de se define como:
+
+`$$F(x) = P(X \leq x)$$`
+&lt;p style="margin-bottom: -0.5em"&gt;
+- En el caso de va discretas, la fda se obtiene sumando las fdp de todos los valores `\(x_{j}\)` tales que `\(x_{j} \leq x\)`
+
+- En el caso de va continuas, `\(F(x)\)` es el área bajo la fdp, `\(f\)`, a la izquierda del punto `\(x\)`
+
+&lt;p style="margin-bottom: -1em"&gt;
+Propiedades
+&lt;p style="margin-bottom: -0.5em"&gt;
+- Como `\(F(x)\)` es una probabilidad, &lt;span style="color:blue"&gt;su valor estará siempre entre 0 y 1&lt;/span&gt;
+&lt;p style="margin-bottom: -0.5em"&gt;
+- Si `\(x_{1}&lt;x_{2}\)`, entonces `\(P(X \leq x_{1})\leq P(X \leq x_{2})\)`, es decir que `\(F(x_{1}) \leq F(x_{2})\)` `\(\Longrightarrow\)` &lt;span style="color:blue"&gt;la fda es una función creciente o por lo menos no decreciente de `\(x\)`&lt;/span&gt;
+&lt;p style="margin-bottom: -0.5em"&gt;
+- `\(P(X&gt;x) = 1-F(x)\)`
+&lt;p style="margin-bottom: -0.5em"&gt;
+- `\(P(a&lt;X \leq b) = F(b)-F(a)\)`, para todo par de números `\(a&lt;b\)`
+
+---
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+&lt;font size = "5"&gt;
+**&lt;span style="color:blue"&gt;Continuas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+
+Ejemplo: función de densidad de los salarios y algunos estadísticos
+
+&lt;img src="fda_salarios.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Tipos de variables aleatorias&lt;/span&gt;
+&lt;font size = "5"&gt;
+**&lt;span style="color:blue"&gt;Continuas&lt;/span&gt;**
+&lt;p style="margin-bottom: -1em"&gt;
+
+Ejemplo: función de densidad de los salarios para hombres y mujeres
+
+&lt;img src="fda_salarios_fm.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+name: distribucion
+# &lt;span style="font-size:80%"&gt;Características de las distribuciones de probabilidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+&lt;p style="margin-bottom: -1em"&gt;
+&lt;span style="color:blue"&gt;Medidas de tendencia central: el valor esperado&lt;/span&gt;
+
+- El valor esperado o la esperanza de `\(X\)` (o media poblacional), que se denota por `\(E(X)\)` o `\(\mu_{X}\)` o simplemente `\(\mu\)`, es un promedio ponderado de todos los posibles valores de `\(X\)`
+&lt;p style="margin-bottom: -0.5em"&gt;
+- Valor esperado para va discretas:
+
+`$$E(X) = x_{1}f(x_{1}) + x_{2}f(x_{2}) + ... + x_{k}f(x_{k}) = \sum_{j=1}^{k}x_{j}f(x_{j})$$`
+&lt;p style="margin-bottom: -0.5em"&gt;
+- Si `\(X\)` es una va continua, entonces `\(E(X)\)` está definida como una integral:
+
+`$$E(X)=\int_{-\infty}^{\infty} xf(x)dx$$`
+&lt;p style="margin-bottom: -0.5em"&gt;
+- Si `\(g()\)` es una función, entonces `\(g(X)\)` es una variable aleatoria y su valor esperado será:
+
+`$$E(g(X))=\int_{-\infty}^{\infty} g(x)f(x)dx$$`
+
+---
+# &lt;span style="font-size:80%"&gt;Características de las distribuciones de probabilidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+&lt;p style="margin-bottom: -1em"&gt;
+&lt;span style="color:blue"&gt;Medidas de tendencia central: el valor esperado&lt;/span&gt;
+&lt;p style="margin-bottom: -1em"&gt;
+Propiedades
+
+- Para toda constante `\(c\)`, `\(E(c)=c\)`
+
+- Sea `\(a\)` y `\(b\)` dos constantes, `\(E(aX + b) = aE(X) + b\)`
+
+- El valor esperado de una suma es la suma de valores esperados:
+
+`$$\begin{array}{ccl}
+E(a_{1}X_{1} + a_{2}X_{2} + ... +a_{n}X_{n}) &amp; = &amp; a_{1}E(X_{1}) + a_{2}E(X_{2}) + ... +a_{n}E(X_{n})\\
+             &amp; = &amp; \sum_{i=1}^{n} a_{i}E(X_{i})
+\end{array}$$`
+
+&lt;p style="margin-bottom: -1em"&gt;
+&lt;span style="color:blue"&gt;Medidas de tendencia central: la mediana&lt;/span&gt;
+
+- La mediana de `\(X\)`, llámese `\(m\)`, es el valor tal que una mitad del área bajo la curva de la fdp queda a la izquierda de `\(m\)` y la otra mitad del área queda a la derecha de `\(m\)`
+
+- Si `\(X\)` es una va discreta, la mediana se obtiene ordenando todos los posibles valores de `\(X\)` y seleccionando después el valor medio  
+
+---
+# &lt;span style="font-size:80%"&gt;Características de las distribuciones de probabilidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+&lt;p style="margin-bottom: -1em"&gt;
+&lt;span style="color:blue"&gt;Medidas de variabilidad: varianza&lt;/span&gt;
+&lt;p style="margin-bottom: -1em"&gt;
+- La varianza es que tan lejos esta `\(X\)` de su valor esperado
+&lt;p style="margin-bottom: -0.5em"&gt;
+- `\(Var(X) =\sigma^2= E[(X-E(X))^2]\)`
+
+&lt;p style="margin-bottom: -0.5em"&gt;
+Propiedades
+&lt;p style="margin-bottom: -1em"&gt;
+- `\(Var(c)=0\)`
+&lt;p style="margin-bottom: -0.5em"&gt;
+- `\(Var(aX+b)=a^2Var(X)\)`
+
+&lt;p style="margin-bottom: -0.5em"&gt;
+
+Esto significa que sumar una constante a una variable aleatoria no modifica la varianza, pero multiplicar una variable aleatoria por una constante aumenta la varianza en un factor igual al cuadrado de la constante
+
+&lt;p style="margin-bottom: -1em"&gt;
+&lt;span style="color:blue"&gt;Medidas de variabilidad: desviación estándar&lt;/span&gt;
+- `\(sd(X) = \sqrt{Var(X)} = \sqrt{E[(X-E(X))^2]}= \sqrt{E(X^2)-E(X)^2}\)`
+
+Propiedades
+&lt;p style="margin-bottom: -1em"&gt;
+- `\(sd(c)=0\)`
+&lt;p style="margin-bottom: -0.5em"&gt;
+- `\(sd(aX+b)=|a|sd(X)\)`
+
+
+---
+# &lt;span style="font-size:80%"&gt;Características de las distribuciones de probabilidad&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+&lt;p style="margin-bottom: -1em"&gt;
+
+&lt;span style="color:blue"&gt;Estandarización de una variable aleatoria&lt;/span&gt;
+&lt;p style="margin-bottom: -1em"&gt;
+`$$Z=\frac{X-\mu}{\sigma}$$`
+
+Entonces
+
+`$$E(Z)=\frac{1}{\sigma}E(X)-\frac{\mu}{\sigma}=\frac{1}{\sigma}\mu-\frac{\mu}{\sigma}=0$$`
+`$$Var(Z)=\frac{1}{\sigma^2}Var(X)=\frac{1}{\sigma^2}\sigma^2=1$$`
+Otras características de la distribución de una variable aleatoria: el sesgo y la curtosis
+- **El sesgo**: el tercer momento de la va Z
+`$$E(Z^3)=E[\frac{(X-\mu)^3}{\sigma^3}]$$`
+&lt;span style="color:blue"&gt;El sesgo sirve para determinar si la distribución es simétrica
+
+- **La curtosis**: el cuarto momento de la variable aleatoria Z
+
+`$$E(Z^4)=E[\frac{(X-\mu)^4}{\sigma^4}]$$`
+&lt;span style="color:blue"&gt;Valores mayores de la curtosis significan que las colas de la distribución de X son más gruesas
+
+---
+name: ma
+# &lt;span style="font-size:80%"&gt;Medidas de asociación&lt;/span&gt;
+&lt;spam style="font-size:115%"&gt;
+
+**&lt;span style="color:blue"&gt;Covarianza&lt;/span&gt;**
+`$$Cov(X,Y)=E[(X-\mu_{X})(Y-\mu_{Y})]=E(XY)-\mu_{X}\mu_{Y}$$`
+- Es una medida de dependencia lineal entre dos variables aleatorias
+- Si la covarianza es positiva indica que las dos variables se mueven en la misma dirección, mientras que si es negativa indica que las dos variables se mueven en dirección opuesta
+- La interpretación de la magnitud es difícil
+- Si `\(X\)` y `\(Y\)` son independientes entonces `\(Cov(X,Y)=0\)`
+- &lt;span style="color:blue"&gt;Limitación&lt;/span&gt;: la covarianza puede utilizarse para medir la relación entre dos variables, sin embargo esta medida depende de las unidades de medición, esto es, la covarianza se verá alterada si las variables están medidas en diferentes unidades de medición
+
+&lt;p style="margin-bottom: 1.5em"&gt;
+
+**&lt;span style="color:blue"&gt;Coeficiente de correlación&lt;/span&gt;**
+`$$Corr(X,Y)=\frac{Cov(X,Y)}{\sigma_{X}\sigma_{Y}}=\rho_{XY}$$`
+- El coeficiente de correlación supera la deficiencia de la covarianza
+- La interpretación de la magnitud es más fácil
+- `\(-1\leq Corr(X,Y)\leq 1\)`
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
