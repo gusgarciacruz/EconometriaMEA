@@ -1,0 +1,256 @@
+---
+title: "Introducción y motivación al curso"
+author: Gustavo A. García <br> <span style="font-size:65%" class='notbold'>ggarci24@eafit.edu.co</span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+date: <span style="font-size:65%" class='notbold'>Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+options(width = 70)
+knitr::opts_chunk$set(
+  dev.args = list(bg = 'transparent'),
+  fig.width = 12, message = TRUE,
+  warning = FALSE, comment = "", cache = TRUE, fig.retina = 3
+)
+knitr::opts_knit$set(global.par = TRUE)
+Sys.setenv(`_R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_` = "false")
+# remotes::install_github("luukvdmeer/sfnetworks")
+# remotes::install_github("EvaMaeRey/flipbookr")
+# remotes::install_github("rlesur/klippy")
+# devtools::install_github("gadenbuie/xaringanExtra")
+library(flipbookr)
+library(xaringanthemer)
+library(tidyverse)
+library(klippy)
+library(xaringanExtra)
+library(gt); library(knitr); library(kableExtra); library(tibble)
+library(summarytools); library(qrcode)
+```
+
+<style>
+.my-logo-right {
+    content: "";
+    position: absolute;
+    left: 400px;
+    height: 400px;
+    width: 400px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("qr.png");
+}
+
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+</style>
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+```{r xaringanExtra-clipboard, echo=FALSE}
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+```
+
+```{r xaringan-extra-styles, echo=FALSE}
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+```
+
+<font size = "5">
+
+<br>
+<br>
+<br>
+<br>
+<br>
+#<div class="my-logo-right"></div> 
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Introduccion/Introduccion.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Introduccion/Introduccion.pdf)
+
+---
+# <span style="font-size:80%">En este tema</span>
+
+- <span style="font-size:150%">Qué es la econometría?</span> <br> <br>
+
+- <span style="font-size:150%"> Cuál es el objetivo de la econometría?</span> <br> <br>
+
+- <span style="font-size:150%"> La economía y el papel del modelo económico</span> <br> <br>
+
+- <span style="font-size:150%"> Expresando la relación económica e identificando la dirección</span> <br> <br>
+
+- <span style="font-size:150%"> El procedimiento econométrico</span> 
+
+---
+# <span style="font-size:80%">Qué es la econometría?</span>
+<font size = "5">
+- **<span style="color:blue">Econometría</span>**: "<span style="color:blue">medición económica</span>" $\Longrightarrow$ El alcance de esta disciplina es mucho más amplio
+
+- **<span style="color:blue">Tintner</span>** (1968): la <span style="color:blue">econometría</span> consiste en la <span style="color:blue">aplicación de la teoría económica matemática</span> y de los <span style="color:blue">métodos estadísticos</span> a los <span style="color:blue">datos económicos</span> para establecer <span style="color:blue">resultados numéricos y verificar los teoremas</span>
+
+- **<span style="color:blue">Samuelson</span>** y **<span style="color:blue">Koopmans</span>** (1954): la econometría puede definirse como el <span style="color:blue">análisis cuantitativo</span> de fenómenos económicos reales, basados en el desarrollo simultáneo de la <span style="color:blue">teoría</span> y la <span style="color:blue">observación</span> , relacionados mediante <span style="color:blue">métodos apropiados de inferencia</span> 
+
+- **<span style="color:blue">Haavelmo</span>** (1944): el método de la investigación econométrica intenta, esencialmente, unir la <span style="color:blue">teoría económica</span> y las <span style="color:blue">mediciones reales</span> , empleando la <span style="color:blue">teoría</span>  y la <span style="color:blue">técnica de la inferencia estadística</span>  como un <span style="color:blue">puente</span> 
+
+<p class="comment">
+La econometría es <span style="color:blue">cuantitativa</span>, tiene en cuenta la <span style="color:blue">teoría económica</span> y está en estrecho contacto con la <span style="color:blue">realidad</span>
+</p>
+
+---
+# <span style="font-size:80%">Cuál es el objetivo de la econometría?</span>
+<font size = "5">
+- El objetivo de la econometría es <span style="color:blue">expresar la teoría económica</span> en términos <span style="color:blue">matemáticos</span>, <span style="color:blue">verificar dicha teoría por métodos estadísticos</span>, medir el impacto de una variable sobre otra, predecir los sucesos futuros, o proveer recomendaciones de la política económica
+
+- Desarrollar métodos estadísticos que se utilizan para estimar relaciones económicas, probar teorías económicas y evaluar e implementar políticas públicas y de negocios
+
+---
+# <span style="font-size:80%">La economía y el papel del modelo económico</span>
+<font size = "5">
+- La economía tiene una gran preocupación con las implicaciones de la <span style="color:blue">escasez</span> $\Longrightarrow$ Se ha desarrollado una <span style="color:blue">teoría general</span> de la elección para explicar las decisiones de producción, localización y distribución: <span style="color:blue">los consumidores maximizan la utilidad</span> y <span style="color:blue">las firmas el beneficio</span>
+
+- Estas fuerzas sugieren relaciones entre variables económicas, por ejemplo:
+<p style="margin-bottom: -0.5em">
+  - el nivel de consumo de una mercancía se encuentra relacionado al precio del propio bien, al precio de los bienes sustitutos y complementarios, y al nivel de ingreso
+<p style="margin-bottom: -0.5em">  
+	- el nivel de producción de un bien se encuentra determinado por los insumos utilizados
+<p style="margin-bottom: -0.5em">
+	- la futura oferta de un bien se encuentra determinada por su precio y el precio de los insumos
+<p style="margin-bottom: -0.5em"> 
+	- en macroeconomía el consumo agregado esta relacionado con el ingreso agregado
+<p style="margin-bottom: -0.5em"> 
+	- los cambios en la inversión están relacionados al nivel de las tasa de interés (real y esperadas)
+<p style="margin-bottom: -0.5em"> 
+	- el ingreso agregado esta relacionado al consumo agregado y a la inversión más el gasto del gobierno
+	
+---
+# <span style="font-size:80%">La economía y el papel del modelo económico</span>
+<spam style="font-size:115%">
+
+- <span style="color:blue">No sólo se sabe que existen tales relaciones, sino que también el modelo teórico nos puede decir las direcciones de estas relaciones</span>, por ejemplo:
+<p style="margin-bottom: -0.5em">
+ - cuando el precio de un bien incrementa $\Longrightarrow$ la tasa de consumo disminuye
+<p style="margin-bottom: -0.5em"> 
+ - cuando el precio un sustituto incrementa $\Longrightarrow$ la tasa de consumo del bien (normal) incrementa
+<p style="margin-bottom: -0.5em">
+ - existe una relación positiva entre los insumos y el producto
+<p style="margin-bottom: -0.5em"> 
+ - existe una relación positiva entre el precio de un bien y la cantidad ofertada
+<p style="margin-bottom: -0.5em"> 
+ - cambios en la tasa de interés están negativamente relacionadas a cambios en la inversión
+<p style="margin-bottom: -0.5em">
+ - relación consumo-ingreso: la propensión marginal a consumir es positiva y alrededor de 0.8
+
+- Este tipo de proposiciones proveen una forma de identificar y pensar sobre:
+<p style="margin-bottom: -0.5em">
+ - <span style="color:blue">relaciones</span> entre variables económicas y la forma de hacer <span style="color:blue">predicciones</span> cuando cambian las condiciones
+<p style="margin-bottom: -0.5em">
+ - <span style="color:blue">pruebas de hipótesis</span> sobre la dirección de la relación entre variables económicas o si la relación existe
+
+<p class="comment">
+<span style="color:blue">Los modelos económicos</span> reflejan el conocimiento o conjeturas sobre las <span style="color:blue">relaciones entre variables económicas</span> (precios, cantidades, ingreso, etc) y proveen una base para <span style="color:blue">clasificar las variables</span> e <span style="color:blue">indentificar hipótesis relevantes y testeables</span>
+</p>
+
+---
+# <span style="font-size:80%">Expresando la relación económica e identificando la dirección</span>
+<spam style="font-size:130%">
+
+Es necesario una forma formal de expresar cualquier información que se tenga en términos a la relación entre variables económicas. Por ejemplo, para las variables de consumo agregado $(c)$ e ingreso $(y)$ se puede escribir:
+
+$$c=f(y)$$
+el consumo agregado es *alguna* función del ingreso
+
+Si nos centramos en un bien particular, por ejemplo un Audi, la relación puede expresarse de la siguiente forma:
+
+$$q^{d}=f(p,p_{s},p_{c},y)$$
+la cantidad de Audis demandados, $q^{d}$, es *alguna* función del precio del Audi, $p$, el precio de los carros que son sustitutos, $p_{s}$, el precio de los carros que son complementarios, $p_{c}$, y el nivel de ingreso, $y$
+
+Cada una de estas ecuaciones es un <span style="color:blue">modelo económico específico</span> que describe cómo nosotros <span style="color:blue">visualizamos</span> la forma en la cual las variables económicas están interrelacionadas
+
+---
+# <span style="font-size:80%">Expresando la relación económica e identificando la dirección</span>
+<font size = "5">
+
+- Los modelos económicos de este tipo <span style="color:blue">guían el análisis económico</span> y permiten alcanzar ciertas conclusiones, bajo diferentes escenarios, sobre lo que esta pasando en la economía
+
+- Para explicar el comportamiento de las variables económicas observadas, se empieza con el modelo económico que relfleja, como nosotros entendemos a las variables, la relación que hay detrás entre las variables económicas
+
+
+<p class="comment">
+	Como plantea Trygve Magnus Haavelmo, el padre de la econometría: "<span style="color:blue">It is not to be forgotten that they (theoretical economic model) are all our own invention in a search for an understanding of real life; they are not hidden truths to be discovered</span>"
+</p>
+
+	
+- Los modelos económicos no nos dicen si las hipótesis o predicciones son verdaderas o falsas $\Longrightarrow$ ellos sólo nos dicen que, dados unos supuestos, si nosotros hacemos uso correctamente de las reglas de la lógica, ciertas conclusiones surgen
+
+---
+# <span style="font-size:80%">Expresando la relación económica e identificando la dirección</span>
+<font size = "5">
+
+- En muchas decisiones económicas no es suficiente con saber que ciertas variables económicas están relacionadas $\Longrightarrow$ <span style="color:blue">es necesario saber la dirección de la relación y la magnitud involucrada</span>
+
+- El modelo económico que expresa la relación entre variables económicas también involucra cuestiones respecto a los signos y magnitudes de <span style="color:blue">parámetros desconocidos</span>
+
+- El modelo económico que expresa la demanda por Audis podría ser especificado como: 
+
+$$q^{d}=f(p,p_{s},p_{c},y; \beta_{1}, \beta_{2},...,\beta_{M})$$
+donde los $\beta$s reflejan el parámetro desconocido y sin signo conectando las variables de precios e ingreso con la variable de cantidades
+
+---
+# <span style="font-size:80%">El procedimiento econométrico</span>
+<font size = "5">
+
+**<span style="color:blue">1**. <span style="color:blue">Especificación del modelo</span>: consiste en usar la teoría, leyes o hipótesis particulares económicas, para investigar las relaciones entre variables y agentes de la economía
+
+**<span style="color:blue">2.** <span style="color:blue">Estimación del modelo</span>: trata de la utilización de instrumentos auxiliares como las matemáticas y la estadística para estimar el modelo objetivo
+
+**<span style="color:blue">3.** <span style="color:blue">Verificación del modelo</span>: en esta etapa se efectúa la interpretación económica del modelo estimado y se realizan pruebas estadísticas. La fase de verificación tiene un papel muy importante dado que examina si la expresión cuantificada puede utilizarse adecuadamente con base en la teoría económica
+
+**<span style="color:blue">4.** <span style="color:blue">Predicción</span>: el modelo obtenido puede ser utilizado para la predicción y el desarrollo de muchas aplicaciones. Pueden surgir nuevos resultados teóricos, y generarse implicaciones de política económica a partir de las conclusiones del modelo 

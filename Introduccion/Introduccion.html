@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introducción y motivación al curso</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gustavo A. García   ggarci24@eafit.edu.co                  " />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introducción y motivación al curso
+### Gustavo A. García <br> <span class="notbold" style="font-size:65%"><a href="mailto:ggarci24@eafit.edu.co" class="email">ggarci24@eafit.edu.co</a></span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+### <span class="notbold" style="font-size:65%">Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+
+---
+
+
+
+
+&lt;style&gt;
+.my-logo-right {
+    content: "";
+    position: absolute;
+    left: 400px;
+    height: 400px;
+    width: 400px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("qr.png");
+}
+
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+&lt;font size = "5"&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+#&lt;div class="my-logo-right"&gt;&lt;/div&gt; 
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Introduccion/Introduccion.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Introduccion/Introduccion.pdf)
+
+---
+# &lt;span style="font-size:80%"&gt;En este tema&lt;/span&gt;
+
+- &lt;span style="font-size:150%"&gt;Qué es la econometría?&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt; Cuál es el objetivo de la econometría?&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt; La economía y el papel del modelo económico&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt; Expresando la relación económica e identificando la dirección&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt; El procedimiento econométrico&lt;/span&gt; 
+
+---
+# &lt;span style="font-size:80%"&gt;Qué es la econometría?&lt;/span&gt;
+&lt;font size = "5"&gt;
+- **&lt;span style="color:blue"&gt;Econometría&lt;/span&gt;**: "&lt;span style="color:blue"&gt;medición económica&lt;/span&gt;" `\(\Longrightarrow\)` El alcance de esta disciplina es mucho más amplio
+
+- **&lt;span style="color:blue"&gt;Tintner&lt;/span&gt;** (1968): la &lt;span style="color:blue"&gt;econometría&lt;/span&gt; consiste en la &lt;span style="color:blue"&gt;aplicación de la teoría económica matemática&lt;/span&gt; y de los &lt;span style="color:blue"&gt;métodos estadísticos&lt;/span&gt; a los &lt;span style="color:blue"&gt;datos económicos&lt;/span&gt; para establecer &lt;span style="color:blue"&gt;resultados numéricos y verificar los teoremas&lt;/span&gt;
+
+- **&lt;span style="color:blue"&gt;Samuelson&lt;/span&gt;** y **&lt;span style="color:blue"&gt;Koopmans&lt;/span&gt;** (1954): la econometría puede definirse como el &lt;span style="color:blue"&gt;análisis cuantitativo&lt;/span&gt; de fenómenos económicos reales, basados en el desarrollo simultáneo de la &lt;span style="color:blue"&gt;teoría&lt;/span&gt; y la &lt;span style="color:blue"&gt;observación&lt;/span&gt; , relacionados mediante &lt;span style="color:blue"&gt;métodos apropiados de inferencia&lt;/span&gt; 
+
+- **&lt;span style="color:blue"&gt;Haavelmo&lt;/span&gt;** (1944): el método de la investigación econométrica intenta, esencialmente, unir la &lt;span style="color:blue"&gt;teoría económica&lt;/span&gt; y las &lt;span style="color:blue"&gt;mediciones reales&lt;/span&gt; , empleando la &lt;span style="color:blue"&gt;teoría&lt;/span&gt;  y la &lt;span style="color:blue"&gt;técnica de la inferencia estadística&lt;/span&gt;  como un &lt;span style="color:blue"&gt;puente&lt;/span&gt; 
+
+&lt;p class="comment"&gt;
+La econometría es &lt;span style="color:blue"&gt;cuantitativa&lt;/span&gt;, tiene en cuenta la &lt;span style="color:blue"&gt;teoría económica&lt;/span&gt; y está en estrecho contacto con la &lt;span style="color:blue"&gt;realidad&lt;/span&gt;
+&lt;/p&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Cuál es el objetivo de la econometría?&lt;/span&gt;
+&lt;font size = "5"&gt;
+- El objetivo de la econometría es &lt;span style="color:blue"&gt;expresar la teoría económica&lt;/span&gt; en términos &lt;span style="color:blue"&gt;matemáticos&lt;/span&gt;, &lt;span style="color:blue"&gt;verificar dicha teoría por métodos estadísticos&lt;/span&gt;, medir el impacto de una variable sobre otra, predecir los sucesos futuros, o proveer recomendaciones de la política económica
+
+- Desarrollar métodos estadísticos que se utilizan para estimar relaciones económicas, probar teorías económicas y evaluar e implementar políticas públicas y de negocios
+
+---
+# &lt;span style="font-size:80%"&gt;La economía y el papel del modelo económico&lt;/span&gt;
+&lt;font size = "5"&gt;
+- La economía tiene una gran preocupación con las implicaciones de la &lt;span style="color:blue"&gt;escasez&lt;/span&gt; `\(\Longrightarrow\)` Se ha desarrollado una &lt;span style="color:blue"&gt;teoría general&lt;/span&gt; de la elección para explicar las decisiones de producción, localización y distribución: &lt;span style="color:blue"&gt;los consumidores maximizan la utilidad&lt;/span&gt; y &lt;span style="color:blue"&gt;las firmas el beneficio&lt;/span&gt;
+
+- Estas fuerzas sugieren relaciones entre variables económicas, por ejemplo:
+&lt;p style="margin-bottom: -0.5em"&gt;
+  - el nivel de consumo de una mercancía se encuentra relacionado al precio del propio bien, al precio de los bienes sustitutos y complementarios, y al nivel de ingreso
+&lt;p style="margin-bottom: -0.5em"&gt;  
+	- el nivel de producción de un bien se encuentra determinado por los insumos utilizados
+&lt;p style="margin-bottom: -0.5em"&gt;
+	- la futura oferta de un bien se encuentra determinada por su precio y el precio de los insumos
+&lt;p style="margin-bottom: -0.5em"&gt; 
+	- en macroeconomía el consumo agregado esta relacionado con el ingreso agregado
+&lt;p style="margin-bottom: -0.5em"&gt; 
+	- los cambios en la inversión están relacionados al nivel de las tasa de interés (real y esperadas)
+&lt;p style="margin-bottom: -0.5em"&gt; 
+	- el ingreso agregado esta relacionado al consumo agregado y a la inversión más el gasto del gobierno
+	
+---
+# &lt;span style="font-size:80%"&gt;La economía y el papel del modelo económico&lt;/span&gt;
+&lt;spam style="font-size:115%"&gt;
+
+- &lt;span style="color:blue"&gt;No sólo se sabe que existen tales relaciones, sino que también el modelo teórico nos puede decir las direcciones de estas relaciones&lt;/span&gt;, por ejemplo:
+&lt;p style="margin-bottom: -0.5em"&gt;
+ - cuando el precio de un bien incrementa `\(\Longrightarrow\)` la tasa de consumo disminuye
+&lt;p style="margin-bottom: -0.5em"&gt; 
+ - cuando el precio un sustituto incrementa `\(\Longrightarrow\)` la tasa de consumo del bien (normal) incrementa
+&lt;p style="margin-bottom: -0.5em"&gt;
+ - existe una relación positiva entre los insumos y el producto
+&lt;p style="margin-bottom: -0.5em"&gt; 
+ - existe una relación positiva entre el precio de un bien y la cantidad ofertada
+&lt;p style="margin-bottom: -0.5em"&gt; 
+ - cambios en la tasa de interés están negativamente relacionadas a cambios en la inversión
+&lt;p style="margin-bottom: -0.5em"&gt;
+ - relación consumo-ingreso: la propensión marginal a consumir es positiva y alrededor de 0.8
+
+- Este tipo de proposiciones proveen una forma de identificar y pensar sobre:
+&lt;p style="margin-bottom: -0.5em"&gt;
+ - &lt;span style="color:blue"&gt;relaciones&lt;/span&gt; entre variables económicas y la forma de hacer &lt;span style="color:blue"&gt;predicciones&lt;/span&gt; cuando cambian las condiciones
+&lt;p style="margin-bottom: -0.5em"&gt;
+ - &lt;span style="color:blue"&gt;pruebas de hipótesis&lt;/span&gt; sobre la dirección de la relación entre variables económicas o si la relación existe
+
+&lt;p class="comment"&gt;
+&lt;span style="color:blue"&gt;Los modelos económicos&lt;/span&gt; reflejan el conocimiento o conjeturas sobre las &lt;span style="color:blue"&gt;relaciones entre variables económicas&lt;/span&gt; (precios, cantidades, ingreso, etc) y proveen una base para &lt;span style="color:blue"&gt;clasificar las variables&lt;/span&gt; e &lt;span style="color:blue"&gt;indentificar hipótesis relevantes y testeables&lt;/span&gt;
+&lt;/p&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Expresando la relación económica e identificando la dirección&lt;/span&gt;
+&lt;spam style="font-size:130%"&gt;
+
+Es necesario una forma formal de expresar cualquier información que se tenga en términos a la relación entre variables económicas. Por ejemplo, para las variables de consumo agregado `\((c)\)` e ingreso `\((y)\)` se puede escribir:
+
+`$$c=f(y)$$`
+el consumo agregado es *alguna* función del ingreso
+
+Si nos centramos en un bien particular, por ejemplo un Audi, la relación puede expresarse de la siguiente forma:
+
+`$$q^{d}=f(p,p_{s},p_{c},y)$$`
+la cantidad de Audis demandados, `\(q^{d}\)`, es *alguna* función del precio del Audi, `\(p\)`, el precio de los carros que son sustitutos, `\(p_{s}\)`, el precio de los carros que son complementarios, `\(p_{c}\)`, y el nivel de ingreso, `\(y\)`
+
+Cada una de estas ecuaciones es un &lt;span style="color:blue"&gt;modelo económico específico&lt;/span&gt; que describe cómo nosotros &lt;span style="color:blue"&gt;visualizamos&lt;/span&gt; la forma en la cual las variables económicas están interrelacionadas
+
+---
+# &lt;span style="font-size:80%"&gt;Expresando la relación económica e identificando la dirección&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Los modelos económicos de este tipo &lt;span style="color:blue"&gt;guían el análisis económico&lt;/span&gt; y permiten alcanzar ciertas conclusiones, bajo diferentes escenarios, sobre lo que esta pasando en la economía
+
+- Para explicar el comportamiento de las variables económicas observadas, se empieza con el modelo económico que relfleja, como nosotros entendemos a las variables, la relación que hay detrás entre las variables económicas
+
+
+&lt;p class="comment"&gt;
+	Como plantea Trygve Magnus Haavelmo, el padre de la econometría: "&lt;span style="color:blue"&gt;It is not to be forgotten that they (theoretical economic model) are all our own invention in a search for an understanding of real life; they are not hidden truths to be discovered&lt;/span&gt;"
+&lt;/p&gt;
+
+	
+- Los modelos económicos no nos dicen si las hipótesis o predicciones son verdaderas o falsas `\(\Longrightarrow\)` ellos sólo nos dicen que, dados unos supuestos, si nosotros hacemos uso correctamente de las reglas de la lógica, ciertas conclusiones surgen
+
+---
+# &lt;span style="font-size:80%"&gt;Expresando la relación económica e identificando la dirección&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- En muchas decisiones económicas no es suficiente con saber que ciertas variables económicas están relacionadas `\(\Longrightarrow\)` &lt;span style="color:blue"&gt;es necesario saber la dirección de la relación y la magnitud involucrada&lt;/span&gt;
+
+- El modelo económico que expresa la relación entre variables económicas también involucra cuestiones respecto a los signos y magnitudes de &lt;span style="color:blue"&gt;parámetros desconocidos&lt;/span&gt;
+
+- El modelo económico que expresa la demanda por Audis podría ser especificado como: 
+
+`$$q^{d}=f(p,p_{s},p_{c},y; \beta_{1}, \beta_{2},...,\beta_{M})$$`
+donde los `\(\beta\)`s reflejan el parámetro desconocido y sin signo conectando las variables de precios e ingreso con la variable de cantidades
+
+---
+# &lt;span style="font-size:80%"&gt;El procedimiento econométrico&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+**&lt;span style="color:blue"&gt;1**. &lt;span style="color:blue"&gt;Especificación del modelo&lt;/span&gt;: consiste en usar la teoría, leyes o hipótesis particulares económicas, para investigar las relaciones entre variables y agentes de la economía
+
+**&lt;span style="color:blue"&gt;2.** &lt;span style="color:blue"&gt;Estimación del modelo&lt;/span&gt;: trata de la utilización de instrumentos auxiliares como las matemáticas y la estadística para estimar el modelo objetivo
+
+**&lt;span style="color:blue"&gt;3.** &lt;span style="color:blue"&gt;Verificación del modelo&lt;/span&gt;: en esta etapa se efectúa la interpretación económica del modelo estimado y se realizan pruebas estadísticas. La fase de verificación tiene un papel muy importante dado que examina si la expresión cuantificada puede utilizarse adecuadamente con base en la teoría económica
+
+**&lt;span style="color:blue"&gt;4.** &lt;span style="color:blue"&gt;Predicción&lt;/span&gt;: el modelo obtenido puede ser utilizado para la predicción y el desarrollo de muchas aplicaciones. Pueden surgir nuevos resultados teóricos, y generarse implicaciones de política económica a partir de las conclusiones del modelo 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
