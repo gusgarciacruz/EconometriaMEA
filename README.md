@@ -10,3 +10,5 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
 [Tema 1. Tipos de datos](https://gusgarciacruz.github.io/EconometriaMEA/Tema1/Tema1.html)
 
+[Tema 2. Probabilidad y distribución](https://gusgarciacruz.github.io/EconometriaMEA/Tema2/Tema2.html)
+
