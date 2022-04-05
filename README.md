@@ -14,3 +14,5 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
 [Tema 3. El modelo de regresión lineal simple (RLS)](https://gusgarciacruz.github.io/EconometriaMEA/Tema3/Tema3.html)
 
+[Tema 4. La inferencia en el modelo de regresión](https://gusgarciacruz.github.io/EconometriaMEA/Tema4/Tema4.html)
+
