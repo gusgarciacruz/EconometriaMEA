@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tema 4. La inferencia en el modelo de regresión</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gustavo A. García   ggarci24@eafit.edu.co                  " />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tema 4. La inferencia en el modelo de regresión
+### Gustavo A. García <br> <span class="notbold" style="font-size:65%"><a href="mailto:ggarci24@eafit.edu.co" class="email">ggarci24@eafit.edu.co</a></span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+### <span class="notbold" style="font-size:65%">Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+
+---
+
+
+
+
+&lt;style&gt;
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+&lt;font size = "5"&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Tema4/Tema4.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Tema4/Tema4.pdf)
+
+---
+# &lt;span style="font-size:80%"&gt;En este tema&lt;/span&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Introducción](#introduccion)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Pruebas de hipótesis](#ph)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Intervalos de confianza](#ic)&lt;/span&gt;&lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;La estrecha relación entre los intervalos de confianza y las pruebas de hipótesis](#relacion)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Ejercicio aplicado en R](#R)&lt;/span&gt;
+---
+# &lt;span style="font-size:80%"&gt;Lecturas&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Wooldridge, Jeffrey (2013). *Introducción a la econometría*. 5a edición, Cengage Learning. &lt;span style="color:blue"&gt;Cap. 4&lt;/span&gt;
+
+- Gujarati, D. y Porter, D. (2010). *Econometría*. 5a edición, Mc Graw Hill. &lt;span style="color:blue"&gt;Cap. 5&lt;/span&gt;
+
+---
+name: introduccion 
+# &lt;span style="font-size:80%"&gt;Introducción&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+El modelo de RLS presenta la siguiente estructura:
+
+`$$Y_{i} = \beta_{0} + \beta_{1} X_{i}+ u_{i}$$`
+
+En la estimación de los parámetros del modelo tenemos
+
+Parámetro   | Estimador        | Varianza estimada
+:----------:|:----------------:|:----------------:
+`\(\beta_{0}\)` | `\(\hat{\beta}_{0}=\bar{Y}-\widehat{\beta}_{1}\overline{X}\)` | `\(\hat{\sigma}_{\widehat{\beta}_{0}}^2=\frac{\widehat{\sigma}_{u}^2 \sum X_{i}^2}{n\sum x_{i}^2}\)`
+`\(\beta_{1}\)` | `\(\hat{\beta}_{1}=\frac{\sum (X_{i}-\overline{X})(Y_{i}-\overline{Y})}{\sum (X_{i}-\overline{X})^2}=\frac{\sum x_{i}y{i}}{\sum x_{i}^2}\)` | `\(\hat{\sigma}_{\hat{\beta}_{1}}^2=\frac{\hat{\sigma}_{u}^2}{\sum x_{i}^2}\)`
+`\(\sigma_{u}^2\)`    | `\(\hat{\sigma}_{u}^2=\frac{\sum{\hat{u}^2}}{n-2}\)` | -
+
+---
+# &lt;span style="font-size:80%"&gt;Introducción&lt;/span&gt;
+&lt;font size = "5"&gt;	
+
+- El método estadístico intenta decir cosas sobre &lt;span style="color:blue"&gt;los parámetros poblacionales&lt;/span&gt; con base en los &lt;span style="color:blue"&gt;estadísticos muestrales&lt;/span&gt;
+
+- En el caso del modelo de RLS, &lt;span style="color:blue"&gt;consiste en decir algo acerca de `\(\beta_{0}\)` y `\(\beta_{1}\)` con base en `\(\hat{\beta}_{0}\)` y `\(\hat{\beta}_{1}\)`&lt;/span&gt;
+
+- Lo anterior implica construir &lt;span style="color:blue"&gt;intervalos de confianza&lt;/span&gt; y &lt;span style="color:blue"&gt;pruebas de hipótesis&lt;/span&gt; para `\(\beta_{0}\)` y `\(\beta_{1}\)`
+
+---
+name: ph
+# &lt;span style="font-size:80%"&gt;Pruebas de hipótesis&lt;/span&gt;
+&lt;font size = "5"&gt;	
+
+- Ahora se quiere verificar estadísticamente una afirmación como la siguiente: `\(\beta_{1} = \beta_{10}\)`, esto es, verificar la hipótesis nula `\((H_{0})\)`: &lt;span style="color:blue"&gt; `\(H_{0}:\beta_{1} = \beta_{10}\)`
+
+- En estadística las &lt;span style="color:blue"&gt;hipótesis&lt;/span&gt; se &lt;/span&gt; &lt;span style="color:blue"&gt;rechazan&lt;/span&gt; o &lt;span style="color:blue"&gt;no se rechazan
+
+- Lo importante en la inferencia estadística es:
+	- suponer que `\(H_{0}\)` es cierta
+	- encontrar la distribución muestral bajo `\(H_{0}\)`
+	- observar la realidad bajo el supuesto de `\(H_{0}\)` cierta
+	- &lt;span style="color:blue"&gt;si lo observado es poco probable&lt;/span&gt; `\(\Longrightarrow\)` &lt;span style="color:blue"&gt;rechazar `\(H_{0}\)`&lt;/span&gt;&lt;br&gt;
+		&lt;span style="color:blue"&gt;si lo observado es probable&lt;/span&gt; `\(\Longrightarrow\)` &lt;span style="color:blue"&gt;no rechazar `\(H_{0}\)`&lt;/span&gt;
+
+- En consecuencia, las hipótesis nulas `\((H_{0})\)` que se verifican son del tipo &lt;span style="color:blue"&gt;igualdad a&lt;/span&gt;, ya que es bajo este supuesto que se dan las distribuciones muestrales conocidas
+
+- Cuando se esta bajo hipótesis nulas del tipo `\(&gt;\)`, `\(&lt;\)` o `\(\neq\)` se tienen otras distribuciones
+ 
+---
+# &lt;span style="font-size:80%"&gt;Pruebas de hipótesis&lt;/span&gt;
+&lt;font size = "5"&gt;	
+
+Tenemos que el método estadístico de toma de decisiones implica:
+- Formular una hipótesis nula (en términos de igualdad) y una hipótesis alternativa
+	
+	`$$H_{0}: \beta_{1} = \beta_{10}$$`
+`$$\begin{array}{cl}
+H_{A}: &amp;\beta_{1} &lt; \beta_{10} \text{ ó}\\
+       &amp;\beta_{1} \neq \beta_{10} \text{ ó}\\
+       &amp;\beta_{1} &gt; \beta_{10}
+\end{array}$$`
+
+- Hay que encontrar la distribución muestral del estadígrafo apropiado, bajo `\(H_{0}\)`
+	
+	`$$\text{Bajo } H_{0} \frac{\hat{\beta}_{1}-\beta_{10}}{\hat{\sigma}_{\widehat{\beta}_{1}}}\sim t_{N-2} \text{ gdl}$$`
+- Dado esto se define el nivel de significancia aceptable en la prueba `\((\epsilon)\)`
+
+---
+# &lt;span style="font-size:80%"&gt;Pruebas de hipótesis&lt;/span&gt;
+&lt;font size = "5"&gt;	
+
+- No se debe olvidar que cualquier decisión que se tome se hace en condiciones de incertidumbre:
+	
+&lt;img src="Error_tipo.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+- `\(Prob(\text{Cometer error tipo I})=\epsilon \Longrightarrow\)` Nivel de significancia
+
+- `\(1-Prob(\text{Cometer error tipo II}) \Longrightarrow\)` Potencia de la prueba
+
+---
+# &lt;span style="font-size:80%"&gt;Pruebas de hipótesis&lt;/span&gt;
+&lt;spam style="font-size:110%"&gt;
+
+La mecánica es
+- Se formula el contraste
+`$$H_{0}: \beta_{1} = \beta_{10}$$`
+`$$\begin{array}{cl}
+H_{A}: &amp;\beta_{1} &lt; \beta_{10} \text{ ó}\\
+       &amp;\beta_{1} \neq \beta_{10} \text{ ó}\\
+       &amp;\beta_{1} &gt; \beta_{10}
+\end{array}$$`
+	
+- Bajo `\(H_{0}\)` cierto el estadístico de prueba ($t_0$) será:
+
+`$$t_0 = \frac{\widehat{\beta}_{1}-\beta_{10}}{\widehat{\sigma}_{\widehat{\beta}_{1}}}\sim t_{N-2} \text{gdl}$$`
+- Se establece una regla de decisión en función de `\(H_{0}\)`:
+ - si `\(H_{A}: \beta_{1}&lt;\beta_{10} \Longrightarrow t_{0}=\frac{\widehat{\beta}_{1}-\beta_{10}}{\widehat{\sigma}_{\widehat{\beta}_{1}}} &lt; -t_{N-2} (\epsilon) \Longrightarrow\)` Rechazo `\(H_{0}\)`
+ - si `\(H_{A}: \beta_{1}\neq\beta_{10} \Longrightarrow |t_{0}|=\frac{\widehat{\beta}_{1}-\beta_{10}}{\widehat{\sigma}_{\widehat{\beta}_{1}}} &gt; t_{N-2} (\epsilon/2) \Longrightarrow\)` Rechazo `\(H_{0}\)`
+ - si `\(H_{A}: \beta_{1}&gt;\beta_{10} \Longrightarrow t_{0}=\frac{\widehat{\beta}_{1}-\beta_{10}}{\widehat{\sigma}_{\widehat{\beta}_{1}}} &gt; t_{N-2} (\epsilon) \Longrightarrow\)` Rechazo `\(H_{0}\)`
+ 
+---
+# &lt;span style="font-size:80%"&gt;Pruebas de hipótesis&lt;/span&gt;
+&lt;spam style="font-size:110%"&gt;
+
+- *&lt;span style="color:blue"&gt;p-value&lt;/span&gt;*: la probabilidad del límite derecho de `\(H_{0}\)` bajo el supuesto de que es cierta
+
+- La regla es rechazar `\(H_{0}\)` si
+	&lt;center&gt;
+	
+	*&lt;span style="color:blue"&gt;p-value&lt;/span&gt;* `\(&lt; \epsilon\)`
+	
+Donde el *p-value* `\((t_{0})=2(1-F(|t_{0}|,m))\)`, `\(m\)` son los grados de libertad
+	
+- Gráficamente sería:
+
+.pull-left-50[
+&lt;img src="sig1.png" width="150%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right-50[
+&lt;img src="sig2.png" width="150%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# &lt;span style="font-size:80%"&gt;Pruebas de hipótesis&lt;/span&gt;
+&lt;spam style="font-size:100%"&gt;
+
+- En el nivel de significancia `\((\epsilon)\)` se tiene el número mágico del 5%
+
+- &lt;span style="color:blue"&gt;Si es del tipo `\(H_{A}:\beta_{1}&lt;\beta_{10}\)`, se trata de una prueba con cola situada a la izquierda&lt;/span&gt;
+
+&lt;img src="sig3.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+- Con el uso del *p-value*:
+
+`$$\text{p-value} = \int_{-\infty}^{t_{0}} t_{N-2} dt$$`
+Esto es exactamente el nivel marginal de significancia en el cual se puede rechazar `\(H_{0}\)`. La regla de decisión sería:
+
+&lt;center&gt;
+Rechazar `\(H_{0}\)` si *p-value* `\(&lt;\epsilon\)`
+
+---
+# &lt;span style="font-size:80%"&gt;Pruebas de hipótesis&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- &lt;span style="color:blue"&gt;Si la hipótesis alternativa es del tipo `\(H_A:\beta_{1}\neq\beta_{10}\)`, se tiene una prueba de dos colas
+
+&lt;p style="margin-bottom: 2em"&gt;
+
+
+&lt;img src="sig4.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+- En términos del *p-value* la regla de decisión sería:
+
+&lt;center&gt;
+Rechazar `\(H_{0}\)` si *p-value* `\(&lt;\epsilon\)`
+
+---
+# &lt;span style="font-size:80%"&gt;Pruebas de hipótesis&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- &lt;span style="color:blue"&gt;Si la hipótesis alternativa es del tipo `\(H_A:\beta_{1}&gt;\beta_{10}\)`, se tiene una prueba con cola a la derecha
+
+&lt;p style="margin-bottom: 2em"&gt;
+
+
+&lt;img src="sig5.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+- En términos del *p-value* la regla de decisión sería:
+
+&lt;center&gt;
+Rechazar `\(H_{0}\)` si *p-value* `\(&lt;\epsilon\)`
+
+---
+name: ic
+# &lt;span style="font-size:80%"&gt;Intervalos de confianza&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+**Definición**&lt;br&gt;
+- Es la probabilidad de que dos valores extremos contengan el parámetro desconocido
+
+- Son unos límites probabilísticos que contienen al verdadero parámetro (en este caso `\(\beta_{1}\)`) con una probabilidad de `\(1-\epsilon\)` (nivel de confianza) 
+
+**Definición matemática**
+
+`$$Prob\left[ \widehat{\beta}_{1} - \widehat{\sigma}_{\widehat{\beta}_{1}}t_{N-2} (\epsilon/2) \leq \beta_{1} \leq \widehat{\beta}_{1} + \widehat{\sigma}_{\widehat{\beta}_{1}}t_{N-2} (\epsilon/2) \right] = 1-\epsilon$$`
+**Interpretación**
+
+- La probabilidad de que el intervalo que va desde `\(\widehat{\beta}_{1} - \widehat{\sigma}_{\widehat{\beta}_{1}}t_{N-2} (\epsilon/2)\)` hasta `\(\widehat{\beta}_{1} + \widehat{\sigma}_{\widehat{\beta}_{1}}t_{N-2} (\epsilon/2)\)` contenga el verdadero valor de `\(\beta_{1}\)` es `\(1-\epsilon\)`
+
+- El intervalo de confianza `\(\widehat{\beta}_{1} \pm \widehat{\sigma}_{\widehat{\beta}_{1}}t_{N-2} (\epsilon/2)\)` contiene a `\(\beta\)` con una probabilidad de `\(1-\epsilon\)`
+
+- En el `\((1-\epsilon)\%\)` de los casos el intervalo contendrá el parámetro `\(\beta_{1}\)`
+
+- `\(IC_{(1-\epsilon)} (\beta_{1}) = \widehat{\beta}_{1} \pm \widehat{\sigma}_{\widehat{\beta}_{1}}t_{N-2} (\epsilon/2)\)`\\
+	\hspace*{1.67cm}                     = \small{Estimador `\(\pm\)` Error de estimación (Valor t-student)}
+
+---
+name: relacion
+# &lt;span style="font-size:80%"&gt;La estrecha relación entre los intervalos de confianza y las pruebas de hipótesis&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Se rechaza la hipótesis nula `\(H_{0}: \beta_{1}=\beta_{10}\)` a un nivel de significancia `\(\epsilon\)`, cuando `\(\beta_{10}\)` cae por fuera del correspondiente `\(100(1-\epsilon)\%\)` intervalo de confianza
+
+- En nuestro ejemplo wage-educ, `\(\beta_{10}=0\)` no cae dentro del intervalo de confianza del 95% (0.436, 0.645), y por tanto, usando este enfoque, nosotros de nuevo rechazamos `\(H_{0}: \beta_{1}=0\)` a un nivel de significancia del 5%
+
+- &lt;span style="color:blue"&gt;De hecho, se rechaza cualquier hipótesis nula donde `\(\beta_{10}\)` no esta contenido en el intervalo de confianza (0.436, 0.645)
+
+- Por otro lado, &lt;span style="color:blue"&gt;Si el IC(95%) contiene el cero, `\(\beta_{1}\)` no es significativo al 5%
+
+---
+name: R
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Se tiene una base de datos de corte transversal de 526 trabajadores correspondientes a 1976 para los Estados unidos. `\(wage\)` son los salarios en dólares por hora y `\(educ\)` los años de educación. Se desea estimar el siguiente modelo:
+
+`$$wage = \beta_{0} + \beta_{1}educ + u$$`
+
+```r
+library(haven); library(summarytools); library(Hmisc); library(tidyverse)
+data &lt;- read_stata("http://fmwww.bc.edu/ec-p/data/wooldridge/wage1.dta")
+# Descripción de la base de datos: http://fmwww.bc.edu/ec-p/data/wooldridge/wage1.des
+names(data)
+```
+
+```
+ [1] "wage"     "educ"     "exper"    "tenure"   "nonwhite" "female"  
+ [7] "married"  "numdep"   "smsa"     "northcen" "south"    "west"    
+[13] "construc" "ndurman"  "trcommpu" "trade"    "services" "profserv"
+[19] "profocc"  "clerocc"  "servocc"  "lwage"    "expersq"  "tenursq" 
+```
+
+```r
+descr(data[,c("educ","wage")], stats = "common", transpose = TRUE, headings  = FALSE)
+```
+
+```
+
+             Media   Dev.std.    Min   Mediana     Max   Num.Válido   Pct.Válido
+---------- ------- ---------- ------ --------- ------- ------------ ------------
+      educ   12.56       2.77   0.00     12.00   18.00       526.00       100.00
+      wage    5.90       3.69   0.53      4.65   24.98       526.00       100.00
+```
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+st_options(lang = "es", footnote=NA, headings = FALSE)
+print(dfSummary(data[,c("educ","wage")], valid.col = FALSE, silent=FALSE), method = "render", varnumbers=F)
+```
+
+<div class="container st-container"><table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
+  <thead>
+    <tr>
+      <th align="center" class="st-protect-top-border"><strong>Variable</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Estad&#0237;sticas / Valores</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Frec. (% sobre v&#0225;lidos)</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Gr&#0225;fico</strong></th>
+      <th align="center" class="st-protect-top-border"><strong>Perdidos</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">educ
+[numeric]</td>
+      <td align="left">Media (d-s) : 12.6 (2.8)
+min < mediana < max:
+0 < 12 < 18
+RI (CV) : 2 (0.2)</td>
+      <td align="left" style="vertical-align:middle">18 valores distintos</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gQFAjMK2a1cjQAAAIlJREFUaN7t2MENgCAMheGuIBtoN9D9d/MgPdCkRksPxvzvQgLhIySlB0RIJsujtK0nWH+HHVd2MDAwMDAwMDAwMDAwMDAwMLBPY/1LaC3B+uj/maYwdbcGAwMDA0tj1p9LMB0RsD9jVjklmE3fY3ZkCabBLjCwCqyNxZrEXH/OYcG7mcPmIiSTE6d3yV8zRDG7AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA0LTA1VDAyOjUxOjEwKzAwOjAwg54NLwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNC0wNVQwMjo1MToxMCswMDowMPLDtZMAAAAASUVORK5CYII="></td>
+      <td align="center">0
+(0.0%)</td>
+    </tr>
+    <tr>
+      <td align="left">wage
+[numeric]</td>
+      <td align="left">Media (d-s) : 5.9 (3.7)
+min < mediana < max:
+0.5 < 4.7 < 25
+RI (CV) : 3.6 (0.6)</td>
+      <td align="left" style="vertical-align:middle">241 valores distintos</td>
+      <td align="left" style="vertical-align:middle;padding:0;background-color:transparent"><img style="border:none;background-color:transparent;padding:0" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gQFAjMLrqpsGwAAAJFJREFUaN7t1k0KgCAQQGGvYDfIbpD3v1toC3+ScEahovcWQYu+hIEaY0iTDS0utFp1BeZDYGBgYGBgYGBgYH3YwC56xTb98cDAwMDAwP6JxT+xm4TFyw4GBvZOTLp432Je+DUCAwMDA3sec6lxLLvvxM43T8LaD38HS1NoD0SEJbF9Ujnmq5NmO0QxzdEMaToA0ZGRrCJmiFwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMDQtMDVUMDI6NTE6MTArMDA6MDCDng0vAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTA0LTA1VDAyOjUxOjExKzAwOjAwVLS+JwAAAABJRU5ErkJggg=="></td>
+      <td align="center">0
+(0.0%)</td>
+    </tr>
+  </tbody>
+</table></div>
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+# Correlaciones
+cor(data[,c("wage","educ")])
+```
+
+```
+          wage      educ
+wage 1.0000000 0.4059033
+educ 0.4059033 1.0000000
+```
+
+```r
+# Correlaciones con significancia estadística
+rcorr(as.matrix(data[,c("wage","educ")]))
+```
+
+```
+     wage educ
+wage 1.00 0.41
+educ 0.41 1.00
+
+n= 526 
+
+
+P
+     wage educ
+wage       0  
+educ  0       
+```
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+# Densidades de los salarios
+ggplot(data, aes(x=wage)) + 
+  geom_density(fill="lightblue")
+```
+
+&lt;img src="Tema4_files/figure-html/unnamed-chunk-10-1.png" width="864" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+# Densidades de los salarios por género
+data &lt;- data |&gt; mutate(sex = case_when(female==1~"F", female==0~"M"))
+ggplot(data, aes(x=wage, fill=sex)) + geom_density(alpha=0.3) +
+  scale_fill_manual(name="Género", labels = c("Mujer", "Hombre"),values=c("red","blue")) + labs(x= "Salario", y="Densidad") 
+```
+
+&lt;img src="Tema4_files/figure-html/unnamed-chunk-11-1.png" width="864" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+plot(data$wage~data$educ)
+```
+
+&lt;img src="Tema4_files/figure-html/unnamed-chunk-12-1.png" width="864" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+ggplot(data, aes(x=educ, y=wage)) + 
+  geom_point()
+```
+
+&lt;img src="Tema4_files/figure-html/unnamed-chunk-13-1.png" width="864" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+ggplot(data, aes(x=educ, y=wage)) + 
+  geom_point(alpha=0.5, color="red", size=2) + geom_smooth(formula=y~x, method=lm, linetype="dashed", color="blue") +
+  labs(x= "Educación", y="Salario hora") + scale_x_continuous(breaks = seq(0, 18, by = 2))
+```
+
+&lt;img src="Tema4_files/figure-html/unnamed-chunk-14-1.png" width="864" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+# El modelo de regresión
+modelo &lt;- lm(wage~educ, data=data)
+summary(modelo)
+```
+
+```
+
+Call:
+lm(formula = wage ~ educ, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.3396 -2.1501 -0.9674  1.1921 16.6085 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.90485    0.68497  -1.321    0.187    
+educ         0.54136    0.05325  10.167   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.378 on 524 degrees of freedom
+Multiple R-squared:  0.1648,	Adjusted R-squared:  0.1632 
+F-statistic: 103.4 on 1 and 524 DF,  p-value: &lt; 2.2e-16
+```
+
+```r
+# Intervalos de confianza
+confint(modelo, level = 0.95)
+```
+
+```
+                 2.5 %    97.5 %
+(Intercept) -2.2504719 0.4407687
+educ         0.4367534 0.6459651
+```
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+
+```r
+freq(data$female, headings = F)
+```
+
+```
+
+              Frec.   % Válido   % Válido acu.   % Total   % Total acu.
+----------- ------- ---------- --------------- --------- --------------
+          0     274      52.09           52.09     52.09          52.09
+          1     252      47.91          100.00     47.91         100.00
+       &lt;NA&gt;       0                                 0.00         100.00
+      Total     526     100.00          100.00    100.00         100.00
+```
+
+
+.pull-left-50[
+
+```r
+# El modelo de regresión para mujeres
+modelo_f &lt;- lm(wage~educ, data=subset(data,female==1))
+summary(modelo_f)
+```
+
+```
+
+Call:
+lm(formula = wage ~ educ, data = subset(data, female == 1))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.9137 -1.3212 -0.6352  0.6474 14.4654 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.99803    0.72851   -1.37    0.172    
+educ         0.45348    0.05799    7.82 1.48e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.272 on 250 degrees of freedom
+Multiple R-squared:  0.1965,	Adjusted R-squared:  0.1933 
+F-statistic: 61.15 on 1 and 250 DF,  p-value: 1.482e-13
+```
+]
+
+.pull-right-50[
+
+```r
+# El modelo de regresión para hombres
+modelo_m &lt;- lm(wage~educ, data=subset(data,female==0))
+summary(modelo_m)
+```
+
+```
+
+Call:
+lm(formula = wage ~ educ, data = subset(data, female == 0))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.1611 -2.7532 -0.7192  1.7725 15.5258 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.20050    1.01646   0.197    0.844    
+educ         0.53948    0.07739   6.971 2.38e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.84 on 272 degrees of freedom
+Multiple R-squared:  0.1516,	Adjusted R-squared:  0.1485 
+F-statistic:  48.6 on 1 and 272 DF,  p-value: 2.378e-11
+```
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
