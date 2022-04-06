@@ -22,3 +22,5 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
 [Tema 6. Formas funcionales del modelo de RLM y variables binarias o *dummies*](https://gusgarciacruz.github.io/EconometriaMEA/Tema6/Tema6.html)
 
+[Taller 1](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/Taller1.html) ([PDF](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/Taller1.pdf))
+
