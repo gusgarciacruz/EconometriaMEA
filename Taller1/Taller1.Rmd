@@ -1,0 +1,145 @@
+---
+title: "Taller 1"
+author: 
+date: <span style="font-size:65%" class='notbold'>Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+  
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+options(width = 70)
+knitr::opts_chunk$set(
+  dev.args = list(bg = 'transparent'),
+  fig.width = 12, message = TRUE,
+  warning = FALSE, comment = "", cache = TRUE, fig.retina = 3
+)
+knitr::opts_knit$set(global.par = TRUE)
+Sys.setenv(`_R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_` = "false")
+# remotes::install_github("luukvdmeer/sfnetworks")
+# remotes::install_github("EvaMaeRey/flipbookr")
+# remotes::install_github("rlesur/klippy")
+# devtools::install_github("gadenbuie/xaringanExtra")
+library(flipbookr)
+library(xaringanthemer)
+library(tidyverse)
+library(klippy)
+library(xaringanExtra)
+library(gt); library(knitr); library(kableExtra); library(tibble)
+library(summarytools); library(qrcode)
+```
+
+<style>
+.notbold{
+  font-weight:normal
+}
+
+body {
+  text-align: justify;
+}
+
+h1{
+  margin-top: -1px;
+  margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+  background-color: #E1E1FF;
+    padding: 10px;
+  border: 1px solid white;
+  margin-left: 25px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.my-footer1 {
+    background-color: white;
+    color: blue;
+    font-size: 0.7em;
+    opacity: 0.5;
+    position: absolute;
+    bottom: 0cm;
+    left: 0.3cm;
+    height: 27px;
+    width: 50%;
+    float: left;
+}
+
+.my-footer2 {
+    background-color: white;
+    color: blue;
+    font-size: 0.7em;
+    opacity: 0.5;
+    position: absolute;
+    bottom: 0px;
+    right: -7.1cm;
+    height: 27px;
+    width: 50%;
+    float: right;
+}
+</style>
+  
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+```{r xaringanExtra-clipboard, echo=FALSE}
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+```
+
+```{r xaringan-extra-styles, echo=FALSE}
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+```
+
+# <span style="font-size:80%">Taller 1</span>
+
+<div class="my-footer1"><span>Econometría para la toma de deciciones - Maestría en Economía Aplicada - Universidad EAFIT - 2022-I</span></div> 
+
+<div class="my-footer2"><span>Prof.: Gustavo A. García (ggarci24@eafit.edu.co)</span></div> 
+
+<font size = "3">
+  
+Se tiene información de directores generales (CEO) sobre salario anual en miles de dólares $(salary)$, valor de mercado de la empresa en millones de dólares $(mktval)$, y años en la compañía del CEO $(comten)$ (en los archivos [ceosal_1.xlsx](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/ceosal_1.xlsx) y [ceosal_2.xlsx](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/ceosal_2.xlsx) están los datos). Se pide:
+
+- Pegue las bases de datos utilizando como llave la variable id de los CEO $(id)$. Cree una nueva variable $(ceo\_senior)$ donde 1 es un trabajador senior (30 a 58 años en la compañía) y 0 no senior (menos de 29 años en la compañía). Calcule las principales estadísticas descriptivas y las densidades de los salarios de los CEO distinguiendo por senior y no senior. Interprete los resultados y dé una explicación a las diferencias en salarios por tipo de CEO
+
+- Construya las variables $salary$ y $mktval$ en logaritmos: $ln(salary)$ y $ln(mktval)$. Calcule la correlación entre estas dos variables. Realice un scatter plot con la línea de regresión entre estas dos variables. Interprete los resultados con sentido económico
+
+- Estime un modelo de RLS de $ln(salary)$ en función de $ln(mktval)$ distinguiendo por tipo de trabajador senior o no. Para cada modelo interprete el coeficiente de la pendiente (con sentido económico, ayuda: leer sección 6.4 del libro de Gujarati y Portes) y su significancia estadística. A qué se deben las diferencias en los efectos de $mktval$ sobre los salarios cuando se distingue por la experiencia del CEO
+
+- Un miembro del comité directivo de la empresa plantea que los CEO senior tienen remuneraciones muy altas y esto se debe a que estos ejecutivos son lo que más ganan cuando el valor de mercado de la empresa incrementa. El miembro del comité directivo plantea que por un incremento en 1% en el valor de la empresa, los salarios de los CEO suben un 0.5%. ¿El modelo econométrico estimado soporta esta hipótesis? Use un nivel de significancia del 5% 
+
+- Pruebe la hipótesis que la elasticidad de los salarios de los CEO no senior respecto al valor de la empresa es mayor que 0.2%. Recuerde plantear la $H_{0}$, $H_{A}$, el estadístico de prueba y la regla de decisión
+
+- Estime un nuevo modelo en el que tanto la variable dependiente como la independiente se encuentren en niveles y prediga el salario de los CEO senior, si el valor de la empresa fuera de 5000 millones de dólares   
+
+
