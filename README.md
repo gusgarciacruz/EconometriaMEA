@@ -18,7 +18,7 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
 [Tema 4. La inferencia en el modelo de regresión](https://gusgarciacruz.github.io/EconometriaMEA/Tema4/Tema4.html)
 
-[Tema 5. El modelo de Regresión Lineal Múltiple (RLM)](https://gusgarciacruz.github.io/EconometriaMEA/Tema5/Tema5.html)
+[Tema 5. El modelo de regresión lineal múltiple (RLM)](https://gusgarciacruz.github.io/EconometriaMEA/Tema5/Tema5.html)
 
 [Tema 6. Formas funcionales del modelo de RLM y variables binarias o *dummies*](https://gusgarciacruz.github.io/EconometriaMEA/Tema6/Tema6.html)
 
