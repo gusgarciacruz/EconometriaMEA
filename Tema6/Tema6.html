@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tema 6. Formas funcionales del modelo de RLM y variables binarias o dummies</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gustavo A. García   ggarci24@eafit.edu.co                  " />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tema 6. Formas funcionales del modelo de RLM y variables binarias o <em>dummies</em>
+### Gustavo A. García <br> <span class="notbold" style="font-size:65%"><a href="mailto:ggarci24@eafit.edu.co" class="email">ggarci24@eafit.edu.co</a></span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+### <span class="notbold" style="font-size:65%">Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+
+---
+
+
+
+
+&lt;style&gt;
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+&lt;font size = "5"&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Tema6/Tema6.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Tema6/Tema6.pdf)
+
+---
+# &lt;span style="font-size:80%"&gt;En este tema&lt;/span&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Formas funcionales del modelo de RLM](#formas)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Variables binarias o *dummies*](#dummies)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Modelación de factores y categorías](#factores)&lt;/span&gt; &lt;br&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Ejercicio aplicado en R](#r)&lt;/span&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Lecturas&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Wooldridge, Jeffrey (2013). *Introducción a la econometría*. 5a edición, Cengage Learning. &lt;span style="color:blue"&gt;Cap. 2.4, 6, 7&lt;/span&gt;
+
+- Gujarati, D. y Porter, D. (2010). *Econometría*. 5a edición, Mc Graw Hill. &lt;span style="color:blue"&gt;Cap. 6 y 9&lt;/span&gt;
+
+---
+name: formas
+# &lt;span style="font-size:80%"&gt;Formas funcionales del modelo de RLM&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;img src="Formasfun.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+name: dummies
+# &lt;span style="font-size:80%"&gt;Variables binarias o *dummies*: conceptualización general&lt;/span&gt;
+
+- La inclusión de variables binarias (también llamadas *dummy* o falsas) en los modelos de regresión, obedece a la necesidad de &lt;span style="color:blue"&gt;incorporar factores de naturaleza cualitativa&lt;/span&gt; que se traducen en cambios paramétricos. Uno de estos cambios puede ser:
+
+  - La ecuación de Mincer o de ingresos laborales puede ser para hombres y mujeres (diferencias en el salario de reserva por discriminación) y el log del ingreso mínimo (o intercepto) puede ser diferente para cada género
+	- La demanda por carne puede variar según los grupos religiosos, las elasticidades precio e ingreso de cada grupo pueden ser diferentes
+	- Un cambio estructural en el tiempo puede ser el resultado de un factor cualitativo que induce el cambio paramétrico
+
+- Si se piensa en la función de consumo para Colombia de 1950 a 2000, es intuitivo afirmar que debido a migración campo-ciudad, transición demográfica o modernización del aparato financiero, la función de consumo de 1950 a 1970 no debe ser la misma que la correspondiente de 1971 a 2000
+
+- El consumo autónomo (intercepto) y la propensión marginal a consumir (la pendiente) de los dos períodos puede haber cambiado. Igual sucedería con los parámetros de la función de importaciones antes y después de la apertura económica en 1990
+
+---
+# &lt;span style="font-size:80%"&gt;Variables binarias o *dummies*: conceptualización general&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- La forma de incluir estos factores cualitativos es usando una variables que sólo tomen el valor 0 y 1, y se denominan falsas, dicótomas binarias o *dummies* `\(\Longrightarrow\)` &lt;span style="color:blue"&gt;variables indiciadores&lt;/span&gt;
+
+- La escogencia de 0 y 1 no es arbitraria, proviene de la esencia del conteo. Cuando se esta contando algo, se suma 1 si ese algo esta y se suma 0 si ese algo no esta
+
+$$
+\mbox{se puede asociar}=
+`\begin{cases}
+0
+&amp; \text{Ausencia}\\
+1 &amp; \text{Presencia}
+\end{cases}`
+$$
+
+- Otro par de números (3 y 7 por ejemplo) no servirían para lo mismo, lo que puede ser arbitrario es la asignación del 0 y el 1
+
+- Cuando se usan variables binarias en los modelos se producen cambios en
+
+ - el intercepto
+ - la pendiente
+ - intercepto y pendiente
+ 
+---
+name: factores
+# &lt;span style="font-size:80%"&gt;Modelación de factores y categorías&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**
+
+Supóngase que se quiere incorporar al modelo de Mincer (ecuación salarial) el factor cualitativo género. Existen tres posibilidades según el efecto que se quiere modelar
+- cambio en el intercepto (en el log del salario mínimo)
+- cambio en la pendiente (en la tasa de retorno de la educación)
+- cambio de ambos, intercepto y pendiente
+
+Lo que se intenta incorporar es una hipótesis de diferenciación por género en la ecuación de ingresos. Se define una variable binaria de la forma
+
+$$
+bsexo_{i} =
+`\begin{cases}
+ 0 &amp; \text{hombre} \\
+  1 &amp; \text{mujer}
+\end{cases}`
+$$
+
+---
+# &lt;span style="font-size:80%"&gt;Modelación de factores y categorías&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**
+
+**&lt;span style="color:blue"&gt;1.&lt;/span&gt;** Cambio en el intercepto&lt;br&gt;
+Sea `\(lwage_{i}=\)` log de los salarios y `\(Educ_{i2}=\)` Años de educación aprobados
+	
+En el modelo `\(lwage_{i}= \beta_{1} + \beta_{2}Educ_{i} + u_{i}\)`
+	
+`\(\beta_{1}:\)` log tasa de salario mínima&lt;br&gt;
+`\(\beta_{2}:\)` tasa de retorno de la educación&lt;br&gt;
+`\(u_{i}:\)` perturbación aleatoria con supuestos estándar
+	
+Al incorporar la variable binaria de género se tendría
+
+`$$lwage_{i} = \beta_{1} + \beta_{2}Educ_{i} + \beta_{3}bsexo_{i} + u_{i}$$`
+
+	
+Es como si el modelo se convirtiese en dos submodelos
+
+Mujeres `\((bsexo_{i}=1)\Longrightarrow lwage_{i} = (\beta_{1}+\beta_{3}) + \beta_{2}Educ_{i} + u_{i}\)`&lt;br&gt;
+Hombres `\((bsexo_{i}=0\Longrightarrow lwage_{i} = \beta_{1} + \beta_{2}Educ_{i} + u_{i}\)`
+
+En esta situación&lt;br&gt;
+`\(\beta_{1}:\)` log de la tasa salaria mínima de los hombres&lt;br&gt;
+`\(\beta_{3}:\)` cambio en log de la tasa salarial mínima de las mujeres respecto a los hombres&lt;br&gt;
+`\(\beta_{1}+\beta_{3}:\)` log de la tasa salarial mínima de las mujeres
+
+---
+# &lt;span style="font-size:80%"&gt;Modelación de factores y categorías&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**
+
+**&lt;span style="color:blue"&gt;1.&lt;/span&gt;** Cambio en el intercepto&lt;br&gt;
+
+Gráficamente tenemos
+
+&lt;img src="Caminterc1.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+Lo que se esta modelando es un cambio en el intercepto manteniendo constante la pendiente
+
+Lo que se hizo fue conservar el intercepto `\((\beta_{1})\)` y agregar una variable falsa `\((bsexo_{i})\)`
+
+---
+# &lt;span style="font-size:80%"&gt;Modelación de factores y categorías&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**
+
+**&lt;span style="color:blue"&gt;1.&lt;/span&gt;** Cambio en el intercepto&lt;br&gt;
+
+Alternativamente se puede eliminar el intercepto e incluir dos variables binarias
+
+.pull-left[
+$$
+bmujer_{i} =
+`\begin{cases}
+0 &amp; \text{Hombre} \\\
+1 &amp; \text{Mujer}
+\end{cases}`
+$$ 
+]
+
+.pull-right[
+$$
+bhombre_{i} =
+`\begin{cases}
+0
+&amp; \text{Mujer} \\
+1 &amp; \text{Hombre}
+\end{cases}`
+$$
+]
+
+&lt;br&gt;
+Observe que `\(bhombre_{i}+bmujer_{i}=1\)`	
+
+El modelo queda de la forma
+
+`$$lwage_{i} = \gamma_{2}Educ_{i2}+\gamma_{3}bhombre_{i}+\gamma_{4}bmujer_{i}+u_{i}$$`
+Nuevamente se tienen dos modelos&lt;br&gt;
+Mujeres `\((bhombre_{i}=0, bmujer_{i}=1)\Longrightarrow lwage_{i} = \gamma_{4} + \gamma_{2}Educ_{i2} + u_{i}\)`&lt;br&gt;
+Hombres `\((bhombre_{i}=1, bmujer_{i}=0)\Longrightarrow lwage_{i} = \gamma_{3} + \gamma_{2}Educ_{i2} + u_{i}\)`
+	
+En esta situación\\
+`\(\gamma_{2}:\)` tasa de retorno de la educación, se supone igual para hombres y mujeres&lt;br&gt;
+`\(\gamma_{3}:\)` log de la tasa salarial mínima para hombres&lt;br&gt;
+`\(\gamma_{4}:\)` log de la tasa salarial mínima para mujeres&lt;br&gt;
+`\(\gamma_{4}-\gamma_{3}:\)` diferencial del log de la tasa mínima de salario de mujeres frente a hombres
+
+---
+# &lt;span style="font-size:80%"&gt;Modelación de factores y categorías&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**
+&lt;p style="margin-bottom: -0.5em"&gt;
+**&lt;span style="color:blue"&gt;1.&lt;/span&gt;** Cambio en el intercepto&lt;br&gt;
+Qué sucede si se utilizan las dos opciones anteriores al mismo tiempo:  conservar el intercepto e incluir las dos variables binarias
+&lt;p style="margin-bottom: -1em"&gt;
+`$$lwage_{i} = \gamma_{1} + \gamma_{2}Educ_{i} + \gamma_{3}bhombre_{i} + \gamma_{4}bmujer_{i} + u_{i}$$`
+La matriz `\(\textbf{X}\)` del modelo tendría la siguiente estructura (suponemos primero mujeres `\((M)\)` y después hombres `\((N-M)\)`)
+
+$$ \textbf{X}\_{N\mbox{x}4} = \left[ \begin{array}{cccc} 
+1      &amp; Educ\_{1}   &amp; 0      &amp; 1   \\\
+1      &amp; \vdots      &amp; 0      &amp; 1 \\\
+1      &amp; Educ\_{M}   &amp; 0      &amp; 1 \\\
+\ldots &amp; \ldots      &amp; \ldots &amp; \ldots \\\
+1      &amp; Educ\_{M+1} &amp; 1      &amp; 0 \\\
+1      &amp; \vdots      &amp; 1      &amp; 0 \\\
+1      &amp; Educ\_{N}   &amp; 1      &amp; 0 \\\
+\end{array}\right]$$ 
+&lt;p style="margin-bottom: -1em"&gt;
+Se observa que Col(1)=Col(3)+Col(4), lo cual implica que rango de la matriz `\(\textbf{X}\)` no es de 4 sino de 3, así que hay un problema de &lt;span style="color:blue"&gt;multicolinealidad perfecta&lt;/span&gt;:
+
+`$$(X'X)_{4\mbox{x}4} \mbox{ es singular}$$`
+`$$(X'X)_{4\mbox{x}4}^{-1} \mbox{ no existe}$$`
+Este caso se conoce como **&lt;span style="color:blue"&gt;la trampa de las variables *dummies*&lt;/span&gt;**
+
+---
+# &lt;span style="font-size:80%"&gt;Modelación de factores y categorías&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**
+
+**&lt;span style="color:blue"&gt;2.&lt;/span&gt;** Cambio en pendiente&lt;br&gt;
+La manera de incorporar cambios en la pendiente es agregar el producto de la variable binaria por la correspondiente variable explicativa. Por ejemplo, modelando diferentes tasas de retornos a la educación por género, el modelo queda de la forma:
+
+`$$lwage_{i}=\beta_{1}+\beta_{2}Educ_{i}+\beta_{3}Educ_{i}bsexo_{i}+u_{i}$$`
+Nuevamente es un modelo que contiene dos&lt;br&gt;
+Hombres `\((bsexo_{i}=0)\Longrightarrow lwage_{i} = \beta_{1} + \beta_{2}Educ_{i} + u_{i}\)`&lt;br&gt;
+Mujeres `\((bsexo_{i}=1)\Longrightarrow lwage_{i} = \beta_{1} + (\beta_{2}+\beta_{3})Educ_{i} + u_{i}\)`
+	
+En esta situación&lt;br&gt;
+`\(\beta_{1}:\)` log de la tasa salarial mínima, se supone igual para hombres y mujeres&lt;br&gt;
+`\(\beta_{2}:\)` tasa de retorno de la educación de las mujeres&lt;br&gt;
+`\(\beta_{3}:\)` cambio en la tasa de retorno de la educación de hombres respecto a mujeres&lt;br&gt;
+`\(\beta_{2}+\beta_{3}:\)` tasa de retorno de la educación de los hombres
+
+---
+# &lt;span style="font-size:80%"&gt;Modelación de factores y categorías&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**
+
+**&lt;span style="color:blue"&gt;3.&lt;/span&gt;** Cambio en el intercepto y la pendiente&lt;br&gt;
+
+La intuición indica que se debe reunir los dos casos anteriores: agregar una variable binaria (o eliminar el intercepto y agregar dos binarias) y la binaria multiplicada por la variable independiente. El modelo queda de la forma:
+	
+`$$lwage_{i}=\beta_{1}+\beta_{2}Educ_{i}+\beta_{3}bsexo_{i}+\beta_{4}Educ_{i}bsexo_{i}+u_{i}$$`
+Hombres `\((bsexo_{i}=0)\Longrightarrow Y_{i} = \beta_{1} + \beta_{2}X_{i2} + u_{i}\)`&lt;br&gt;
+Mujeres `\((bsexo_{i}=1)\Longrightarrow Y_{i} = (\beta_{1}+\beta_{3}) + (\beta_{2}+\beta_{4})X_{i2} + u_{i}\)`	
+	
+En esta situación&lt;br&gt;
+`\(\beta_{1}:\)` log de la tasa salarial mínima de las mujeres&lt;br&gt;
+`\(\beta_{2}:\)` tasa de retorno de la educación de las mujeres&lt;br&gt;
+`\(\beta_{3}:\)` cambio en log de la tasa salarial mínima de hombres respecto a mujeres&lt;br&gt;
+`\(\beta_{4}:\)` cambio en la tasa de retorno de la educación de hombres respecto a mujeres&lt;br&gt;
+`\(\beta_{1}+\beta_{3}:\)` log de la tasa salarial mínima de los hombres&lt;br&gt;
+`\(\beta_{2}+\beta_{4}:\)` Tasa de retorno de la educación de los hombres
+
+&lt;span style="color:blue"&gt;El modelo conjunto es equivalente a estimar dos regresiones por separado
+
+---
+# &lt;span style="font-size:80%"&gt;Modelación de factores y categorías&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;ii. Un factor varias categorías&lt;/span&gt;**&lt;br&gt;
+Se tienen tres niveles educatiovs, así que se definen las siguientes variables binarias
+
+.pull-left[
+$$
+bpri_{i} =
+`\begin{cases}
+1 &amp; \text{primaria } \\\
+0 &amp; \text{otro caso } 
+\end{cases}`
+$$ 
+]
+
+.pull-left[
+$$
+bsec_{i} =
+`\begin{cases}
+1 &amp; \text{secundaria } \\
+0 &amp; \text{otro caso }
+\end{cases}`
+$$
+]
+
+.pull-left[
+$$
+bsup_{i} =
+`\begin{cases}
+1 &amp; \text{superior } \\
+0 &amp; \text{otro caso }
+\end{cases}`
+$$
+]
+
+En el modelo de RLM se conserva el intercepto y al haber 3 categorías se incluyen 2 variables binarias. La categoría a la cual no se le incluye la variable binaria se vuelve el patrón de referencia del modelo. El modelo queda de la forma: 
+
+`$$lwage_{i}=\beta_{1}+\beta_{2}Exper_{i}+\beta_{3}bsec_{i}+\beta_{4}bsup_{i}+u_{i}$$`
+El modelo incluye 3 submodelos:&lt;br&gt;
+Secundaria `\((bsec_{i}=1, bsup_{i}=0)\Longrightarrow lwage_{i} = (\beta_{1}+\beta_{3}) + \beta_{2}Exper_{i} + u_{i}\)`&lt;br&gt;
+Superior `\((bsec_{i}=0, bsup_{i}=1)\Longrightarrow lwage_{i} = (\beta_{1}+\beta_{4}) + \beta_{2}Exper_{i2} + u_{i}\)`&lt;br&gt;
+Primaria `\((bsec_{i}=0, bsup_{i}=0)\Longrightarrow lwage_{i} = \beta_{1} + \beta_{2}Exper_{i2} + u_{i}\)`	
+	
+En esta situación&lt;br&gt;
+`\(\beta_{1}:\)` log de la tasa salarial mínima de los individuos con primaria&lt;br&gt;
+`\(\beta_{2}:\)` tasa de retorno de la experiencia, asumida igual independiente del nivel educativo&lt;br&gt;
+`\(\beta_{3}:\)` diferencia en log de la tasa salarial mínima de individuos con secundaria respecto a los de primaria&lt;br&gt;
+`\(\beta_{4}:\)` diferencia en log de la tasa salarial mínima de individuos con superior respecto a los de primaria&lt;br&gt;
+`\(\beta_{1}+\beta_{3}:\)` log de la tasa salarial mínima de los individuos con secundaria&lt;br&gt;
+`\(\beta_{1}+\beta_{4}:\)` log de la tasa salarial mínima de los individuos con superior
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo aplicado en R&lt;/span&gt;
+&lt;font size = "4"&gt;
+Se tiene una base de datos de corte transversal de 526 trabajadores correspondientes a 1976 para los Estados unidos. `\(wage\)` son los salarios en dólares por hora y `\(educ\)` los años de educación
+
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**&lt;br&gt;
+&lt;span style="color:blue"&gt;1.&lt;/span&gt; Cambio en el intercepto (intercepto + una binaria)
+
+`$$lwage = \beta_{1} + \beta_{2}educ + \beta_{3}female + u$$`
+$$
+female_{i} =
+`\begin{cases}
+1 &amp; \text{mujer} \\
+0 &amp; \text{hombre}
+\end{cases}`
+$$
+
+```r
+library(haven); library(tidyverse); library(summarytools)
+data &lt;- read_stata("http://fmwww.bc.edu/ec-p/data/wooldridge/wage1.dta")
+
+modelo1 &lt;- lm(lwage ~ educ + female, data=data)
+summary(modelo1)
+```
+
+```
+
+Call:
+lm(formula = lwage ~ educ + female, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.02672 -0.27470 -0.03731  0.26219  1.34738 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.826269   0.094054   8.785   &lt;2e-16 ***
+educ         0.077203   0.007047  10.955   &lt;2e-16 ***
+female      -0.360865   0.039024  -9.247   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4455 on 523 degrees of freedom
+Multiple R-squared:  0.3002,	Adjusted R-squared:  0.2975 
+F-statistic: 112.2 on 2 and 523 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo aplicado en R&lt;/span&gt;
+&lt;font size = "4"&gt;
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**&lt;br&gt;
+&lt;span style="color:blue"&gt;1.&lt;/span&gt; Cambio en el intercepto (no intercepto y dos binarias)
+
+.pull-left[
+$$
+female_{i} =
+`\begin{cases}
+1 &amp; \text{mujer} \\\
+0 &amp; \text{hombre} 
+\end{cases}`
+$$ 
+]
+
+.pull-left[
+$$
+male_{i} =
+`\begin{cases}
+1 &amp; \text{hombre} \\
+0 &amp; \text{mujer}
+\end{cases}`
+$$
+]
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+
+```r
+data &lt;- read_stata("http://fmwww.bc.edu/ec-p/data/wooldridge/wage1.dta") |&gt; 
+  mutate(male = case_when(female==1~0,
+                          female==0~1))
+
+modelo2 &lt;- lm(lwage ~ 0 + educ + female + male , data=data)
+summary(modelo2)
+```
+
+```
+
+Call:
+lm(formula = lwage ~ 0 + educ + female + male, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.02672 -0.27470 -0.03731  0.26219  1.34738 
+
+Coefficients:
+       Estimate Std. Error t value Pr(&gt;|t|)    
+educ   0.077203   0.007047  10.955  &lt; 2e-16 ***
+female 0.465404   0.091227   5.102 4.72e-07 ***
+male   0.826269   0.094054   8.785  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4455 on 523 degrees of freedom
+Multiple R-squared:  0.9323,	Adjusted R-squared:  0.932 
+F-statistic:  2403 on 3 and 523 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo aplicado en R&lt;/span&gt;
+&lt;font size = "4"&gt;
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**&lt;br&gt;
+&lt;span style="color:blue"&gt;2.&lt;/span&gt; Cambio en pendiente
+
+`$$lwage = \beta_{1} + \beta_{2}educ + \beta_{3}educ*female + u$$`
+
+
+```r
+modelo3 &lt;- lm(lwage ~ educ + educ:female, data=data)
+summary(modelo3)
+```
+
+```
+
+Call:
+lm(formula = lwage ~ educ + educ:female, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.04030 -0.28526 -0.03285  0.27044  1.36353 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.680021   0.091277   7.450 3.88e-13 ***
+educ         0.088045   0.007071  12.451  &lt; 2e-16 ***
+educ:female -0.027595   0.003063  -9.008  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4471 on 523 degrees of freedom
+Multiple R-squared:  0.2952,	Adjusted R-squared:  0.2925 
+F-statistic: 109.5 on 2 and 523 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo aplicado en R&lt;/span&gt;
+&lt;font size = "4"&gt;
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**&lt;br&gt;
+&lt;span style="color:blue"&gt;2.&lt;/span&gt; Cambio en intercepto y pendiente
+
+`$$lwage = \beta_{1} + \beta_{2}educ + \beta_{3}female + \beta_{4}educ*female + u$$`
+
+
+```r
+modelo4 &lt;- lm(lwage ~ educ + educ*female, data=data)
+summary(modelo4)
+```
+
+```
+
+Call:
+lm(formula = lwage ~ educ + educ * female, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.02673 -0.27468 -0.03721  0.26221  1.34740 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  8.260e-01  1.181e-01   6.997 8.08e-12 ***
+educ         7.723e-02  8.988e-03   8.593  &lt; 2e-16 ***
+female      -3.601e-01  1.854e-01  -1.942   0.0527 .  
+educ:female -6.408e-05  1.450e-02  -0.004   0.9965    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4459 on 522 degrees of freedom
+Multiple R-squared:  0.3002,	Adjusted R-squared:  0.2962 
+F-statistic: 74.65 on 3 and 522 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo aplicado en R&lt;/span&gt;
+&lt;font size = "4"&gt;
+**&lt;ins&gt;&lt;span style="color:blue"&gt;i. Un factor dos categorías&lt;/span&gt;**&lt;br&gt;
+&lt;span style="color:blue"&gt;2.&lt;/span&gt; Cambio en intercepto y pendiente
+
+Lo anterior es equivalente a estimar dos regresiones por separado, una cuando `\(female=1\)` y otra cuando `\(female=0\)`
+
+.pull-left-50[
+
+```r
+modelo5 &lt;- lm(lwage ~ educ, data=subset(data,female==1))
+summary(modelo5)
+```
+
+```
+
+Call:
+lm(formula = lwage ~ educ, data = subset(data, female == 1))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.02673 -0.24397 -0.06163  0.21415  1.21924 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.46589    0.12890   3.614 0.000364 ***
+educ         0.07716    0.01026   7.520 9.82e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.402 on 250 degrees of freedom
+Multiple R-squared:  0.1845,	Adjusted R-squared:  0.1812 
+F-statistic: 56.55 on 1 and 250 DF,  p-value: 9.824e-13
+```
+]
+.pull-right-50[
+
+```r
+modelo6 &lt;- lm(lwage ~ educ, data=subset(data,female==0))
+summary(modelo6)
+```
+
+```
+
+Call:
+lm(formula = lwage ~ educ, data = subset(data, female == 0))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.11585 -0.34240 -0.01708  0.32659  1.34740 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.825955   0.127813   6.462 4.75e-10 ***
+educ        0.077228   0.009731   7.936 5.47e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4828 on 272 degrees of freedom
+Multiple R-squared:  0.188,	Adjusted R-squared:  0.185 
+F-statistic: 62.99 on 1 and 272 DF,  p-value: 5.471e-14
+```
+]
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo aplicado en R&lt;/span&gt;
+&lt;font size = "4"&gt;
+**&lt;ins&gt;&lt;span style="color:blue"&gt;ii. Un factor varias categorías&lt;/span&gt;**
+
+`$$lwage = \beta_{1} + \beta_{2}exper + \beta_{3}bsec + \beta_{4}bsup + u$$`
+
+.pull-left[
+$$
+bpri_{i} =
+`\begin{cases}
+1 &amp; \text{primaria } \\\
+0 &amp; \text{otro caso } 
+\end{cases}`
+$$ 
+]
+
+.pull-left[
+$$
+bsec_{i} =
+`\begin{cases}
+1 &amp; \text{secundaria } \\
+0 &amp; \text{otro caso }
+\end{cases}`
+$$
+]
+
+.pull-left[
+$$
+bsup_{i} =
+`\begin{cases}
+1 &amp; \text{superior } \\
+0 &amp; \text{otro caso }
+\end{cases}`
+$$
+]
+
+.pull-left-50[
+
+```r
+freq(data$educ, headings=F)
+```
+
+```
+
+              Freq   % Valid   % Valid Cum.   % Total   % Total Cum.
+----------- ------ --------- -------------- --------- --------------
+          0      2      0.38           0.38      0.38           0.38
+          2      1      0.19           0.57      0.19           0.57
+          3      1      0.19           0.76      0.19           0.76
+          4      3      0.57           1.33      0.57           1.33
+          5      1      0.19           1.52      0.19           1.52
+          6      6      1.14           2.66      1.14           2.66
+          7      4      0.76           3.42      0.76           3.42
+          8     22      4.18           7.60      4.18           7.60
+          9     17      3.23          10.84      3.23          10.84
+         10     30      5.70          16.54      5.70          16.54
+         11     29      5.51          22.05      5.51          22.05
+         12    198     37.64          59.70     37.64          59.70
+         13     39      7.41          67.11      7.41          67.11
+         14     53     10.08          77.19     10.08          77.19
+         15     21      3.99          81.18      3.99          81.18
+         16     68     12.93          94.11     12.93          94.11
+         17     12      2.28          96.39      2.28          96.39
+         18     19      3.61         100.00      3.61         100.00
+       &lt;NA&gt;      0                               0.00         100.00
+      Total    526    100.00         100.00    100.00         100.00
+```
+]
+
+.pull-right-50[
+
+```r
+data &lt;- data |&gt; 
+  mutate(educ_n = case_when(educ&gt;=0 &amp; educ&lt;=5 ~ 1,
+                            educ&gt;=6 &amp; educ&lt;=13 ~ 2,
+                            educ&gt;=14 &amp; educ&lt;=18 ~ 3))
+freq(data$educ_n, headings=F)
+```
+
+```
+
+              Freq   % Valid   % Valid Cum.   % Total   % Total Cum.
+----------- ------ --------- -------------- --------- --------------
+          1      8      1.52           1.52      1.52           1.52
+          2    345     65.59          67.11     65.59          67.11
+          3    173     32.89         100.00     32.89         100.00
+       &lt;NA&gt;      0                               0.00         100.00
+      Total    526    100.00         100.00    100.00         100.00
+```
+]
+
+---
+# &lt;span style="font-size:80%"&gt;Ejemplo aplicado en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+**&lt;ins&gt;&lt;span style="color:blue"&gt;ii. Un factor varias categorías&lt;/span&gt;**
+
+.pull-left-50[
+
+```r
+modelo7 &lt;- lm(lwage ~ exper + factor(educ_n), data=data)
+summary(modelo7)
+```
+
+```
+
+Call:
+lm(formula = lwage ~ exper + factor(educ_n), data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.99901 -0.31438 -0.07762  0.32933  1.55045 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     0.860162   0.180326   4.770 2.39e-06 ***
+exper           0.008099   0.001594   5.081 5.23e-07 ***
+factor(educ_n)2 0.479675   0.174428   2.750  0.00617 ** 
+factor(educ_n)3 0.944581   0.177853   5.311 1.62e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.479 on 522 degrees of freedom
+Multiple R-squared:  0.1926,	Adjusted R-squared:  0.188 
+F-statistic: 41.51 on 3 and 522 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+.pull-right-50[
+
+```r
+data &lt;- data |&gt; 
+  mutate(bpri = case_when(educ&gt;=0 &amp; educ&lt;=5 ~ 1,
+                          TRUE ~ 0),
+         bsec = case_when(educ&gt;=6 &amp; educ&lt;=13 ~ 1,
+                          TRUE ~ 0),
+         bsup = case_when(educ&gt;=14 &amp; educ&lt;=18 ~ 1,
+                          TRUE ~ 0))
+
+modelo8 &lt;- lm(lwage ~ exper + bsec + bsup, data=data)
+summary(modelo8)
+```
+
+```
+
+Call:
+lm(formula = lwage ~ exper + bsec + bsup, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.99901 -0.31438 -0.07762  0.32933  1.55045 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.860162   0.180326   4.770 2.39e-06 ***
+exper       0.008099   0.001594   5.081 5.23e-07 ***
+bsec        0.479675   0.174428   2.750  0.00617 ** 
+bsup        0.944581   0.177853   5.311 1.62e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.479 on 522 degrees of freedom
+Multiple R-squared:  0.1926,	Adjusted R-squared:  0.188 
+F-statistic: 41.51 on 3 and 522 DF,  p-value: &lt; 2.2e-16
+```
+
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
