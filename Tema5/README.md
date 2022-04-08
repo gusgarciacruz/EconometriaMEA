@@ -7,7 +7,7 @@
 
 - <span style="font-size:150%">Sesgo por variables omitidas</span> <br>
 
-- <span style="font-size:150%">El coeficiente de determinación $R^2$</span> <br>
+- <span style="font-size:150%">El coeficiente de determinación $ R^2$</span> <br>
 
 - <span style="font-size:150%">Inferencia estadística</span> <br>
 
