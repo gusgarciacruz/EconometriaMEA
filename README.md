@@ -26,3 +26,4 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
 [Taller 2](https://gusgarciacruz.github.io/EconometriaMEA/Taller2/Taller2.pdf) 
 
+[Evaluación](https://gusgarciacruz.github.io/EconometriaMEA/Evaluacion/Evaluacion1.pdf) 
