@@ -443,4 +443,4 @@ $$api00_i = \beta_1 + \beta_2 meals_i + \beta_3 ell_i + \beta_4 emer_i + u_i$$
 donde $api00_i$ es un índice de desempeño académico de la escuela $i$, que oscila entre 200 y 1000, y entre más alto indica mejor desempeño; $meals_i$ es el porcentage de estudiantes recibiendo comida gratis; $ell_i$ porcentage de estudiantes aprendiendo inglés; $emer_i$ porcentage de profesores con credenciales de profesores emergentes. 
 
 En el siguiente link se encuentra el código en R utilizado:
-- [Código en R](https://gusgarciacruz.github.io/EconometriaMEA/Tema8/Tema8.R)
+- [Código en R](https://gusgarciacruz.github.io/EconometriaMEA/Tema8/Tema 8.R)
