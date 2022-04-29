@@ -26,8 +26,14 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
 [Tema 8. Heteroscedasticidad](https://gusgarciacruz.github.io/EconometriaMEA/Tema8/Tema8.html)
 
+[Tema 9. Estimación por variables instrumentales](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/Tema9.html)
+
+[Tema 10. Modelos de datos panel](https://gusgarciacruz.github.io/EconometriaMEA/Tema10/Tema10.html)
+
 [Taller 1](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/Taller1.html) ([PDF](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/Taller1.pdf))
 
-[Taller 2](https://gusgarciacruz.github.io/EconometriaMEA/Taller2/Taller2.pdf) 
+[Taller 2](https://gusgarciacruz.github.io/EconometriaMEA/Taller2/Taller2.pdf)
+
+[Taller 3](https://gusgarciacruz.github.io/EconometriaMEA/Taller3/Taller3.pdf)
 
 [Evaluación](https://gusgarciacruz.github.io/EconometriaMEA/Evaluacion/Evaluacion1.pdf) 
