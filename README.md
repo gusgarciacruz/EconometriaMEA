@@ -22,6 +22,10 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
 [Tema 6. Formas funcionales del modelo de RLM y variables binarias o *dummies*](https://gusgarciacruz.github.io/EconometriaMEA/Tema6/Tema6.html)
 
+[Tema 7. Multicolinealidad](https://gusgarciacruz.github.io/EconometriaMEA/Tema7/Tema7.html)
+
+[Tema 8. Heteroscedasticidad](https://gusgarciacruz.github.io/EconometriaMEA/Tema8/Tema8.html)
+
 [Taller 1](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/Taller1.html) ([PDF](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/Taller1.pdf))
 
 [Taller 2](https://gusgarciacruz.github.io/EconometriaMEA/Taller2/Taller2.pdf) 
