@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tema 7. Multicolinealidad</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gustavo A. García   ggarci24@eafit.edu.co                  " />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tema 7. Multicolinealidad
+### Gustavo A. García <br> <span class="notbold" style="font-size:65%"><a href="mailto:ggarci24@eafit.edu.co" class="email">ggarci24@eafit.edu.co</a></span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+### <span class="notbold" style="font-size:65%">Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+
+---
+
+
+
+
+&lt;style&gt;
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+&lt;font size = "5"&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Tema7/Tema7.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Tema7/Tema7.pdf)
+
+---
+# &lt;span style="font-size:80%"&gt;En este tema&lt;/span&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Naturaleza del problema](#naturaleza)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Multicolinealidad perfecta](#perfecta)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Ausencia total de multicolinealidad (ortogonalidad)](#ausencia)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Multicolinealidad imperfecta](#imperfecta)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Consecuencias](#consecuencias)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Criterios para detectar multicolinealidad](#criterios)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Medidas correctivas](#medidas)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Ejercicio aplicado en R](#r)&lt;/span&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Lecturas&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Wooldridge, Jeffrey (2013). *Introducción a la econometría*. 5a edición, Cengage Learning. &lt;span style="color:blue"&gt;Cap. 3.4&lt;/span&gt;
+
+- Gujarati, D. y Porter, D. (2010). *Econometría*. 5a edición, Mc Graw Hill. &lt;span style="color:blue"&gt;Cap. 10&lt;/span&gt;
+
+---
+name: naturaleza
+# &lt;span style="font-size:80%"&gt;Naturaleza del problema&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- La multicolinealidad es un problema de &lt;span style="color:blue"&gt;dependencia lineal entre las variables explicatorias que obstaculizan el poder aislar el efecto de cada una por separado&lt;/span&gt;
+
+- Su principal efecto serán varianzas excesivamente grandes para cada estimador, y esto llevará a que cada parámetro pueda estar mal estimado
+
+- No obstante:
+&lt;p style="margin-bottom: -1em"&gt;
+  - alta depencencia no necesariamente lleva a molestias
+	- en presencia de molestias para cada parámetro, una combinación lineal puede estar bien estimada
+	- puede haber una contradicción estadística: &lt;span style="color:blue"&gt;por separado ningún parámetro significativo pero de conjunto si lo son
+	
+---
+# &lt;span style="font-size:80%"&gt;Naturaleza del problema&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Lo primero que hay que tener en cuenta es que es un problema muestral, al ser consecuencia de excesiva dependencia entre las `\(X\)`
+
+Se pueden distinguir tres situaciones:
+- &lt;span style="color:blue"&gt;Multicolinealidad perfecta
+
+- &lt;span style="color:blue"&gt;Ausencia total de multicolinealidad (Ortogonalidad)
+
+- &lt;span style="color:blue"&gt;multicolinealidad imperfecta
+
+---
+name: perfecta
+# &lt;span style="font-size:80%"&gt;Multicolinealidad perfecta&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Representa la violación del supuesto de rango completo de la matriz `\(\textbf{X}_{n\mbox{x}k}\)`
+
+&lt;center&gt;
+Si `\(\rho(\textbf{X}_{n\mbox{x}k})&lt;k\)`&lt;br&gt;
+
+`\(|\textbf{X}'\textbf{X}|=0\)`&lt;br&gt;
+
+`\((\textbf{X}'\textbf{X})\)` es matriz singular&lt;br&gt;
+
+`\((\textbf{X}'\textbf{X})^{-1}\)` no existe&lt;br&gt;
+
+`\(\widehat{\textbf{B}}=(\textbf{X}'\textbf{X})^{-1} \textbf{X}'\textbf{Y}\)` no se puede calcular&lt;br&gt;
+
+`\(Cov(\widehat{\textbf{B}})=\widehat{\sigma}_u^2 (\textbf{X}'\textbf{X})^{-1}\)` no se puede calcular
+
+&lt;p align="justify"&gt;
+La trampa de las variables binarias es un ejemplo de multicolinealidad perfecta, en este caso por una incorrecta especificación del modelo
+
+---
+# &lt;span style="font-size:80%"&gt;Multicolinealidad perfecta&lt;/span&gt;
+&lt;spam style="font-size:120%"&gt;
+
+Supóngase un modelo de 2 variables
+
+`$$Y_{i} = \beta_{1} + \beta_{2}X_{2i} + \beta_{3}X_{3i} + u_{i}$$`
+Así que la matriz `\(\textbf{X}'\textbf{X}\)` será
+
+`$$\textbf{X}'\textbf{X} = \left( \begin{array}{ccc}
+n           &amp; \sum X_{2i} &amp; \sum X_{3i}\\
+\sum X_{2i} &amp; \sum X_{2i}^2 &amp; \sum X_{2i}X_{3i}\\
+\sum X_{3i} &amp; \sum X_{2i}X_{3i} &amp; \sum X_{3i}^2\\ \end{array} \right)$$`
+
+Si se diese el caso que `\(X_{3i} = qX_{2i}\)` entonces el `\(\rho(\textbf{X}_{n\mbox{x}3})=2\)`, entonces se tendría
+
+`$$\textbf{X}'\textbf{X} = \left( \begin{array}{ccc}
+n &amp; \sum X_{2i} &amp; q\sum X_{2i} \\
+\sum X_{2i} &amp; \sum X_{2i}^2 &amp; q\sum X_{2i}^2 \\
+q\sum X_{2i} &amp; q\sum X_{2i}^2 &amp; q^2 \sum X_{2i}^2\\  \end{array} \right)$$`
+
+Se observa que la 3a columna de `\(\textbf{X}'\textbf{X}\)` es `\(q\)` veces la 2a, por lo tanto los datos muestrales no permiten estimar el modelo planteado
+
+---
+# &lt;span style="font-size:80%"&gt;Multicolinealidad perfecta&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+En efecto 
+
+`$$Y_{i} = \beta_{1} + \beta_{2}X_{2i} + \beta_{3}qX_{2i} + u_{i}$$`
+`$$Y_{i} = \beta_{1} + (\beta_{2}+q\beta_{3})X_{2i} + u_{i}$$`
+La muestra contiene información para estimar `\(\beta_1\)` y `\(\beta_{2}+q\beta_{3}\)`, pero no hay suficiente información para estimar `\(\beta_{2}\)` y `\(\beta_{3}\)` por separado
+	
+&lt;span style="color:blue"&gt;En este caso extremo de multicolinealidad perfecta el modelo `\(\textbf{Y} = \textbf{X}\textbf{B} + \textbf{u}\)` no puede ser estimado&lt;/span&gt;. Si es consecuencia de una incorrecta especificación el único camino es re-especificar el modelo
+
+---
+name: ausencia
+# &lt;span style="font-size:80%"&gt;Ausencia total de multicolinealidad (ortogonalidad)&lt;/span&gt;
+&lt;spam style="font-size:110%"&gt;
+
+En el otro extremo está la ausencia total de interdependencia entre regresores. Es el caso de la &lt;span style="color:blue"&gt;ortogonalidad&lt;/span&gt;: &lt;span style="color:blue"&gt;como la variable `\(X_{j}\)` es totalmente independiente de otra `\(X_{m}\)`, su producto vectorial será nulo `\(X_{j}'X_{m}=0\)`&lt;/span&gt;. Este es el mejor caso para estimar `\(\beta_j\)`, pero rara vez sucede
+	
+Si la correlación entre los regresores es `\(0\)`, el estimador MCO, `\(\widehat{\textbf{B}}=(\textbf{X}'\textbf{X})^{-1}\textbf{X}'\textbf{Y}\)`, equivale a esta expresión:
+
+`$$\left[ \begin{array}{c}
+\widehat{\beta}_{2} \\ 
+\\
+\widehat{\beta}_{3}\\ \end{array} \right] = \left[ \begin{array}{c}
+\frac{\sum (X_{2i}-\bar{X}_{2})(Y_{i}-\bar{Y})}{\sum (X_{2i}-\bar{X}_{2})^2} \\
+\\
+\frac{\sum (X_{3i}-\bar{X}_{3})(Y_{i}-\bar{Y})}{\sum (X_{3i}-\bar{X}_{3})^2} \\ \end{array} \right]$$`
+
+- La matriz `\((\textbf{X}'\textbf{X})\)` se convierte en una matriz diagonal, se pierde la componente de covarianza entre los regresores por la incorrelación los mismos 
+
+- Las estimaciones del modelo múltiple coinciden con la de dos modelos simples por separado
+
+- Los valores de la varianza si varían puesto que `\(\widehat{\sigma}_{u}^2\)` depende del número de regresores utilizados: `\(\widehat{\sigma}_{u}^2 = \frac{\widehat{\textbf{u}}'\widehat{\textbf{u}}}{N-k}\)` y `\(Cov(\widehat{\textbf{B}}) = \widehat{\sigma}_{u}^2 (\textbf{X}'\textbf{X})^{-1}\)` 
+
+- Difícilmente se da en la práctica
+
+---
+name: imperfecta
+# &lt;span style="font-size:80%"&gt;Multicolinealidad imperfecta&lt;/span&gt;
+&lt;font size = "4"&gt;
+
+En este caso existe una altísima dependencia entre regresores mas no es una relación exacta
+
+En algunos casos el origen está en el movimiento conjunto de algunas variables. Es el caso de ciertas series temporales macroeconómicas. En otros casos, el origen puede estar en la construcción del modelo: si se incluyen cuadrados y productos cruzados, además de los regresores lineales, como en la función translog o en la ecuación de mincer
+
+Es la situación más habitual en la práctica. Se cumple la condición de rango: 
+&lt;center&gt;
+`\(\rho(\textbf{X}_{n\mbox{x}k})=k\)`&lt;br&gt;
+`\(|\textbf{X}'\textbf{X}|\neq0\)`&lt;br&gt;
+`\((\textbf{X}'\textbf{X})\)` es una matriz no singular&lt;br&gt;
+`\((\textbf{X}'\textbf{X})^{-1}\)` existe
+
+
+&lt;img src="multimperf.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+name: consecuencias
+# &lt;span style="font-size:80%"&gt;Consecuencias de la multicolinealidad imperfecta&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+1. Hay pérdida de precisión en la estimación individual de los parámetros
+
+2. Como consecuencia de la mayor varianza habrán intervalos de confianza más amplios y más tendencias al no rechazo de `\(H_0:\beta_{j}=0\)`. No obstante la prueba en su conjunto no se verá afectada
+
+3. Si como consecuencia del no rechazo de `\(\beta_{j}=0\)` se elimina `\(X_{ji}\)`, puede ocurrir un sesgo en la estimación del resto de parámetros
+
+4. Excesiva sensibilidad muestral
+
+---
+name: criterios
+# &lt;span style="font-size:80%"&gt;Criterios para detectar multicolinealidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- La multicolinealidad es una cuestión de grado y no de clase. La distinción importante no es entre presencia o ausencia de multicolinealidad, sino entre sus diferentes grados
+
+- Como la multicolinealidad se refiere a la condición de las variables explicativas que son no estocásticas por supuestos, es una característica de la muestra y no de la población  
+
+Por consiguiente, no es necesario "llevar a cabo pruebas sobre multicolinealidad", pero, si se desea, es posible medir su grado en cualquier muestra determinada
+
+No existe un método único para detectar o medir la fuerza de la multicolinealidad. Lo que se tiene son ciertas reglas prácticas, algunas informales y otras formales, pero todas reglas prácticas
+
+---
+# &lt;span style="font-size:80%"&gt;Criterios para detectar multicolinealidad&lt;/span&gt;
+&lt;spam style="font-size:120%"&gt;
+
+- Diagrama de dispersión: permite observar cómo se relacionan las diversas variables de un modelo de regresión
+	
+- Un `\(R^2\)` elevado o significancia conjunta del modelo y pocas razones `\(t\)` significativas
+
+- Altas correlaciones entre parejas de regresores
+
+- Regresiones auxiliares y calculo de `\(R_{j}^2\)`
+
+- La regla práctica de Klein: la multicolinealidad puede ser un problema complicado solamente si el `\(R^2\)` de una regresión auxiliar es mayor que el `\(R^2\)` de la regresión de `\(Y\)` sobre todos los regresores
+
+- Factor inflacionario de la varianza (FIV)
+&lt;center&gt;	
+`\(Var(\widehat{\beta}_j) = \frac{\widehat{\sigma}_{u}^2}{\sum x_{ji}^2 (1-R_{j}^2)}  = \frac{\widehat{\sigma}_{u}^2}{\sum x_{ji}^2} FIV_{j}\)`, donde `\(FIV_{j}=\frac{1}{1-R_{j}^2}\)`
+
+La regla práctica es: si el `\(FIV\)` de una variable es superior a 10 (esto sucede si `\(R_{j}^2\)` excede 0.90), se dice que esa variable es muy colineal
+
+---
+name: medidas
+# &lt;span style="font-size:80%"&gt;Medidas correctivas&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- La multicolinealidad es en esencia un problema de deficiencia de datos, y en algunas ocasiones no hay opción respecto de los datos disponibles para el análisis empírico
+
+- Procedimiento de reglas prácticas
+	- Información *a priori*
+	
+	- Combinación de información de corte transversal y de series de tiempo
+	
+	- Eliminación de una(s) variable(s) y el sesgo de especificación
+	
+	- Transformación de variables
+	
+	- Datos nuevos o adicionales
+	
+---
+name: r
+# &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Los datos para este ejercicio fueron extraidos de *the 1974 Motor Trend US magazine*, y contiene información sobre consumo de gasolina y 10 características del diseño y desempeño de 32 automóviles.
+
+Se dispone de las siguientes varibles:  
+- mpg: Miles/(US) gallon
+- disp:	Displacement (cu.in.)
+- hp:	Gross horsepower
+- wt:	Weight (1000 lbs)
+- qsec:	1/4 mile time
+
+La idea es analizar los determinantes del desempeño de los automóviles y se estima la siguiente ecuación:
+
+`$$mpg_i = \beta_1 + \beta_2 disp_i + \beta_3 hp_i + \beta_4 wt + \beta_5 qsec + u_i$$`
+
+---
+# &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R&lt;/span&gt;
+.pull-left-50[
+
+```r
+library(Hmisc); library(corrplot); library(olsrr); library('mctest')
+data(mtcars)
+model &lt;- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
+summary(model)
+```
+
+```
+
+Call:
+lm(formula = mpg ~ disp + hp + wt + qsec, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.8664 -1.5819 -0.3788  1.1712  5.6468 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept) 27.329638   8.639032   3.164  0.00383 **
+disp         0.002666   0.010738   0.248  0.80576   
+hp          -0.018666   0.015613  -1.196  0.24227   
+wt          -4.609123   1.265851  -3.641  0.00113 **
+qsec         0.544160   0.466493   1.166  0.25362   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.622 on 27 degrees of freedom
+Multiple R-squared:  0.8351,	Adjusted R-squared:  0.8107 
+F-statistic: 34.19 on 4 and 27 DF,  p-value: 3.311e-10
+```
+]
+.pull-right-50[
+
+```r
+# Matriz de correlaciones parciales y su significancia estadística
+subdata &lt;- mtcars[,c("disp",  "hp", "wt", "qsec")]
+cor(subdata)
+```
+
+```
+           disp         hp         wt       qsec
+disp  1.0000000  0.7909486  0.8879799 -0.4336979
+hp    0.7909486  1.0000000  0.6587479 -0.7082234
+wt    0.8879799  0.6587479  1.0000000 -0.1747159
+qsec -0.4336979 -0.7082234 -0.1747159  1.0000000
+```
+
+```r
+cor &lt;- cor(mtcars[,c("disp",  "hp", "wt", "qsec")])
+cor
+```
+
+```
+           disp         hp         wt       qsec
+disp  1.0000000  0.7909486  0.8879799 -0.4336979
+hp    0.7909486  1.0000000  0.6587479 -0.7082234
+wt    0.8879799  0.6587479  1.0000000 -0.1747159
+qsec -0.4336979 -0.7082234 -0.1747159  1.0000000
+```
+
+```r
+# Correlaciones con significancia estadística
+rcorr(as.matrix(subdata))
+```
+
+```
+      disp    hp    wt  qsec
+disp  1.00  0.79  0.89 -0.43
+hp    0.79  1.00  0.66 -0.71
+wt    0.89  0.66  1.00 -0.17
+qsec -0.43 -0.71 -0.17  1.00
+
+n= 32 
+
+
+P
+     disp   hp     wt     qsec  
+disp        0.0000 0.0000 0.0131
+hp   0.0000        0.0000 0.0000
+wt   0.0000 0.0000        0.3389
+qsec 0.0131 0.0000 0.3389       
+```
+
+```r
+cor2&lt;-rcorr(as.matrix(subdata))
+```
+]
+
+---
+# &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R&lt;/span&gt;
+
+.pull-left-50[
+
+```r
+# Corrplot function
+corrplot(cor, type="upper", order = "hclust",tl.col = "black",
+         tl.srt = 45, sig.level = 0.05, insig = "blank")
+```
+
+&lt;img src="Tema7_files/figure-html/unnamed-chunk-4-1.png" width="864" /&gt;
+]
+
+.pull-right-50[
+
+```r
+# Diagrama de dispersión
+plot(subdata, col = "dodgerblue")
+```
+
+&lt;img src="Tema7_files/figure-html/unnamed-chunk-5-1.png" width="864" /&gt;
+]
+
+---
+# &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R&lt;/span&gt;
+.pull-left-50[
+
+```r
+# FIV
+# vif: factor de inflación de la varianza (FIV). VIF mayores a 10 son preocupamtes. La otra media que aparece es
+# la tolerancia = 1/vif. Tolerancia más bajo que 0.1 es comparable a un VIF de 10
+
+ols_vif_tol(model)
+```
+
+```
+  Variables Tolerance      VIF
+1      disp 0.1252279 7.985439
+2        hp 0.1935450 5.166758
+3        wt 0.1445726 6.916942
+4      qsec 0.3191708 3.133119
+```
+]
+
+.pull-right-50[
+
+```r
+ols_coll_diag(model)
+```
+
+```
+Tolerance and Variance Inflation Factor
+---------------------------------------
+  Variables Tolerance      VIF
+1      disp 0.1252279 7.985439
+2        hp 0.1935450 5.166758
+3        wt 0.1445726 6.916942
+4      qsec 0.3191708 3.133119
+
+
+Eigenvalue and Condition Index
+------------------------------
+   Eigenvalue Condition Index   intercept        disp          hp
+1 4.721487187        1.000000 0.000123237 0.001132468 0.001413094
+2 0.216562203        4.669260 0.002617424 0.036811051 0.027751289
+3 0.050416837        9.677242 0.001656551 0.120881424 0.392366164
+4 0.010104757       21.616057 0.025805998 0.777260487 0.059594623
+5 0.001429017       57.480524 0.969796790 0.063914571 0.518874831
+            wt         qsec
+1 0.0005253393 0.0001277169
+2 0.0002096014 0.0046789491
+3 0.0377028008 0.0001952599
+4 0.7017528428 0.0024577686
+5 0.2598094157 0.9925403056
+```
+]
+
+---
+# &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R&lt;/span&gt;
+
+```r
+# Otro paquete para hacer diagnóstico de colinealidad es mctest
+# Leer https://journal.r-project.org/archive/2016/RJ-2016-062/RJ-2016-062.pdf para entender cada estadístico del paquete
+#omcdiag(model)
+#imcdiag(model)
+#imcdiag(model, corr=T)
+#imcdiag(model, corr=T, all=TRUE)
+#mctest(model, all=TRUE)
+mc.plot(model)
+```
+
+&lt;img src="Tema7_files/figure-html/unnamed-chunk-8-1.png" width="864" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R&lt;/span&gt;
+.pull-left-50[
+
+```r
+# Solución: eliminar disp 
+model1 &lt;- lm(mpg ~ hp + wt + qsec, data = mtcars)
+summary(model1)
+```
+
+```
+
+Call:
+lm(formula = mpg ~ hp + wt + qsec, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.8591 -1.6418 -0.4636  1.1940  5.6092 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 27.61053    8.41993   3.279  0.00278 ** 
+hp          -0.01782    0.01498  -1.190  0.24418    
+wt          -4.35880    0.75270  -5.791 3.22e-06 ***
+qsec         0.51083    0.43922   1.163  0.25463    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.578 on 28 degrees of freedom
+Multiple R-squared:  0.8348,	Adjusted R-squared:  0.8171 
+F-statistic: 47.15 on 3 and 28 DF,  p-value: 4.506e-11
+```
+
+```r
+imcdiag(model1, corr=T)
+```
+
+```
+
+Call:
+imcdiag(mod = model1, corr = T)
+
+
+All Individual Multicollinearity Diagnostics Result
+
+        VIF    TOL      Wi       Fi Leamer    CVIF Klein   IND1
+hp   4.9220 0.2032 56.8684 117.6587 0.4507 -1.5328     0 0.0140
+wt   2.5304 0.3952 22.1914  45.9133 0.6286 -0.7880     0 0.0273
+qsec 2.8738 0.3480 27.1702  56.2141 0.5899 -0.8950     0 0.0240
+       IND2
+hp   1.1640
+wt   0.8835
+qsec 0.9525
+
+1 --&gt; COLLINEARITY is detected by the test 
+0 --&gt; COLLINEARITY is not detected by the test
+
+hp , qsec , coefficient(s) are non-significant may be due to multicollinearity
+
+R-square of y on all x: 0.8348 
+
+* use method argument to check which regressors may be the reason of collinearity
+===================================
+
+Correlation Matrix
+             hp         wt       qsec
+hp    1.0000000  0.6587479 -0.7082234
+wt    0.6587479  1.0000000 -0.1747159
+qsec -0.7082234 -0.1747159  1.0000000
+
+====================NOTE===================
+
+hp and qsec may be collinear as |-0.708223|&gt;=0.7 
+```
+]
+
+.pull-right-50[
+
+```r
+# hp y qsec tienen alta correlación, se podría eliminar qsec
+model2 &lt;- lm(mpg ~ hp + wt, data = mtcars)
+summary(model2)
+```
+
+```
+
+Call:
+lm(formula = mpg ~ hp + wt, data = mtcars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.941 -1.600 -0.182  1.050  5.854 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
+hp          -0.03177    0.00903  -3.519  0.00145 ** 
+wt          -3.87783    0.63273  -6.129 1.12e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.593 on 29 degrees of freedom
+Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8148 
+F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
+```
+
+```r
+imcdiag(model2, corr=T)
+```
+
+```
+
+Call:
+imcdiag(mod = model2, corr = T)
+
+
+All Individual Multicollinearity Diagnostics Result
+
+      VIF    TOL      Wi  Fi Leamer    CVIF Klein   IND1 IND2
+hp 1.7666 0.5661 22.9987 Inf 0.7524 -0.8613     0 0.0189    1
+wt 1.7666 0.5661 22.9987 Inf 0.7524 -0.8613     0 0.0189    1
+
+1 --&gt; COLLINEARITY is detected by the test 
+0 --&gt; COLLINEARITY is not detected by the test
+
+* all coefficients have significant t-ratios
+
+R-square of y on all x: 0.8268 
+
+* use method argument to check which regressors may be the reason of collinearity
+===================================
+
+Correlation Matrix
+          hp        wt
+hp 1.0000000 0.6587479
+wt 0.6587479 1.0000000
+
+====================NOTE===================
+ 
+```
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
