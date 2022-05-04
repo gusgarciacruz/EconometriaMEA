@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tema 9. Estimación por variables instrumentales</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gustavo A. García   ggarci24@eafit.edu.co                  " />
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Tema 9. Estimación por variables instrumentales
+### Gustavo A. García <br> <span class="notbold" style="font-size:65%"><a href="mailto:ggarci24@eafit.edu.co" class="email">ggarci24@eafit.edu.co</a></span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+### <span class="notbold" style="font-size:65%">Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+
+---
+
+
+
+
+&lt;style&gt;
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+&lt;font size = "5"&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/Tema9.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/Tema9.pdf)
+
+---
+# &lt;span style="font-size:80%"&gt;En este tema&lt;/span&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Generalidades](#generalidades)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Variables instrumentales y validez](#validez)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Estimación en el caso de RLS](#rls)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;VI frente a MCO](#mco)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Estimación VI del modelo RLM](#vi)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Mínimos cuadrados en dos etapas](#etapas)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Test de endogeneidad](#endogeneidad)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Test de sobreidentificación](#sobreidentificacion)&lt;/span&gt; &lt;br&gt;
+
+- &lt;span style="font-size:150%"&gt;[&lt;span style="color:black"&gt;Ejercicio aplicado en R: el efecto de la educación sobre el crimen](#r)&lt;/span&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Lecturas&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Wooldridge, Jeffrey (2013). *Introducción a la econometría*. 5a edición, Cengage Learning. &lt;span style="color:blue"&gt;Cap. 5&lt;/span&gt;
+
+- Gujarati, D. y Porter, D. (2010). *Econometría*. 5a edición, Mc Graw Hill. &lt;span style="color:blue"&gt;Cap. 8&lt;/span&gt;
+
+---
+name: generalidades
+# &lt;span style="font-size:80%"&gt;Generalidades&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Recordemos que el modelo clásico de regresión descansa sobre varios supuestos   
+&gt;	Sobre las `\(\textbf{X}\)`...  
+	Sobre los `\(\textbf{u}\)`... Uno de estos supuestos era:
+
+
+`$$E(\textbf{X}'\textbf{u})=\textbf{0} \Longrightarrow \text{ Exogeneidad}$$`
+
+
+&gt;¿Qué sucede si se viola este supuesto? Es decir, existencia de **&lt;span style="color:blue"&gt;endogeneidad&lt;/span&gt;**:
+
+`$$E(\textbf{X}'\textbf{u})\neq\textbf{0}$$`
+En este caso se dice que `\(X\)` es una **&lt;span style="color:blue"&gt;variable explicativa endógena&lt;/span&gt;**
+
+---
+# &lt;span style="font-size:80%"&gt;Generalidades&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+**&lt;span style="color:blue"&gt;Fuentes de endogeneidad:** 
+&lt;p style="margin-bottom: -.5em"&gt;
+
+- Variables omitidas (o heterogeneidad inobservable)
+
+- Errores en las variables
+
+- Simultaneidad (cuando una o más de las variables explicativas se determina conjuntamente con la variable dependiente)
+
+---
+# &lt;span style="font-size:80%"&gt;Generalidades&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Suponga un modelo	de salarios para adultos trabajadores
+
+`$$log(wage) = \beta_1 + \beta_2educ + \beta_3abil + e$$`
+Como la habilidad innata `\((abil)\)` es no observada, entonces se estima el modelo
+
+`$$log(wage) = \beta_1 + \beta_2educ + u$$`
+donde `\(u=\beta_3 abil+e\)` 
+
+Se cree que las personas con mayores habilidades innatas suelen alcanzar niveles superiores de educación. Dado que mejores habilidades llevan a salarios más altos, se observa una correlación entre **educación** y factores críticos que afectan el salario 
+
+Es posible comprobar que si `\(\beta_3\neq0\)`, es decir, `\(abil\)` es relevante y `\(Cov(educ,abil)\neq0\)` el supuesto de exogeneidad en el modelo estimado no se cumple, `\(E(educ\text{ }u)\neq0\)`
+
+---
+# &lt;span style="font-size:80%"&gt;Generalidades&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+**&lt;span style="color:blue"&gt;Consecuencia:&lt;/span&gt;**
+
+En ese caso, la estimación por MCO produce estimadores **&lt;span style="color:blue"&gt;sesgados e inconsistentes&lt;/span&gt;**
+
+**&lt;span style="color:blue"&gt;Solución??&lt;/span&gt;** 
+
+- Si `\(abil\)` es observable, la solución será incluirla como regresor
+
+- Cuando `\(abil\)` no sea observable, hay que proponer un estimador alternativo...  
+
+&gt; ¿Existe un método que permita obtener estimadores consistentes cuando `\(X\)` y `\(u\)` están correlacionadas? 
+
+¡Si! Este método reconoce la presencia de endogeneidad y se conoce como **&lt;span style="color:blue"&gt;Método de Variables Instrumentales (VI)&lt;/span&gt;**
+
+---
+name: validez
+# &lt;span style="font-size:80%"&gt;Variables instrumentales y validez&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+Suponga el modelo de regresión simple
+`$$Y = \beta_1 + \beta_2X + u$$`
+
+y que `\(X\)` y `\(u\)` están correlacionadas: `\(Cov(X, u) \neq 0\)`
+
+Se requiere definir una variable observable, llamémosle `\(z\)`, la cual se denomina **&lt;span style="color:blue"&gt;variable instrumental o instrumento&lt;/span&gt;** para `\(X\)` que satisface las siguientes condiciones:  
+
+- `\(z\)` no está correlacionada con `\(u\)`: `\(Cov(z, u) = E(zu) = 0 \Longrightarrow\)` **&lt;span style="color:blue"&gt;Exogeneidad del instrumento&lt;/span&gt;** (es una variable exógena) 
+
+- `\(z\)` está correlacionada con `\(X\)`: `\(Cov(z, X) \neq 0 \Longrightarrow\)` **&lt;span style="color:blue"&gt;Relevancia del instrumento&lt;/span&gt;** (está relacionada con la var. explicativa endógena)
+
+---
+# &lt;span style="font-size:80%"&gt;Variables instrumentales y validez&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- En el caso de una variable endógena y un instrumento, no es posible contrastar si se verifica la condición de exogeneidad `\(\Longrightarrow\)` Usar la intuición y la teoría para decidir si tiene sentido asumir `\(Cov(z,u) = 0\)`
+
+- Es posible probar si `\(Cov(z, X) \neq 0\)`, mediante una regresión simple entre `\(X\)` y `\(z\)` `$$X= \pi_0 +  \pi_1z + v$$`
+y probar la hipótesis nula: `\(H_{0}: \pi_1=0\)` vs. `\(H_{A}: \pi_1\neq 0\)` 
+
+---
+name: rls
+# &lt;span style="font-size:80%"&gt;Estimación en el caso de RLS&lt;/span&gt;
+&lt;spam style="font-size:125%"&gt;
+
+- Dado `\(Y = \beta_1 + \beta_2X + u\)`  y  `\(z\)` un instrumento válido: `\(Cov(z,u)=\)` E$(zu)=0$
+
+`$$Cov(z,Y)=\beta_2Cov(z,X)+Cov(z,u)$$`   
+`\(\Longrightarrow \beta_2=Cov(z,Y)/Cov(z,X)\)` 
+
+Así, el estimador de VI para `\(\beta_2\)` es:
+
+`$$\widehat{\beta}_{2VI}=\frac{\sum(z_i-\bar{z})(Y_i-\bar{Y})}{\sum(z_i-\bar{z})(X_i-\bar{X})}$$`  
+- El supuesto de homocedasticidad en este caso es `\(E(u^2/z)=\sigma^2=Var(u)\)` y la varianza asintótica estimada está dada por:
+
+
+`$$Var(\widehat{\beta}_{2VI})=\frac{\widehat{\sigma}^2}{STC_X R^2_{X,z}}$$`
+`\(R^2_{X,z}\)` mide la fortaleza de la relación lineal entre `\(X\)` y `\(z\)` en la muestra
+
+---
+name: mco
+# &lt;span style="font-size:80%"&gt;VI frente a MCO&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- La varianza del estimador VI difiere de la MCO, en el `\(R^2\)` que se obtiene de regresar `\(X\)` sobre `\(z\)`
+
+- Dado que `\(R^2&lt;1\)`, la varianza de VI siempre es mayor que la varianza de MCO (cuando MCO es válido, este es el costo de realizar la estimación de VI cuando `\(X\)` y `\(u\)` no se correlacionan)
+
+- Cuanto mayor sea la correlación entre `\(z\)` y `\(X\)`, menor será la varianza de VI 
+
+- Sin embargo, en el caso en que `\(cov(X, u) \neq 0\)`, VI es consistente, mientras MCO es inconsistente
+
+---
+name: vi
+# &lt;span style="font-size:80%"&gt;Estimación VI del modelo RLM&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- La estimación VI puede ser extendida con facilidad al caso de regresión múltiple 
+
+- En este caso podemos tener una o más variables que son endógenas
+
+- Necesitamos variables instrumentales (tantas como variables endógenas entre los regresores) 
+
+- Es posible tener múltiples instrumentos
+
+---
+name: etapas
+# &lt;span style="font-size:80%"&gt;Mínimos cuadrados en dos etapas (MC2E)&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Considere el modelo de interés
+
+`$$y_1 = \beta_1 + \beta_2y_2 + \beta_3z_1 + u_1$$`
+
+donde &lt;span style="color:blue"&gt; `\(y_2\)` es endógena y `\(z_1\)` es exógena
+
+- Asumimos que `\(z_2\)` y `\(z_3\)` son instrumentos válidos. En este caso, el mejor instrumento es una combinación lineal de todas las variables exógenas
+
+`$$y_2^* = \pi_0 + \pi_1z_1 + \pi_2z_2 + \pi_3z_3$$`
+  donde `\(\pi_2\neq0\)` o `\(\pi_3\neq0\)`
+
+---
+# &lt;span style="font-size:80%"&gt;Mínimos cuadrados en dos etapas (MC2E)&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+El método consiste en dos etapas:
+
+- &lt;span style="color:blue"&gt;Primera etapa&lt;/span&gt;: Estimar `\(y_2^*\)`, regresando `\(y_2\)` sobre `\(z_1\)`, `\(z_2\)` y `\(z_3\)` y obtenemos los valores predichos `\(\widehat{y}_2\)`
+
+- &lt;span style="color:blue"&gt;Segunda etapa&lt;/span&gt;: Sustituimos `\({y}_2\)` por `\(\widehat{y}_2\)` en el modelo de interés y estimamos por MCO, los estimadores asi obtenidos se conocen como &lt;span style="color:blue"&gt;estimadores de MC2E
+
+- El método se extiende a múltiples variables endógenas. Es necesario asegurarse de que tenemos al menos tantas variables exógenas excluidas (instrumentos) como variables endógenas en la ecuación de interés
+
+---
+name: endogeneidad
+# &lt;span style="font-size:80%"&gt;Test de endogeneidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+- Si no existe endogeneidad en el modelo original, MCO es preferido a VI, por tanto, es necesario probar la existencia de endogeneidad 
+
+- Si no existe endogeneidad, MCO y VI son consistentes, pero MCO es más eficiente (óptimo) 
+
+- Si existe endogeneidad, solamente VI es consistente
+
+- Por tanto, es importante realizar un contraste de endogeneidad para evitar usar VI cuando no es necesario
+
+- Se utiliza el test de Hausman ($H_0$: Exogeneidad) 
+
+---
+# &lt;span style="font-size:80%"&gt;Test de endogeneidad&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+`\(H_0\)`: `\(y_2\)` es exógena, `\(H_A\)`: `\(y_2\)` es endógena 
+
+Pasos:
+&lt;p style="margin-bottom: -1em"&gt;
+
+- Guarde los residuos de la primera etapa: `\(\widehat{v}_i\)`
+
+- Incluya `\(\widehat{v}_i\)` en la ecuación principal (contiene `\(y_2\)`): 
+
+`$$y_{1i} = \beta_1 + \beta_2y_{2i} + \beta_3z_{1i} + \delta\widehat{v}_i + u_{1i}$$`
+- Si el coeficiente asociado al residuo es estadísticamente diferente de cero, rechace la hipótesis nula de exogeneidad
+
+  Contrastamos:  `\(H_0\)`: `\(\delta=0\)` frente a `\(H_A\)`: `\(\delta\neq0\)` 
+  
+  Si no rechazamos `\(H_0\)`, no rechazaremos que `\(y_2\)` es exógena
+
+---
+name: sobreidentificacion
+# &lt;span style="font-size:80%"&gt;Test de sobreidentificación o test de Sargan&lt;/span&gt;
+&lt;font size = "5"&gt;
+
+-  Si solo hay un instrumento para nuestra variable endógena, no podemos probar si el instrumento no está correlacionado con el error. Decimos que el modelo está identificado 
+
+-  Si tenemos varios instrumentos, es posible probar las restricciones de sobreidentificación, para ver si algunos de los instrumentos están correlacionados con el error
+
+- Pasos:
+&lt;p style="margin-bottom: -1em"&gt;
+ - Estime el modelo de interés usando MC2E y obtenga los residuos: `\(\widehat{u}^{MC2E}_i\)` 
+
+ - Regrese los `\(\widehat{u}^{MC2E}_i\)` sobre todas las variables exógenas (incluido los instrumentos) y obtenga el `\(R^2\)` para calcular `\(nR^2\)` 
+
+ - Bajo la hipótesis nula que todos los instrumentos no están correlacionados con el error, `\(LM \sim \chi_q^2\)`, donde `\(q\)` es el número de instrumentos adicionales  
+
+---
+name: r
+# &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R: el efecto de la educación sobre el crimen&lt;/span&gt;
+&lt;spam style="font-size:110%"&gt;
+
+&lt;span style="color:blue"&gt;La educacion reduce el crimen?&lt;/span&gt; Si es así, gastar más en educacion podría ser una herramienta de largo plazo para combatir el crimen. Este ejercio aplicado se basa en el *paper* de Lochner, L. y Moretti, E. (2004). "The Effect of Education on Crime: Evidence from Prison Inmates, Arrests, and Self-Reports", American Economic Review, 94(1):155-189.
+
+Las principales variables para el análisis son:  
+`\(prision\)`: variable binaria igual a 1 si la persona esta en prision, 0 no  
+`\(educ\)`: años de escolaridad  
+`\(age\)`: edad  
+`\(AfAm\)`: variable binaria igual a 1 para afroamericano, 0 no  
+`\(ca8\)`: variable binaria igual a 1 si la escolaridad obligatoria estatal es de 8 o menos años  
+`\(ca9\)`: variable binaria igual a 1 si la escolaridad obligatoria estatal es de 9 años  
+`\(ca10\)`: variable binaria igual a 1 si la escolaridad obligatoria estatal es de 10 años  
+`\(ca11\)`: variable binaria igual a 1 si la escolaridad obligatoria estatal es de 11 o mas años
+
+La idea es estimar el siguiente modelo
+`$$prison = \beta_1 + \beta_2 educ + \beta_3 age + \beta_4 age^2 + \beta_5 AfAm + u$$`
+En el siguiente link se encuentra la base de datos y el código en R utilizado:
+- [Datos](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/inmates.dta)
+- [Código en R](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/Tema 9.R)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

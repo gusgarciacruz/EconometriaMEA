@@ -1,0 +1,372 @@
+---
+title: "Tema 9. Estimación por variables instrumentales"
+author: Gustavo A. García <br> <span style="font-size:65%" class='notbold'>ggarci24@eafit.edu.co</span> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+date: <span style="font-size:65%" class='notbold'>Econometría para la Toma de Decisiones <br> Maestría en Economía Aplicada <br> Escuela de Finanzas, Economía y Gobierno <br> Universidad EAFIT</span>
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+options(width = 70)
+knitr::opts_chunk$set(
+  dev.args = list(bg = 'transparent'),
+  fig.width = 12, message = TRUE,
+  warning = FALSE, comment = "", cache = TRUE, fig.retina = 3
+)
+knitr::opts_knit$set(global.par = TRUE)
+Sys.setenv(`_R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_` = "false")
+# remotes::install_github("luukvdmeer/sfnetworks")
+# remotes::install_github("EvaMaeRey/flipbookr")
+# remotes::install_github("rlesur/klippy")
+# devtools::install_github("gadenbuie/xaringanExtra")
+library(flipbookr)
+library(xaringanthemer)
+library(tidyverse)
+library(klippy)
+library(xaringanExtra)
+library(gt); library(knitr); library(kableExtra); library(tibble)
+library(summarytools); library(qrcode)
+```
+
+<style>
+.notbold{
+    font-weight:normal
+}
+
+body {
+text-align: justify;
+}
+
+h1{
+      margin-top: -1px;
+      margin-bottom: -3px;
+}
+
+.small-code pre{
+  margin-bottom: -10px;
+  
+}  
+
+.medium-code pre{
+  margin-bottom: 2px;
+  
+}
+
+p.comment {
+background-color: #E1E1FF;
+padding: 10px;
+border: 1px solid white;
+margin-left: 25px;
+border-radius: 15px;
+text-align: center;
+}
+</style>
+
+```{r xaringan-scribble, echo=FALSE}
+xaringanExtra::use_scribble()
+```
+
+```{r xaringanExtra-clipboard, echo=FALSE}
+htmltools::tagList(
+  xaringanExtra::use_clipboard(
+    button_text = "<i class=\"fa fa-clipboard\"></i>",
+    success_text = "<i class=\"fa fa-check\" style=\"color: #90BE6D\"></i>",
+    error_text = "<i class=\"fa fa-times-circle\" style=\"color: #F94144\"></i>"
+  ),
+  rmarkdown::html_dependency_font_awesome()
+)
+```
+
+```{r xaringan-extra-styles, echo=FALSE}
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+```
+
+<font size = "5">
+
+<br>
+<br>
+<br>
+<br>
+<br>
+Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/Tema9.html)
+
+Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/Tema9.pdf)
+
+---
+# <span style="font-size:80%">En este tema</span>
+
+- <span style="font-size:150%">[<span style="color:black">Generalidades](#generalidades)</span> <br>
+
+- <span style="font-size:150%">[<span style="color:black">Variables instrumentales y validez](#validez)</span> <br>
+
+- <span style="font-size:150%">[<span style="color:black">Estimación en el caso de RLS](#rls)</span> <br>
+
+- <span style="font-size:150%">[<span style="color:black">VI frente a MCO](#mco)</span> <br>
+
+- <span style="font-size:150%">[<span style="color:black">Estimación VI del modelo RLM](#vi)</span> <br>
+
+- <span style="font-size:150%">[<span style="color:black">Mínimos cuadrados en dos etapas](#etapas)</span> <br>
+
+- <span style="font-size:150%">[<span style="color:black">Test de endogeneidad](#endogeneidad)</span> <br>
+
+- <span style="font-size:150%">[<span style="color:black">Test de sobreidentificación](#sobreidentificacion)</span> <br>
+
+- <span style="font-size:150%">[<span style="color:black">Ejercicio aplicado en R: el efecto de la educación sobre el crimen](#r)</span>
+
+---
+# <span style="font-size:80%">Lecturas</span>
+<font size = "5">
+
+- Wooldridge, Jeffrey (2013). *Introducción a la econometría*. 5a edición, Cengage Learning. <span style="color:blue">Cap. 5</span>
+
+- Gujarati, D. y Porter, D. (2010). *Econometría*. 5a edición, Mc Graw Hill. <span style="color:blue">Cap. 8</span>
+
+---
+name: generalidades
+# <span style="font-size:80%">Generalidades</span>
+<font size = "5">
+
+Recordemos que el modelo clásico de regresión descansa sobre varios supuestos   
+>	Sobre las $\textbf{X}$...  
+	Sobre los $\textbf{u}$... Uno de estos supuestos era:
+
+
+$$E(\textbf{X}'\textbf{u})=\textbf{0} \Longrightarrow \text{ Exogeneidad}$$
+
+
+>¿Qué sucede si se viola este supuesto? Es decir, existencia de **<span style="color:blue">endogeneidad</span>**:
+
+$$E(\textbf{X}'\textbf{u})\neq\textbf{0}$$
+En este caso se dice que $X$ es una **<span style="color:blue">variable explicativa endógena</span>**
+
+---
+# <span style="font-size:80%">Generalidades</span>
+<font size = "5">
+
+**<span style="color:blue">Fuentes de endogeneidad:** 
+<p style="margin-bottom: -.5em">
+
+- Variables omitidas (o heterogeneidad inobservable)
+
+- Errores en las variables
+
+- Simultaneidad (cuando una o más de las variables explicativas se determina conjuntamente con la variable dependiente)
+
+---
+# <span style="font-size:80%">Generalidades</span>
+<font size = "5">
+
+Suponga un modelo	de salarios para adultos trabajadores
+
+$$log(wage) = \beta_1 + \beta_2educ + \beta_3abil + e$$
+Como la habilidad innata $(abil)$ es no observada, entonces se estima el modelo
+
+$$log(wage) = \beta_1 + \beta_2educ + u$$
+donde $u=\beta_3 abil+e$ 
+
+Se cree que las personas con mayores habilidades innatas suelen alcanzar niveles superiores de educación. Dado que mejores habilidades llevan a salarios más altos, se observa una correlación entre **educación** y factores críticos que afectan el salario 
+
+Es posible comprobar que si $\beta_3\neq0$, es decir, $abil$ es relevante y $Cov(educ,abil)\neq0$ el supuesto de exogeneidad en el modelo estimado no se cumple, $E(educ\text{ }u)\neq0$
+
+---
+# <span style="font-size:80%">Generalidades</span>
+<font size = "5">
+
+**<span style="color:blue">Consecuencia:</span>**
+
+En ese caso, la estimación por MCO produce estimadores **<span style="color:blue">sesgados e inconsistentes</span>**
+
+**<span style="color:blue">Solución??</span>** 
+
+- Si $abil$ es observable, la solución será incluirla como regresor
+
+- Cuando $abil$ no sea observable, hay que proponer un estimador alternativo...  
+
+> ¿Existe un método que permita obtener estimadores consistentes cuando $X$ y $u$ están correlacionadas? 
+
+¡Si! Este método reconoce la presencia de endogeneidad y se conoce como **<span style="color:blue">Método de Variables Instrumentales (VI)</span>**
+
+---
+name: validez
+# <span style="font-size:80%">Variables instrumentales y validez</span>
+<font size = "5">
+
+Suponga el modelo de regresión simple
+$$Y = \beta_1 + \beta_2X + u$$
+
+y que $X$ y $u$ están correlacionadas: $Cov(X, u) \neq 0$
+
+Se requiere definir una variable observable, llamémosle $z$, la cual se denomina **<span style="color:blue">variable instrumental o instrumento</span>** para $X$ que satisface las siguientes condiciones:  
+
+- $z$ no está correlacionada con $u$: $Cov(z, u) = E(zu) = 0 \Longrightarrow$ **<span style="color:blue">Exogeneidad del instrumento</span>** (es una variable exógena) 
+
+- $z$ está correlacionada con $X$: $Cov(z, X) \neq 0 \Longrightarrow$ **<span style="color:blue">Relevancia del instrumento</span>** (está relacionada con la var. explicativa endógena)
+
+---
+# <span style="font-size:80%">Variables instrumentales y validez</span>
+<font size = "5">
+
+- En el caso de una variable endógena y un instrumento, no es posible contrastar si se verifica la condición de exogeneidad $\Longrightarrow$ Usar la intuición y la teoría para decidir si tiene sentido asumir $Cov(z,u) = 0$
+
+- Es posible probar si $Cov(z, X) \neq 0$, mediante una regresión simple entre $X$ y $z$ $$X= \pi_0 +  \pi_1z + v$$
+y probar la hipótesis nula: $H_{0}: \pi_1=0$ vs. $H_{A}: \pi_1\neq 0$ 
+
+---
+name: rls
+# <span style="font-size:80%">Estimación en el caso de RLS</span>
+<spam style="font-size:125%">
+
+- Dado $Y = \beta_1 + \beta_2X + u$  y  $z$ un instrumento válido: $Cov(z,u)=$ E$(zu)=0$
+
+$$Cov(z,Y)=\beta_2Cov(z,X)+Cov(z,u)$$   
+$\Longrightarrow \beta_2=Cov(z,Y)/Cov(z,X)$ 
+
+Así, el estimador de VI para $\beta_2$ es:
+
+$$\widehat{\beta}_{2VI}=\frac{\sum(z_i-\bar{z})(Y_i-\bar{Y})}{\sum(z_i-\bar{z})(X_i-\bar{X})}$$  
+- El supuesto de homocedasticidad en este caso es $E(u^2/z)=\sigma^2=Var(u)$ y la varianza asintótica estimada está dada por:
+
+
+$$Var(\widehat{\beta}_{2VI})=\frac{\widehat{\sigma}^2}{STC_X R^2_{X,z}}$$
+$R^2_{X,z}$ mide la fortaleza de la relación lineal entre $X$ y $z$ en la muestra
+
+---
+name: mco
+# <span style="font-size:80%">VI frente a MCO</span>
+<font size = "5">
+
+- La varianza del estimador VI difiere de la MCO, en el $R^2$ que se obtiene de regresar $X$ sobre $z$
+
+- Dado que $R^2<1$, la varianza de VI siempre es mayor que la varianza de MCO (cuando MCO es válido, este es el costo de realizar la estimación de VI cuando $X$ y $u$ no se correlacionan)
+
+- Cuanto mayor sea la correlación entre $z$ y $X$, menor será la varianza de VI 
+
+- Sin embargo, en el caso en que $cov(X, u) \neq 0$, VI es consistente, mientras MCO es inconsistente
+
+---
+name: vi
+# <span style="font-size:80%">Estimación VI del modelo RLM</span>
+<font size = "5">
+
+- La estimación VI puede ser extendida con facilidad al caso de regresión múltiple 
+
+- En este caso podemos tener una o más variables que son endógenas
+
+- Necesitamos variables instrumentales (tantas como variables endógenas entre los regresores) 
+
+- Es posible tener múltiples instrumentos
+
+---
+name: etapas
+# <span style="font-size:80%">Mínimos cuadrados en dos etapas (MC2E)</span>
+<font size = "5">
+
+- Considere el modelo de interés
+
+$$y_1 = \beta_1 + \beta_2y_2 + \beta_3z_1 + u_1$$
+
+donde <span style="color:blue"> $y_2$ es endógena y $z_1$ es exógena
+
+- Asumimos que $z_2$ y $z_3$ son instrumentos válidos. En este caso, el mejor instrumento es una combinación lineal de todas las variables exógenas
+
+$$y_2^* = \pi_0 + \pi_1z_1 + \pi_2z_2 + \pi_3z_3$$
+  donde $\pi_2\neq0$ o $\pi_3\neq0$
+
+---
+# <span style="font-size:80%">Mínimos cuadrados en dos etapas (MC2E)</span>
+<font size = "5">
+
+El método consiste en dos etapas:
+
+- <span style="color:blue">Primera etapa</span>: Estimar $y_2^*$, regresando $y_2$ sobre $z_1$, $z_2$ y $z_3$ y obtenemos los valores predichos $\widehat{y}_2$
+
+- <span style="color:blue">Segunda etapa</span>: Sustituimos ${y}_2$ por $\widehat{y}_2$ en el modelo de interés y estimamos por MCO, los estimadores asi obtenidos se conocen como <span style="color:blue">estimadores de MC2E
+
+- El método se extiende a múltiples variables endógenas. Es necesario asegurarse de que tenemos al menos tantas variables exógenas excluidas (instrumentos) como variables endógenas en la ecuación de interés
+
+---
+name: endogeneidad
+# <span style="font-size:80%">Test de endogeneidad</span>
+<font size = "5">
+
+- Si no existe endogeneidad en el modelo original, MCO es preferido a VI, por tanto, es necesario probar la existencia de endogeneidad 
+
+- Si no existe endogeneidad, MCO y VI son consistentes, pero MCO es más eficiente (óptimo) 
+
+- Si existe endogeneidad, solamente VI es consistente
+
+- Por tanto, es importante realizar un contraste de endogeneidad para evitar usar VI cuando no es necesario
+
+- Se utiliza el test de Hausman ($H_0$: Exogeneidad) 
+
+---
+# <span style="font-size:80%">Test de endogeneidad</span>
+<font size = "5">
+
+$H_0$: $y_2$ es exógena, $H_A$: $y_2$ es endógena 
+
+Pasos:
+<p style="margin-bottom: -1em">
+
+- Guarde los residuos de la primera etapa: $\widehat{v}_i$
+
+- Incluya $\widehat{v}_i$ en la ecuación principal (contiene $y_2$): 
+
+$$y_{1i} = \beta_1 + \beta_2y_{2i} + \beta_3z_{1i} + \delta\widehat{v}_i + u_{1i}$$
+- Si el coeficiente asociado al residuo es estadísticamente diferente de cero, rechace la hipótesis nula de exogeneidad
+
+  Contrastamos:  $H_0$: $\delta=0$ frente a $H_A$: $\delta\neq0$ 
+  
+  Si no rechazamos $H_0$, no rechazaremos que $y_2$ es exógena
+
+---
+name: sobreidentificacion
+# <span style="font-size:80%">Test de sobreidentificación o test de Sargan</span>
+<font size = "5">
+
+-  Si solo hay un instrumento para nuestra variable endógena, no podemos probar si el instrumento no está correlacionado con el error. Decimos que el modelo está identificado 
+
+-  Si tenemos varios instrumentos, es posible probar las restricciones de sobreidentificación, para ver si algunos de los instrumentos están correlacionados con el error
+
+- Pasos:
+<p style="margin-bottom: -1em">
+ - Estime el modelo de interés usando MC2E y obtenga los residuos: $\widehat{u}^{MC2E}_i$ 
+
+ - Regrese los $\widehat{u}^{MC2E}_i$ sobre todas las variables exógenas (incluido los instrumentos) y obtenga el $R^2$ para calcular $nR^2$ 
+
+ - Bajo la hipótesis nula que todos los instrumentos no están correlacionados con el error, $LM \sim \chi_q^2$, donde $q$ es el número de instrumentos adicionales  
+
+---
+name: r
+# <span style="font-size:80%">Ejercicio aplicado en R: el efecto de la educación sobre el crimen</span>
+<spam style="font-size:110%">
+
+<span style="color:blue">La educacion reduce el crimen?</span> Si es así, gastar más en educacion podría ser una herramienta de largo plazo para combatir el crimen. Este ejercio aplicado se basa en el *paper* de Lochner, L. y Moretti, E. (2004). "The Effect of Education on Crime: Evidence from Prison Inmates, Arrests, and Self-Reports", American Economic Review, 94(1):155-189.
+
+Las principales variables para el análisis son:  
+$prision$: variable binaria igual a 1 si la persona esta en prision, 0 no  
+$educ$: años de escolaridad  
+$age$: edad  
+$AfAm$: variable binaria igual a 1 para afroamericano, 0 no  
+$ca8$: variable binaria igual a 1 si la escolaridad obligatoria estatal es de 8 o menos años  
+$ca9$: variable binaria igual a 1 si la escolaridad obligatoria estatal es de 9 años  
+$ca10$: variable binaria igual a 1 si la escolaridad obligatoria estatal es de 10 años  
+$ca11$: variable binaria igual a 1 si la escolaridad obligatoria estatal es de 11 o mas años
+
+La idea es estimar el siguiente modelo
+$$prison = \beta_1 + \beta_2 educ + \beta_3 age + \beta_4 age^2 + \beta_5 AfAm + u$$
+En el siguiente link se encuentra la base de datos y el código en R utilizado:
+- [Datos](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/inmates.dta)
+- [Código en R](https://gusgarciacruz.github.io/EconometriaMEA/Tema9/Tema 9.R)
