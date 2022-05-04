@@ -1,4 +1,4 @@
-#Tema 10. Modelos de datos panel
+# Tema 10. Modelos de datos panel
 - <span style="font-size:150%">Generalidades</span>
 
 - <span style="font-size:150%">Modelo de MCO agrupados (*Pooling*)</span>
