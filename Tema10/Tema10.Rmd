@@ -91,7 +91,7 @@ xaringanExtra::use_extra_styles(
 
 Link slides formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Tema10/Tema10.html)
 
-Link slides formato [PDF](https://gusgarciacruz.github.io/EconometriaII/Tema10/Tema10.pdf)
+Link slides formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Tema10/Tema10.pdf)
 ---
 # <span style="font-size:80%">En este tema</span>
 
