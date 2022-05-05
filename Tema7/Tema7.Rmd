@@ -349,7 +349,7 @@ $$mpg_i = \beta_1 + \beta_2 disp_i + \beta_3 hp_i + \beta_4 wt + \beta_5 qsec + 
 # <span style="font-size:80%">Ejercicio aplicado en R</span>
 .pull-left-50[
 ```{r}
-library(Hmisc); library(corrplot); library(olsrr); library('mctest')
+library(Hmisc); library(corrplot); library(olsrr); library(mctest)
 data(mtcars)
 model <- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 summary(model)
@@ -408,15 +408,24 @@ ols_coll_diag(model)
 # <span style="font-size:80%">Ejercicio aplicado en R</span>
 ```{r}
 # Otro paquete para hacer diagnóstico de colinealidad es mctest
-# Leer https://journal.r-project.org/archive/2016/RJ-2016-062/RJ-2016-062.pdf para entender cada estadístico del paquete
-#omcdiag(model)
-#imcdiag(model)
-#imcdiag(model, corr=T)
-#imcdiag(model, corr=T, all=TRUE)
-#mctest(model, all=TRUE)
+# Leer https://journal.r-project.org/archive/2016/RJ-2016-062/RJ-2016-062.pdf y https://cran.r-project.org/web/packages/mctest/mctest.pdf para entender cada estadístico del paquete
 mc.plot(model)
 
 ```
+
+---
+# <span style="font-size:80%">Ejercicio aplicado en R</span>
+.pull-left-50[
+```{r}
+imcdiag(model)
+```
+]
+
+.pull-right-50[
+```{r}
+imcdiag(model, method ="Klein")
+```
+]
 
 ---
 # <span style="font-size:80%">Ejercicio aplicado en R</span>

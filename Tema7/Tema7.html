@@ -326,7 +326,7 @@ La idea es analizar los determinantes del desempeño de los automóviles y se es
 .pull-left-50[
 
 ```r
-library(Hmisc); library(corrplot); library(olsrr); library('mctest')
+library(Hmisc); library(corrplot); library(olsrr); library(mctest)
 data(mtcars)
 model &lt;- lm(mpg ~ disp + hp + wt + qsec, data = mtcars)
 summary(model)
@@ -496,16 +496,80 @@ Eigenvalue and Condition Index
 
 ```r
 # Otro paquete para hacer diagnóstico de colinealidad es mctest
-# Leer https://journal.r-project.org/archive/2016/RJ-2016-062/RJ-2016-062.pdf para entender cada estadístico del paquete
-#omcdiag(model)
-#imcdiag(model)
-#imcdiag(model, corr=T)
-#imcdiag(model, corr=T, all=TRUE)
-#mctest(model, all=TRUE)
+# Leer https://journal.r-project.org/archive/2016/RJ-2016-062/RJ-2016-062.pdf y https://cran.r-project.org/web/packages/mctest/mctest.pdf para entender cada estadístico del paquete
 mc.plot(model)
 ```
 
 &lt;img src="Tema7_files/figure-html/unnamed-chunk-8-1.png" width="864" /&gt;
+
+---
+# &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R&lt;/span&gt;
+.pull-left-50[
+
+```r
+imcdiag(model)
+```
+
+```
+
+Call:
+imcdiag(mod = model)
+
+
+All Individual Multicollinearity Diagnostics Result
+
+        VIF    TOL      Wi       Fi Leamer    CVIF Klein   IND1
+disp 7.9854 0.1252 65.1974 101.2889 0.3539 -1.0541     1 0.0134
+hp   5.1668 0.1935 38.8897  60.4180 0.4399 -0.6820     0 0.0207
+wt   6.9169 0.1446 55.2248  85.7957 0.3802 -0.9130     1 0.0155
+qsec 3.1331 0.3192 19.9091  30.9302 0.5650 -0.4136     0 0.0342
+       IND2
+disp 1.0875
+hp   1.0026
+wt   1.0635
+qsec 0.8464
+
+1 --&gt; COLLINEARITY is detected by the test 
+0 --&gt; COLLINEARITY is not detected by the test
+
+disp , hp , qsec , coefficient(s) are non-significant may be due to multicollinearity
+
+R-square of y on all x: 0.8351 
+
+* use method argument to check which regressors may be the reason of collinearity
+===================================
+```
+]
+
+.pull-right-50[
+
+```r
+imcdiag(model, method ="Klein")
+```
+
+```
+
+Call:
+imcdiag(mod = model, method = "Klein")
+
+
+ Klein Multicollinearity Diagnostics
+
+        R2j R2(overall) Difference detection
+disp 0.8748      0.8351     0.0396         1
+hp   0.8065      0.8351    -0.0287         0
+wt   0.8554      0.8351     0.0203         1
+qsec 0.6808      0.8351    -0.1543         0
+
+Multicollinearity may be due to disp wt regressors
+
+
+1 --&gt; COLLINEARITY is detected by the test 
+0 --&gt; COLLINEARITY is not detected by the test
+
+===================================
+```
+]
 
 ---
 # &lt;span style="font-size:80%"&gt;Ejercicio aplicado en R&lt;/span&gt;
