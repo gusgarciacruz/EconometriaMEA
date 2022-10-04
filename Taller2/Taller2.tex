@@ -1,0 +1,57 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{appendix}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage{pdflscape}
+\usepackage{array}
+\usepackage{pdfpages}
+\usepackage{color}
+\usepackage{amsmath,amssymb}
+\usepackage[english]{babel}
+\usepackage{colortbl}
+\usepackage[latin1]{inputenc}
+\usepackage{eurosym}
+\geometry{top=2.9cm, bottom=2.9cm, left=2.5cm, right=2.5cm}
+\usepackage{multirow}
+\usepackage{ae,aecompl} %tíldes
+\usepackage{hyperref}
+
+\begin{document}
+
+%\baselineskip 19pt
+\pagenumbering{arabic}
+
+\begin{center}
+\textbf{TALLER 2}\\
+\textbf{ECONOMETRÍA PARA LA TOMA DE DECISIONES}\\
+\textbf{MAESTRÍA EN ECONOMÍA APLICADA}\\
+%\textbf{2022-I}
+\end{center}
+
+
+\hspace*{-.7cm} \textbf{Profesor: Gustavo A. García}\\
+%\textbf{Departamento de Economía}\\
+\textbf{Escuela de Finanzas, Economía y Gobierno}\\
+\textbf{Universidad EAFIT}\\\vspace*{.1cm}
+
+Este ejercicio se basa en el $paper$ seminal de \href{https://gusgarciacruz.github.io/EconometriaMEA/Taller2/Harrison-and-Rubinfeld-(1978)-Housing-prices-and-the-demand-for-clean-air.pdf}{Harrison y Rubinfeld (1978)} \footnote{Harrison, D. y Rubinfeld, D. (1978). ``Hedonic housing prices and the demand for clean air''. \itshape{Journal of Environmental Economics and Management}\normalfont, 5(1): 81-102. También pueden buscar interpretaciones en el libro de Wooldridge, buscar en el libro por HPRICE2.}, en el que se hace la estimación de una ecuación de precios hedónicos y se estudian los efectos de la contaminación en el aire sobre el mercado inmobiliario de Boston (US). Se tiene información para 506 zonas censales (manzanas) de las ciudades de Boston. La variable dependiente en la ecuación de precios de la vivienda es la mediana del valor de la vivienda a nivel de zona censal ($medv$). Además se tiene información sobre variables estructurales de la vivienda ($rm$ y $age$), del vecindario ($b$, $lstat$, $crim$, $zn$, $indus$, $tax$, $ptratio$ y $chas$), de accesibilidad a la vivienda ($dis$ y $rad$) y una variable de contaminación del aire ($nox$). En el archivo \href{https://gusgarciacruz.github.io/EconometriaMEA/Taller2/BostonHousing.dta}{BostonHousing.dta} se encuentran los datos y más detalle de la descripción de las variables se encuentran en el $paper$.\\
+
+Se pide:\\\vspace*{-.6cm}
+\begin{enumerate}\justifying
+\item Leer cuidadosamente el documento de Harrison y Rubinfeld (1978) y hacer un resumen muy breve (no más de un página). Describa el objetivo o propósito del estudio, la metodología utilizada (datos y en una ecuación describa el modelo econométrico estimado) y los principales resultados o conclusiones encontrados.   
+\item Haga un análisis descriptivo del precio de la vivienda (densidad, media, sd, min, max, p25, p50, p75). Realice un análisis de correlación (con significancia estadística), y \textit{scatter plot} y la línea de regresión entre el precio de la vivienda y la contaminación del aire y otro determinante importante que ustedes crean. Interprete los resultados. \\\vspace*{-.6cm}
+\item Construya las variables utilizadas por Harrison y Rubinfeld (1978) en el modelo econométrico que ellos estimaron. Con estas variables construidas estime un modelo (modelo A) que explique el precio de la vivienda en función de la contaminación, y las variables de estructura de la vivienda. Determine si existe una relación convexa o rendimientos crecientes entre el precio de la vivienda y el número de habitaciones (llame a este modelo, modelo B), y calcule el número de habitaciones en el que el precio de la vivienda comienza a ser positivo. Seleccione el mejor modelo entre A y B e interprete los resultados en términos económicos (coeficientes estimados, su significancia estadística, los intervalos de confianza, $R^2$ y su versión ajustada, y la significancia global de la regresión).\\\vspace*{-.6cm}
+\item Uno de los alcaldes de las ciudades sugiere que la contaminación del aire tiene un importante efecto negativo en el mercado inmobiliario, y plantea que puede disminuir el precio de las viviendas en un 100\%. Otro alcalde más negativo plantea que un incremento en la contaminación generará que el precio de la vivienda pueda disminuir es más de un 200\%. A partir del modelo seleccionado en el anterior numeral corrobore si estás hipótesis de los alcaldes se rechazan o no.\\\vspace*{-.6cm}
+\item Estime un modelo C, que será el modelo seleccionado en el numeral 3 más las otras variables incorporadas en el modelo estimado por Harrison y Rubinfeld (1978) (continue incorporando $nox$ en forma lineal). Interprete los resultados (coeficientes, significancia individual y $R^2$). ¿Este modelo C tiene mejor ajuste que el modelo seleccionado en el numeral 3? Por qué?\\\vspace*{-.6cm}
+\item Con el fin calcular efectos heterogéneos de la contaminación del aire sobre el precio de la vivienda, estime el modelo C en las colas de la distribución del precio de la vivienda. Estime esto para el 25\% de las viviendas con el valor más bajo y el 25\% de las viviendas más costosas. A partir de los modelos estimados analice si existen efectos diferenciales de la contaminación del aire, la estructura de la vivienda, las características del vecindario y la accesibilidad sobre el precio de la vivienda. Cuáles son las posibles explicaciones a estas diferencias? 
+\end{enumerate}
+
+\end{document}
+
+
