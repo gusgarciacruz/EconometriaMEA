@@ -1,0 +1,92 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{appendix}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage{pdflscape}
+\usepackage{array}
+\usepackage{pdfpages}
+\usepackage{color}
+\usepackage{amsmath,amssymb}
+\usepackage[english]{babel}
+\usepackage{colortbl}
+\usepackage[latin1]{inputenc}
+\usepackage{eurosym}
+\geometry{top=2.9cm, bottom=2.9cm, left=2.5cm, right=2.5cm}
+\usepackage{multirow}
+\usepackage{ae,aecompl} %tíldes
+\usepackage{hyperref}
+
+\begin{document}
+
+%\baselineskip 19pt
+\pagenumbering{arabic}
+
+\begin{center}
+\textbf{TALLER 3}\\
+\textbf{ECONOMETRÍA PARA LA TOMA DE DECISIONES}\\
+\textbf{MAESTRÍA EN ECONOMÍA APLICADA}\\
+%\textbf{2022-I}
+\end{center}
+
+
+\hspace*{-.7cm} \textbf{Profesor: Gustavo A. García}\\
+%\textbf{Departamento de Economía}\\
+\textbf{Escuela de Finanzas, Economía y Gobierno}\\
+\textbf{Universidad EAFIT}\\\vspace*{.1cm}
+
+Numerosos estudios indican que la educación de las mujeres tiene un efecto negativo sobre la fertilidad. Varias son las posibles explicaciones: la escolarización aumenta el coste de oportunidad de tener un hijo, aumenta la eficiencia del control fertilidad o simplemente reduce la preferencia por los hijos\footnote{Leer el siguiente documento para profundizar en el tema: \href{https://gusgarciacruz.github.io/EconometriaMEA/Taller3/mccrary_and_royer2011aer.pdf}{McCrary, J and Royer, H. (2011)}. ``The Effect of Female Education on Fertility and Infant Health: Evidence from
+School Entry Policies Using Exact Date of Birth''. \itshape{American Economic Review}\normalfont, 101: 158-195}. En este ejercicio vamos a estudiar este posible efecto negativo. Los datos deben descargarse de la página web de \textit{General Social Survey} la cual recopila información para EEUU anualmente desde 1972 hasta 2021 sobre diferentes características laborales y personales. Ingresar al siguiente \href{https://gss.norc.org/get-the-data/stata}{link} y descargar la base de datos ``\textit{GSS 1972-2021 Cross-Sectional Cumulative Data (Release 2, May 2022)}''.
+
+Con el fin de corroborar la relación entre la educación y la fertilidad con la anterior base de datos descargada, se debe seleccionar alguno de los siguientes periodos:\\\vspace*{-.6cm}
+
+\begin{enumerate}
+	\item 1972 a 1980
+	\item 1982 a 1986
+	\item 1987 a 1991
+	\item 1993 a 2000
+	\item 2002 a 2010
+	\item 2012 a 2021
+\end{enumerate}
+
+%Adicionalmente, se deben filtra los datos para las mujeres entre 35 y 55 años (se eliminan las mujeres menores de 35 años porque habitualmente no han completado su ``fertilidad''). En la siguiente tabla se describen las principales variables con las que se va a trabajar:
+
+Adicionalmente, se deben filtra los datos para las mujeres entre 20 y 55 años. En la siguiente tabla se describen las principales variables con las que se va a trabajar:
+%\newpage
+\begin{table}[htbp]\centering
+\scalebox{.8} {
+\begin{tabular}{ll}
+\textbf{Variable}   & \textbf{Definición}\\\hline
+$age$     & Edad en años\\
+$sex$     & Sexo\\
+$race$    & Raza (3 categorías)\\
+$educ$    & Años de educación\\
+$childs$  & Número de hijos\\
+$paeduc$   & Años de educación del padre\\
+$maeduc$   & Años de educación de la madre\\
+$degree$  & Nivel educativo más alto alcanzado (5 categorías)\\\hline
+    \end{tabular}}
+\end{table}\\
+
+La variable $childs$ se interpreta como una medida de la fertilidad. Se debe responder las siguientes preguntas:\\\vspace*{-.4cm}
+\begin{enumerate}
+	\item Realice un pequeño análisis estadístico que apunte a corroborar la relación negativa entre educación de la mujer y la fertilidad. Por ejemplo, calcule el número de hijos promedio para cada año de educación y/o nivel educativo más alto alcanzado. Analice los resultados encontrados.\\\vspace*{-.4cm}
+	
+	\item Estime un primer modelo (Modelo 1) en el que relacione $childs$ en función de los años de educación de la mujer, la edad, edad al cuadrado, una variable binaria de afroamericano (1 si es afroamericano, 0 blanco) y la educación del padre y la madre. Corrobore si este modelo presenta problemas de multicolinealidad. De existir este problema, explique a qué se debe y proponga las posibles soluciones. Interprete el modelo corregido que resulta (Modelo 2), en términos de los $\beta$s, significancia individual y global, y $R^2$. ¿Cuál es el efecto esperado sobre la fertilidad de aumentar un año la edad de la mujer manteniendo el resto de variables fijas? ¿Es este efecto significativo al 5\%?¿A partir de qué edad el efecto de la edad sobre la fertilidad es negativo?\\\vspace*{-.4cm}
+	
+	\item A partir del Modelo 2, contraste la existencia de heteroscedasticidad. ¿Qué conclusión se obtiene? Obtenga la estimación robusta a la heteroscedasticidad.\\\vspace*{-.4cm}
+	
+	\item Existe la hipótesis que a mayores niveles educativos alcanzados, la relación negativa entre educación de la mujer y fertilidad se acentúa (utilizar $degree$). También existe la idea que en esa relación entre educación y fertilidad existen diferencias por razas. Plantee un modelo econométrico en el que se puedan corroborar las dos hipótesis conjuntamente. Comente los resultados e indique si los datos soportan las hipótesis.\\\vspace*{-.4cm}
+	
+  \item Algunos autores consideran que la educación puede ser una variable endógena ¿por qué podría ser la variable $educ$ endógena? Si la variable $educ$ fuese realmente endógena ¿qué implicaciones tendrá sobre las propiedades de los estimadores MCO obtenidos en los apartados anteriores? Teniendo en cuenta el Modelo 2 y utilizando como variables instrumentales la educación de la madre y el padre, contraste que la variable $educ$ es realmente endógena. Razone y pruebe por qué la educación de la madre y el padre pueden ser buenos instrumentos, esto es, relevantes y exógenos. Estime por mínimos cuadrados en dos etapas (MC2E) el Modelo 2. De acuerdo a esta nueva estimación ¿cuál es el efecto de la escolarización sobre la fertilidad manteniendo el resto de variables constantes?
+	
+\end{enumerate}
+
+\end{document}
+
+
