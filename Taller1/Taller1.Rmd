@@ -122,7 +122,7 @@ xaringanExtra::use_extra_styles(
 
 # <span style="font-size:80%">Taller 1</span>
 
-<div class="my-footer1"><span>Econometría para la toma de deciciones - Maestría en Economía Aplicada - Universidad EAFIT - 2022-I</span></div> 
+<div class="my-footer1"><span>Econometría para la toma de deciciones - Maestría en Economía Aplicada - Universidad EAFIT</span></div> 
 
 <div class="my-footer2"><span>Prof.: Gustavo A. García (ggarci24@eafit.edu.co)</span></div> 
 
