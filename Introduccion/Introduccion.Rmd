@@ -109,12 +109,14 @@ xaringanExtra::use_extra_styles(
 <br>
 <br>
 <br>
-<br>
-<br>
-#<div class="my-logo-right"></div> 
+
+#<div class="my-logo-right"><span style="font-size:50%"><br><br><br><br><br><br><br>https://gusgarciacruz.github.io/EconometriaMEA</span>
+</div> 
 Link slides en formato [html](https://gusgarciacruz.github.io/EconometriaMEA/Introduccion/Introduccion.html)
 
 Link slides en formato [PDF](https://gusgarciacruz.github.io/EconometriaMEA/Introduccion/Introduccion.pdf)
+
+
 
 ---
 # <span style="font-size:80%">En este tema</span>
