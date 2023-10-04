@@ -6,7 +6,7 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 **Temas**<br>
 [Una breve introducción a R](https://gusgarciacruz.github.io/EbookR_introduccion/)
 
-[Programa del curso](https://gusgarciacruz.github.io/EconometriaMEA/EC0743-Econometría-para-la-toma-de-decisiones-2023-I.pdf)
+[Programa del curso](https://gusgarciacruz.github.io/EconometriaMEA/EC0743-Econometría-para-la-toma-de-decisiones-2023-II.pdf)
 
 [Introducción](https://gusgarciacruz.github.io/EconometriaMEA/Introduccion/Introduccion.html)
 
@@ -35,5 +35,3 @@ Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 [Taller 2](https://gusgarciacruz.github.io/EconometriaMEA/Taller2/Taller2.pdf)
 
 [Taller 3](https://gusgarciacruz.github.io/EconometriaMEA/Taller3/Taller3.pdf)
-
-[Evaluación](https://gusgarciacruz.github.io/EconometriaMEA/Evaluacion/Evaluacion1.pdf) 
