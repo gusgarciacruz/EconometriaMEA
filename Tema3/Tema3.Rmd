@@ -425,7 +425,7 @@ name: R
 Los accidentes de tráfico son la principal causa de muerte de los estadounidenses entre los 5 y los 32 años de edad. Mediante distintas políticas de gasto, el gobierno federal ha alentado a los estados
 a instituir normativas de obligatoriedad de uso del cinturón de seguridad para reducir el número de muertes y lesiones graves. 
 
-En este ejercicio se investigará la eficacia de estas leyes para el aumento del uso del cinturón de seguridad y la reducción de víctimas mortales. El archivo [SeatBelts.xls](https://wps.pearsoned.com/wps/media/objects/11422/11696965/empirical/empex_tb/SeatBelts.xls) contiene un panel de datos sobre 50 estados de los EE.UU., además del distrito de Columbia para los años 1983-1997. Se ofrece una descripción detallada en el archivo [SeatBelts_Description.pdf](https://wps.pearsoned.com/wps/media/objects/11422/11696965/empirical/empex_tb/SeatBelts_Description.pdf)
+En este ejercicio se investigará la eficacia de estas leyes para el aumento del uso del cinturón de seguridad y la reducción de víctimas mortales. El archivo [SeatBelts.xls](https://www.princeton.edu/~mwatson/Stock-Watson_3u/Students/EE_Datasets/SeatBelts.xls) contiene un panel de datos sobre 50 estados de los EE.UU., además del distrito de Columbia para los años 1983-1997. Se ofrece una descripción detallada en el archivo [SeatBelts_Description.pdf](https://www.princeton.edu/~mwatson/Stock-Watson_3u/Students/EE_Datasets/SeatBelts_Description.pdf)
 
 - Estime el efecto del uso del cinturón de seguridad sobre las muertes mediante la regresión de la variable $fatalityrate$ sobre la variable $sb\_useage$. ¿La regresión estimada sugiere que un mayor uso del cinturón de seguridad reduce las muertes?
 
