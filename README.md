@@ -3,10 +3,10 @@ En este repositorio se encuentra el material del curso de Econometría para la t
 
 Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
+[Programa del curso](https://gusgarciacruz.github.io/EconometriaMEA/EC0743EconometriaMAE2025-II.pdf)
+
 **Temas**<br>
 [Una breve introducción a R](https://gusgarciacruz.github.io/EbookR_introduccion/)
-
-[Programa del curso](https://gusgarciacruz.github.io/EconometriaMEA/EC0743-Econometría-para-la-toma-de-decisiones-2023-II.pdf)
 
 [Introducción](https://gusgarciacruz.github.io/EconometriaMEA/Introduccion/Introduccion.html)
 
