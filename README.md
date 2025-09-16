@@ -1,5 +1,4 @@
 # Curso de Econometría para la Toma de Decisiones, Universidad EAFIT (Medellín-Colombia)
-En este repositorio se encuentra el material del curso de Econometría para la toma de Decisiones de la Maestría en Economía Aplicada de la Universidad EAFIT.
 
 Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
