@@ -1,5 +1,4 @@
-flipbookr
-xaringanthemer
+haven
 tidyverse
 ggplot2
 tibble
@@ -9,10 +8,16 @@ purrr
 dplyr
 stringr
 forcats
+lubridate
+summarytools
+writexl
+readxl
+Hmisc
+flipbookr
+xaringanthemer
 klippy
 xaringanExtra
 gt
 knitr
 kableExtra
-summarytools
 qrcode
