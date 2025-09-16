@@ -1,4 +1,4 @@
-# Curso de Econometría para la Toma de Decisiones, Universidad EAFIT (Medellín-Colombia)
+# Curso de Econometría para la Toma de Decisiones
 
 Profesor: [Gustavo A. García](https://gusgarciacruz.github.io/cv)
 
