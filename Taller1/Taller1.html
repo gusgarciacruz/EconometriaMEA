@@ -4,7 +4,7 @@
     <title>Taller 1</title>
     <meta charset="utf-8" />
     <meta name="author" content="" />
-    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
     <script src="libs/fabric-4.3.1/fabric.min.js"></script>
     <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
@@ -13,8 +13,8 @@
     <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
-    <link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-    <link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+    <link href="libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
     <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -94,33 +94,27 @@ p.comment {
 
 &lt;div class="my-footer1"&gt;&lt;span&gt;Econometría para la toma de deciciones - Maestría en Economía Aplicada - Universidad EAFIT&lt;/span&gt;&lt;/div&gt; 
 
-&lt;div class="my-footer2"&gt;&lt;span&gt;Prof.: Gustavo A. García (ggarci24@eafit.edu.co)&lt;/span&gt;&lt;/div&gt; 
+&lt;div class="my-footer2"&gt;&lt;span&gt;Prof.: Gustavo A. García  (ggarci24@eafit.edu.co)&lt;/span&gt;&lt;/div&gt; 
 
 &lt;font size = "3"&gt;
   
 Se tiene información de directores generales (CEO) sobre salario anual en miles de dólares `\((salary)\)`, valor de mercado de la empresa en millones de dólares `\((mktval)\)`, y años en la compañía del CEO `\((comten)\)` (en los archivos [ceosal_1.xlsx](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/ceosal_1.xlsx) y [ceosal_2.xlsx](https://gusgarciacruz.github.io/EconometriaMEA/Taller1/ceosal_2.xlsx) están los datos). Se pide:
 
-- Pegue las bases de datos utilizando como llave la variable id de los CEO `\((id)\)`. Cree una nueva variable `\((ceo\_senior)\)` donde 1 es un trabajador senior (30 a 58 años en la compañía) y 0 no senior (menos de 29 años en la compañía). Calcule las principales estadísticas descriptivas y las densidades de los salarios de los CEO distinguiendo por senior y no senior. Interprete los resultados y dé una explicación a las diferencias en salarios por tipo de CEO
+1. Pegue las bases de datos utilizando como llave la variable id de los CEO `\((id)\)`. Cree una nueva variable `\((ceo\_senior)\)` donde 1 es un trabajador senior (30 a 58 años en la compañía) y 0 no senior (menos de 29 años en la compañía). Construya las variables `\(salary\)` y `\(mktval\)` en logaritmos: `\(ln(salary)\)` y `\(ln(mktval)\)`. 
 
-- Construya las variables `\(salary\)` y `\(mktval\)` en logaritmos: `\(ln(salary)\)` y `\(ln(mktval)\)`. Calcule la correlación entre estas dos variables. Realice un scatter plot con la línea de regresión entre estas dos variables. Interprete los resultados con sentido económico
+2. Construya una tabla con las principales estadísticas descriptivas de las variables. Grafique las densidades de los salarios de los CEO distinguiendo por senior y no senior. Construya una tabla con la correlación entre estas dos variables. Realice un gráfico del scatter plot con la línea de regresión entre `\(ln(salary)\)` y `\(ln(mktval)\)`. Interprete todas la estadísticas descriptivas generadas y plantee una explicación a las diferencias en salarios por tipo de CEO
 
-- Estime un modelo de RLS de `\(ln(salary)\)` en función de `\(ln(mktval)\)` distinguiendo por tipo de trabajador senior o no. Para cada modelo interprete el coeficiente de la pendiente (con sentido económico, ayuda: leer sección 6.4 del libro de Gujarati y Portes) y su significancia estadística. A qué se deben las diferencias en los efectos de `\(mktval\)` sobre los salarios cuando se distingue por la experiencia del CEO
+3. Estime un modelo de RLS de `\(ln(salary)\)` en función de `\(ln(mktval)\)` distinguiendo por tipo de trabajador senior o no. Para cada modelo interprete el coeficiente de la pendiente (con sentido económico, ayuda: leer sección 6.4 del libro de Gujarati y Portes) y su significancia estadística. A qué se deben las diferencias en los efectos de `\(mktval\)` sobre los salarios cuando se distingue por la experiencia del CEO. Estime un nuevo modelo en el que tanto la variable dependiente como la independiente se encuentren en niveles y prediga el salario de los CEO senior, si el valor de la empresa fuera de 5000 millones de dólares 
 
-- Un miembro del comité directivo de la empresa plantea que los CEO senior tienen remuneraciones muy altas y esto se debe a que estos ejecutivos son lo que más ganan cuando el valor de mercado de la empresa incrementa. El miembro del comité directivo plantea que por un incremento en 1% en el valor de la empresa, los salarios de los CEO suben un 0.5%. ¿El modelo econométrico estimado soporta esta hipótesis? Use un nivel de significancia del 5% 
-
-- Pruebe la hipótesis que la elasticidad de los salarios de los CEO no senior respecto al valor de la empresa es mayor que 0.2%. Recuerde plantear la `\(H_{0}\)`, `\(H_{A}\)`, el estadístico de prueba y la regla de decisión
-
-- Estime un nuevo modelo en el que tanto la variable dependiente como la independiente se encuentren en niveles y prediga el salario de los CEO senior, si el valor de la empresa fuera de 5000 millones de dólares   
-
-
+4. Un miembro del comité directivo de la empresa plantea que los CEO senior tienen remuneraciones muy altas y esto se debe a que estos ejecutivos son lo que más ganan cuando el valor de mercado de la empresa incrementa. El miembro del comité directivo plantea que por un incremento en 1% en el valor de la empresa, los salarios de los CEO suben un 0.5%. ¿El modelo econométrico estimado soporta esta hipótesis? Use un nivel de significancia del 5%. Otro directivo platea que la elasticidad de los salarios de los CEO no senior respecto al valor de la empresa es mayor que 0.2%. Recuerde plantear la `\(H_{0}\)`, `\(H_{A}\)`, el estadístico de prueba y la regla de decisión
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false,
-"ratio": "16:9"
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false,
+  "ratio": "16:9"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
